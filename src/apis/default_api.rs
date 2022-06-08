@@ -160,712 +160,712 @@ pub enum UpdatePlayerTagsError {
 
 /// Used to stop a scheduled or currently outgoing notification
 pub async fn cancel_notification(configuration: &configuration::Configuration, app_id: &str, notification_id: &str) -> Result<crate::models::InlineResponse2001, Error<CancelNotificationError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/notifications/{notification_id}", local_var_configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let uri_str = format!("{}/notifications/{notification_id}", configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
+    let mut req_builder = client.request(reqwest::Method::DELETE, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CancelNotificationError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<CancelNotificationError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Creates a new OneSignal app
 pub async fn create_app(configuration: &configuration::Configuration, app: crate::models::App) -> Result<crate::models::App, Error<CreateAppError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.user_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.user_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&app);
+    req_builder = req_builder.json(&app);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateAppError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<CreateAppError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Sends notifications to your users 
 pub async fn create_notification(configuration: &configuration::Configuration, notification: crate::models::Notification) -> Result<crate::models::InlineResponse200, Error<CreateNotificationError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/notifications", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/notifications", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&notification);
+    req_builder = req_builder.json(&notification);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateNotificationError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<CreateNotificationError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Register a new device to one of your OneSignal apps &#x1F6A7; Don't use this This API endpoint is designed to be used from our open source Mobile and Web Push SDKs. It is not designed for developers to use it directly, unless instructed to do so by OneSignal support. If you use this method instead of our SDKs, many OneSignal features such as conversion tracking, timezone tracking, language detection, and rich-push won't work out of the box. It will also make it harder to identify possible setup issues. This method is used to register a new device with OneSignal. If a device is already registered with the specified identifier, then this will update the existing device record instead of creating a new one. The returned player is a player / user ID. Use the returned ID to send push notifications to this specific user later, or to include this player when sending to a set of users. &#x1F6A7; iOS Must set test_type to 1 when building your iOS app as development. Omit this field in your production app builds. 
 pub async fn create_player(configuration: &configuration::Configuration, player: crate::models::Player) -> Result<crate::models::InlineResponse2005, Error<CreatePlayerError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&player);
+    req_builder = req_builder.json(&player);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreatePlayerError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<CreatePlayerError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Create segments visible and usable in the dashboard and API - Required: OneSignal Paid Plan The Create Segment method is used when you want your server to programmatically create a segment instead of using the OneSignal Dashboard UI. Just like creating Segments from the dashboard you can pass in filters with multiple \"AND\" or \"OR\" operator's. &#x1F6A7; Does Not Update Segments This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segments endpoint and re-create it with this endpoint to edit. 
 pub async fn create_segments(configuration: &configuration::Configuration, app_id: &str, segment: Option<crate::models::Segment>) -> Result<crate::models::InlineResponse201, Error<CreateSegmentsError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}/segments", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}/segments", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&segment);
+    req_builder = req_builder.json(&segment);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateSegmentsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<CreateSegmentsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Delete player - Required: Used to delete a single, specific Player ID record from a specific OneSignal app. 
 pub async fn delete_player(configuration: &configuration::Configuration, app_id: &str, player_id: &str) -> Result<crate::models::InlineResponse2007, Error<DeletePlayerError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players/{player_id}", local_var_configuration.base_path, player_id=crate::apis::urlencode(player_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players/{player_id}", configuration.base_path, player_id=crate::apis::urlencode(player_id));
+    let mut req_builder = client.request(reqwest::Method::DELETE, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<DeletePlayerError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<DeletePlayerError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Delete segments (not user devices) - Required: OneSignal Paid Plan You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app. The segment_id can be found in the URL of the segment when viewing it in the dashboard. 
 pub async fn delete_segments(configuration: &configuration::Configuration, app_id: &str, segment_id: &str) -> Result<crate::models::InlineResponse2001, Error<DeleteSegmentsError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}/segments/{segment_id}", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id), segment_id=crate::apis::urlencode(segment_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}/segments/{segment_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id), segment_id=crate::apis::urlencode(segment_id));
+    let mut req_builder = client.request(reqwest::Method::DELETE, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<DeleteSegmentsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<DeleteSegmentsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Generate a compressed CSV export of all of your current user data This method can be used to generate a compressed CSV export of all of your current user data. It is a much faster alternative than retrieving this data using the /players API endpoint. The file will be compressed using GZip. The file may take several minutes to generate depending on the number of users in your app. The URL generated will be available for 3 days and includes random v4 uuid as part of the resource name to be unguessable. &#x1F6A7; 403 Error Responses          You can test if it is complete by making a GET request to the csv_file_url value. This file may take time to generate depending on how many device records are being pulled. If the file is not ready, a 403 error will be returned. Otherwise the file itself will be returned. &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs. &#x1F6A7; Concurrent Exports Only one concurrent export is allowed per OneSignal account. Please ensure you have successfully downloaded the .csv.gz file before exporting another app. CSV File Format: - Default Columns:   | Field | Details |   | --- | --- |   | id | OneSignal Player Id |   | identifier | Push Token |   | session_count | Number of times they visited the app or site   | language | Device language code |   | timezone | Number of seconds away from UTC. Example: -28800 |   | game_version | Version of your mobile app gathered from Android Studio versionCode in your App/build.gradle and iOS uses kCFBundleVersionKey in Xcode. |   | device_os | Device Operating System Version. Example: 80 = Chrome 80, 9 = Android 9 |   | device_type | Device Operating System Type |   | device_model | Device Hardware String Code. Example: Mobile Web Subscribers will have `Linux armv` |   | ad_id | Based on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut means user turned off Advertising tracking on the device. |   | tags | Current OneSignal Data Tags on the device. |   | last_active | Date and time the user last opened the mobile app or visited the site. |   | playtime | Total amount of time in seconds the user had the mobile app open. |   | amount_spent |  Mobile only - amount spent in USD on In-App Purchases. |    | created_at | Date and time the device record was created in OneSignal. Mobile - first time they opened the app with OneSignal SDK. Web - first time the user subscribed to the site. |   | invalid_identifier | t = unsubscribed, f = subscibed |   | badge_count | Current number of badges on the device | - Extra Columns:   | Field | Details |   | --- | --- |   | external_user_id | Your User Id set on the device |   | notification_types | Notification types |   | location | Location points (Latitude and Longitude) set on the device. |   | country | Country code |   | rooted | Android device rooted or not |   | ip | IP Address of the device if being tracked. See Handling Personal Data. |   | web_auth | Web Only authorization key. |   | web_p256 | Web Only p256 key. | 
 pub async fn export_players(configuration: &configuration::Configuration, app_id: &str, export_players_request_body: Option<crate::models::ExportPlayersRequestBody>) -> Result<crate::models::InlineResponse2008, Error<ExportPlayersError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players/csv_export?app_id={app_id}", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players/csv_export?app_id={app_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&export_players_request_body);
+    req_builder = req_builder.json(&export_players_request_body);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ExportPlayersError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<ExportPlayersError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of a single OneSignal app
 pub async fn get_app(configuration: &configuration::Configuration, app_id: &str) -> Result<crate::models::App, Error<GetAppError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.user_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.user_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetAppError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetAppError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of all of your current OneSignal apps
 pub async fn get_apps(configuration: &configuration::Configuration, ) -> Result<Vec<crate::models::App>, Error<GetAppsError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.user_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.user_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetAppsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetAppsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of a single notification and outcomes associated with it
 pub async fn get_notification(configuration: &configuration::Configuration, app_id: &str, notification_id: &str) -> Result<crate::models::NotificationWithMeta, Error<GetNotificationError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/notifications/{notification_id}", local_var_configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/notifications/{notification_id}", configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetNotificationError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetNotificationError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// -> View the devices sent a message - OneSignal Paid Plan Required This method will return all devices that were sent the given notification_id of an Email or Push Notification if used within 7 days of the date sent. After 7 days of the sending date, the message history data will be unavailable. After a successful response is received, the destination url may be polled until the file becomes available. Most exports are done in ~1-3 minutes, so setting a poll interval of 10 seconds should be adequate. For use cases that are not meant to be consumed by a script, an email will be sent to the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan. Turn on Send History via OneSignal API in Settings -> Analytics. Cannot get data before this was turned on. Must be called within 7 days after sending the message. Messages targeting under 1000 recipients will not have \"sent\" events recorded, but will show \"clicked\" events. Requires your OneSignal App's REST API Key, available in Keys & IDs.
 pub async fn get_notification_history(configuration: &configuration::Configuration, notification_id: &str, get_notification_request_body: crate::models::GetNotificationRequestBody) -> Result<crate::models::InlineResponse2002, Error<GetNotificationHistoryError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/notifications/{notification_id}/history", local_var_configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let uri_str = format!("{}/notifications/{notification_id}/history", configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&get_notification_request_body);
+    req_builder = req_builder.json(&get_notification_request_body);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetNotificationHistoryError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetNotificationHistoryError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of multiple notifications
 pub async fn get_notifications(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>, kind: Option<i32>) -> Result<crate::models::NotificationSlice, Error<GetNotificationsError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/notifications", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/notifications", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_str) = limit {
-        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref str) = limit {
+        req_builder = req_builder.query(&[("limit", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = offset {
-        local_var_req_builder = local_var_req_builder.query(&[("offset", &local_var_str.to_string())]);
+    if let Some(ref str) = offset {
+        req_builder = req_builder.query(&[("offset", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = kind {
-        local_var_req_builder = local_var_req_builder.query(&[("kind", &local_var_str.to_string())]);
+    if let Some(ref str) = kind {
+        req_builder = req_builder.query(&[("kind", &str.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetNotificationsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetNotificationsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of all the outcomes associated with your app  &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs.  &#x1F6A7; Outcome Data Limitations Outcomes are only accessible for around 30 days before deleted from our servers. You will need to export this data every month if you want to keep it. 
 pub async fn get_outcomes(configuration: &configuration::Configuration, app_id: &str, outcome_names: &str, outcome_names2: Option<&str>, outcome_time_range: Option<&str>, outcome_platforms: Option<&str>, outcome_attribution: Option<&str>) -> Result<crate::models::OutcomesData, Error<GetOutcomesError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}/outcomes", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}/outcomes", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("outcome_names", &outcome_names.to_string())]);
-    if let Some(ref local_var_str) = outcome_names2 {
-        local_var_req_builder = local_var_req_builder.query(&[("outcome_names[]", &local_var_str.to_string())]);
+    req_builder = req_builder.query(&[("outcome_names", &outcome_names.to_string())]);
+    if let Some(ref str) = outcome_names2 {
+        req_builder = req_builder.query(&[("outcome_names[]", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = outcome_time_range {
-        local_var_req_builder = local_var_req_builder.query(&[("outcome_time_range", &local_var_str.to_string())]);
+    if let Some(ref str) = outcome_time_range {
+        req_builder = req_builder.query(&[("outcome_time_range", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = outcome_platforms {
-        local_var_req_builder = local_var_req_builder.query(&[("outcome_platforms", &local_var_str.to_string())]);
+    if let Some(ref str) = outcome_platforms {
+        req_builder = req_builder.query(&[("outcome_platforms", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = outcome_attribution {
-        local_var_req_builder = local_var_req_builder.query(&[("outcome_attribution", &local_var_str.to_string())]);
+    if let Some(ref str) = outcome_attribution {
+        req_builder = req_builder.query(&[("outcome_attribution", &str.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetOutcomesError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetOutcomesError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of an existing device in one of your OneSignal apps
 pub async fn get_player(configuration: &configuration::Configuration, app_id: &str, player_id: &str, email_auth_hash: Option<&str>) -> Result<crate::models::Player, Error<GetPlayerError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players/{player_id}", local_var_configuration.base_path, player_id=crate::apis::urlencode(player_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players/{player_id}", configuration.base_path, player_id=crate::apis::urlencode(player_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_str) = email_auth_hash {
-        local_var_req_builder = local_var_req_builder.query(&[("email_auth_hash", &local_var_str.to_string())]);
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref str) = email_auth_hash {
+        req_builder = req_builder.query(&[("email_auth_hash", &str.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetPlayerError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetPlayerError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// View the details of multiple devices in one of your OneSignal apps Unavailable for Apps Over 80,000 Users For performance reasons, this method is not available for larger apps. Larger apps should use the CSV export API endpoint, which is much more performant. 
 pub async fn get_players(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>) -> Result<crate::models::PlayerSlice, Error<GetPlayersError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("app_id", &app_id.to_string())]);
-    if let Some(ref local_var_str) = limit {
-        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
+    if let Some(ref str) = limit {
+        req_builder = req_builder.query(&[("limit", &str.to_string())]);
     }
-    if let Some(ref local_var_str) = offset {
-        local_var_req_builder = local_var_req_builder.query(&[("offset", &local_var_str.to_string())]);
+    if let Some(ref str) = offset {
+        req_builder = req_builder.query(&[("offset", &str.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetPlayersError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<GetPlayersError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Updates the name or configuration settings of an existing OneSignal app
 pub async fn update_app(configuration: &configuration::Configuration, app_id: &str, app: crate::models::App) -> Result<crate::models::App, Error<UpdateAppError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::PUT, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.user_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.user_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&app);
+    req_builder = req_builder.json(&app);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<UpdateAppError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<UpdateAppError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Update an existing device in one of your OneSignal apps
 pub async fn update_player(configuration: &configuration::Configuration, player_id: &str, player: crate::models::Player) -> Result<crate::models::InlineResponse2001, Error<UpdatePlayerError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/players/{player_id}", local_var_configuration.base_path, player_id=crate::apis::urlencode(player_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+    let uri_str = format!("{}/players/{player_id}", configuration.base_path, player_id=crate::apis::urlencode(player_id));
+    let mut req_builder = client.request(reqwest::Method::PUT, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&player);
+    req_builder = req_builder.json(&player);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<UpdatePlayerError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<UpdatePlayerError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
 /// Update an existing device's tags in one of your OneSignal apps using the External User ID. Warning - Android SDK Data Synchronization Tags added through the Android SDK tagging methods may not update if using the API to change or update the same tag. For example, if you use SDK method sendTag(\"key\", \"value1\") then update the tag value to \"value2\" with this API endpoint. You will not be able to set the value back to \"value1\" through the SDK, you will need to change it to something different through the SDK to be reset. Recommendations if using this Endpoint on Android Mobile Apps: 1 - Do not use the same tag keys for SDK and API updates 2 - If you want to use the same key for both SDK and API updates, call the SDK getTags method first to update the device's tags. This is only applicable on the Android Mobile App SDKs. &#128216; Deleting Tags To delete a tag, include its key and set its value to blank. Omitting a key/value will not delete it. For example, if I wanted to delete two existing tags rank and category while simultaneously adding a new tag class, the tags JSON would look like the following: \"tags\": {    \"rank\": \"\",    \"category\": \"\",    \"class\": \"my_new_value\" } 
 pub async fn update_player_tags(configuration: &configuration::Configuration, app_id: &str, external_user_id: &str, update_player_tags_request_body: Option<crate::models::UpdatePlayerTagsRequestBody>) -> Result<crate::models::InlineResponse2001, Error<UpdatePlayerTagsError>> {
-    let local_var_configuration = configuration;
+    let configuration = configuration;
 
-    let local_var_client = &local_var_configuration.client;
+    let client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/apps/{app_id}/users/{external_user_id}", local_var_configuration.base_path, app_id=crate::apis::urlencode(app_id), external_user_id=crate::apis::urlencode(external_user_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+    let uri_str = format!("{}/apps/{app_id}/users/{external_user_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id), external_user_id=crate::apis::urlencode(external_user_id));
+    let mut req_builder = client.request(reqwest::Method::PUT, uri_str.as_str());
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
     // Adds a telemetry header
-    local_var_req_builder = local_var_req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, name=onesignal-rust, version=1.0.1");
 
-    if let Some(ref local_var_token) = local_var_configuration.app_key_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    if let Some(ref token) = configuration.app_key_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
     }
-    local_var_req_builder = local_var_req_builder.json(&update_player_tags_request_body);
+    req_builder = req_builder.json(&update_player_tags_request_body);
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content = resp.text().await?;
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<UpdatePlayerTagsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
+        let entity: Option<UpdatePlayerTagsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
     }
 }
 
