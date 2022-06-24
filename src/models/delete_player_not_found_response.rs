@@ -12,18 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2002 {
+pub struct DeletePlayerNotFoundResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
-    pub success: Option<bool>,
-    #[serde(rename = "destination_url", skip_serializing_if = "Option::is_none")]
-    pub destination_url: Option<String>,
+    pub success: Option<String>,
 }
 
-impl InlineResponse2002 {
-    pub fn new() -> InlineResponse2002 {
-        InlineResponse2002 {
+impl DeletePlayerNotFoundResponse {
+    pub fn new() -> DeletePlayerNotFoundResponse {
+        DeletePlayerNotFoundResponse {
             success: None,
-            destination_url: None,
         }
     }
 }

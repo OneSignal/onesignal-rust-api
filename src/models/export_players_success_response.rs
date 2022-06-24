@@ -12,15 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse4003 {
-    #[serde(rename = "erorrs", skip_serializing_if = "Option::is_none")]
-    pub erorrs: Option<Vec<String>>,
+pub struct ExportPlayersSuccessResponse {
+    #[serde(rename = "csv_file_url", skip_serializing_if = "Option::is_none")]
+    pub csv_file_url: Option<String>,
 }
 
-impl InlineResponse4003 {
-    pub fn new() -> InlineResponse4003 {
-        InlineResponse4003 {
-            erorrs: None,
+impl ExportPlayersSuccessResponse {
+    pub fn new() -> ExportPlayersSuccessResponse {
+        ExportPlayersSuccessResponse {
+            csv_file_url: None,
         }
     }
 }

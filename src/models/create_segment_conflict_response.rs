@@ -12,15 +12,18 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2001 {
+pub struct CreateSegmentConflictResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
     pub success: Option<bool>,
+    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    pub errors: Option<Vec<String>>,
 }
 
-impl InlineResponse2001 {
-    pub fn new() -> InlineResponse2001 {
-        InlineResponse2001 {
+impl CreateSegmentConflictResponse {
+    pub fn new() -> CreateSegmentConflictResponse {
+        CreateSegmentConflictResponse {
             success: None,
+            errors: None,
         }
     }
 }

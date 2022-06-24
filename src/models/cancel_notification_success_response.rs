@@ -12,15 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse400 {
-    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
-    pub errors: Option<Vec<String>>,
+pub struct CancelNotificationSuccessResponse {
+    #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
+    pub success: Option<bool>,
 }
 
-impl InlineResponse400 {
-    pub fn new() -> InlineResponse400 {
-        InlineResponse400 {
-            errors: None,
+impl CancelNotificationSuccessResponse {
+    pub fn new() -> CancelNotificationSuccessResponse {
+        CancelNotificationSuccessResponse {
+            success: None,
         }
     }
 }

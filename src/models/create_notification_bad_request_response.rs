@@ -12,15 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2008 {
-    #[serde(rename = "csv_file_url", skip_serializing_if = "Option::is_none")]
-    pub csv_file_url: Option<String>,
+pub struct CreateNotificationBadRequestResponse {
+    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    pub errors: Option<Vec<String>>,
 }
 
-impl InlineResponse2008 {
-    pub fn new() -> InlineResponse2008 {
-        InlineResponse2008 {
-            csv_file_url: None,
+impl CreateNotificationBadRequestResponse {
+    pub fn new() -> CreateNotificationBadRequestResponse {
+        CreateNotificationBadRequestResponse {
+            errors: None,
         }
     }
 }

@@ -12,18 +12,18 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse4002 {
+pub struct NotificationHistorySuccessResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
     pub success: Option<bool>,
-    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
-    pub errors: Option<Vec<String>>,
+    #[serde(rename = "destination_url", skip_serializing_if = "Option::is_none")]
+    pub destination_url: Option<String>,
 }
 
-impl InlineResponse4002 {
-    pub fn new() -> InlineResponse4002 {
-        InlineResponse4002 {
+impl NotificationHistorySuccessResponse {
+    pub fn new() -> NotificationHistorySuccessResponse {
+        NotificationHistorySuccessResponse {
             success: None,
-            errors: None,
+            destination_url: None,
         }
     }
 }
