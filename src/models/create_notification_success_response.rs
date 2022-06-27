@@ -12,7 +12,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse200 {
+pub struct CreateNotificationSuccessResponse {
     #[serde(rename = "id")]
     pub id: String,
     /// Estimated number of subscribers targetted by notification.
@@ -24,9 +24,9 @@ pub struct InlineResponse200 {
     pub errors: Option<Box<crate::models::Notification200Errors>>,
 }
 
-impl InlineResponse200 {
-    pub fn new(id: String, recipients: i32) -> InlineResponse200 {
-        InlineResponse200 {
+impl CreateNotificationSuccessResponse {
+    pub fn new(id: String, recipients: i32) -> CreateNotificationSuccessResponse {
+        CreateNotificationSuccessResponse {
             id,
             recipients,
             external_id: None,

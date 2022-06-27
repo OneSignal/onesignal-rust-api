@@ -12,18 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse4001 {
+pub struct UpdatePlayerSuccessResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
-    pub success: Option<String>,
-    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
-    pub errors: Option<Vec<String>>,
+    pub success: Option<bool>,
 }
 
-impl InlineResponse4001 {
-    pub fn new() -> InlineResponse4001 {
-        InlineResponse4001 {
+impl UpdatePlayerSuccessResponse {
+    pub fn new() -> UpdatePlayerSuccessResponse {
+        UpdatePlayerSuccessResponse {
             success: None,
-            errors: None,
         }
     }
 }

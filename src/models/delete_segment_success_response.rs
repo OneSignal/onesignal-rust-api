@@ -12,18 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2005 {
+pub struct DeleteSegmentSuccessResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
     pub success: Option<bool>,
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<String>,
 }
 
-impl InlineResponse2005 {
-    pub fn new() -> InlineResponse2005 {
-        InlineResponse2005 {
+impl DeleteSegmentSuccessResponse {
+    pub fn new() -> DeleteSegmentSuccessResponse {
+        DeleteSegmentSuccessResponse {
             success: None,
-            id: None,
         }
     }
 }

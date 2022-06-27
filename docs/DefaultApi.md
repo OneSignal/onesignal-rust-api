@@ -28,7 +28,7 @@ Method | HTTP request | Description
 
 ## cancel_notification
 
-> crate::models::InlineResponse2001 cancel_notification(app_id, notification_id)
+> crate::models::CancelNotificationSuccessResponse cancel_notification(app_id, notification_id)
 Stop a scheduled or currently outgoing notification
 
 Used to stop a scheduled or currently outgoing notification
@@ -43,7 +43,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2001**](inline_response_200_1.md)
+[**crate::models::CancelNotificationSuccessResponse**](CancelNotificationSuccessResponse.md)
 
 ### Authorization
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Required | Notes
 
 ## create_notification
 
-> crate::models::InlineResponse200 create_notification(notification)
+> crate::models::CreateNotificationSuccessResponse create_notification(notification)
 Create notification
 
 Sends notifications to your users 
@@ -103,7 +103,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse200**](inline_response_200.md)
+[**crate::models::CreateNotificationSuccessResponse**](CreateNotificationSuccessResponse.md)
 
 ### Authorization
 
@@ -119,7 +119,7 @@ Name | Type | Description  | Required | Notes
 
 ## create_player
 
-> crate::models::InlineResponse2005 create_player(player)
+> crate::models::CreatePlayerSuccessResponse create_player(player)
 Add a device
 
 Register a new device to one of your OneSignal apps &#x1F6A7; Don't use this This API endpoint is designed to be used from our open source Mobile and Web Push SDKs. It is not designed for developers to use it directly, unless instructed to do so by OneSignal support. If you use this method instead of our SDKs, many OneSignal features such as conversion tracking, timezone tracking, language detection, and rich-push won't work out of the box. It will also make it harder to identify possible setup issues. This method is used to register a new device with OneSignal. If a device is already registered with the specified identifier, then this will update the existing device record instead of creating a new one. The returned player is a player / user ID. Use the returned ID to send push notifications to this specific user later, or to include this player when sending to a set of users. &#x1F6A7; iOS Must set test_type to 1 when building your iOS app as development. Omit this field in your production app builds. 
@@ -133,7 +133,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2005**](inline_response_200_5.md)
+[**crate::models::CreatePlayerSuccessResponse**](CreatePlayerSuccessResponse.md)
 
 ### Authorization
 
@@ -149,7 +149,7 @@ Name | Type | Description  | Required | Notes
 
 ## create_segments
 
-> crate::models::InlineResponse201 create_segments(app_id, segment)
+> crate::models::CreateSegmentSuccessResponse create_segments(app_id, segment)
 Create Segments
 
 Create segments visible and usable in the dashboard and API - Required: OneSignal Paid Plan The Create Segment method is used when you want your server to programmatically create a segment instead of using the OneSignal Dashboard UI. Just like creating Segments from the dashboard you can pass in filters with multiple \"AND\" or \"OR\" operator's. &#x1F6A7; Does Not Update Segments This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segments endpoint and re-create it with this endpoint to edit. 
@@ -164,7 +164,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse201**](inline_response_201.md)
+[**crate::models::CreateSegmentSuccessResponse**](CreateSegmentSuccessResponse.md)
 
 ### Authorization
 
@@ -180,7 +180,7 @@ Name | Type | Description  | Required | Notes
 
 ## delete_player
 
-> crate::models::InlineResponse2007 delete_player(app_id, player_id)
+> crate::models::DeletePlayerSuccessResponse delete_player(app_id, player_id)
 Delete a user record
 
 Delete player - Required: Used to delete a single, specific Player ID record from a specific OneSignal app. 
@@ -195,7 +195,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2007**](inline_response_200_7.md)
+[**crate::models::DeletePlayerSuccessResponse**](DeletePlayerSuccessResponse.md)
 
 ### Authorization
 
@@ -211,7 +211,7 @@ Name | Type | Description  | Required | Notes
 
 ## delete_segments
 
-> crate::models::InlineResponse2001 delete_segments(app_id, segment_id)
+> crate::models::DeleteSegmentSuccessResponse delete_segments(app_id, segment_id)
 Delete Segments
 
 Delete segments (not user devices) - Required: OneSignal Paid Plan You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app. The segment_id can be found in the URL of the segment when viewing it in the dashboard. 
@@ -226,7 +226,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2001**](inline_response_200_1.md)
+[**crate::models::DeleteSegmentSuccessResponse**](DeleteSegmentSuccessResponse.md)
 
 ### Authorization
 
@@ -242,7 +242,7 @@ Name | Type | Description  | Required | Notes
 
 ## export_players
 
-> crate::models::InlineResponse2008 export_players(app_id, export_players_request_body)
+> crate::models::ExportPlayersSuccessResponse export_players(app_id, export_players_request_body)
 CSV export
 
 Generate a compressed CSV export of all of your current user data This method can be used to generate a compressed CSV export of all of your current user data. It is a much faster alternative than retrieving this data using the /players API endpoint. The file will be compressed using GZip. The file may take several minutes to generate depending on the number of users in your app. The URL generated will be available for 3 days and includes random v4 uuid as part of the resource name to be unguessable. &#x1F6A7; 403 Error Responses          You can test if it is complete by making a GET request to the csv_file_url value. This file may take time to generate depending on how many device records are being pulled. If the file is not ready, a 403 error will be returned. Otherwise the file itself will be returned. &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs. &#x1F6A7; Concurrent Exports Only one concurrent export is allowed per OneSignal account. Please ensure you have successfully downloaded the .csv.gz file before exporting another app. CSV File Format: - Default Columns:   | Field | Details |   | --- | --- |   | id | OneSignal Player Id |   | identifier | Push Token |   | session_count | Number of times they visited the app or site   | language | Device language code |   | timezone | Number of seconds away from UTC. Example: -28800 |   | game_version | Version of your mobile app gathered from Android Studio versionCode in your App/build.gradle and iOS uses kCFBundleVersionKey in Xcode. |   | device_os | Device Operating System Version. Example: 80 = Chrome 80, 9 = Android 9 |   | device_type | Device Operating System Type |   | device_model | Device Hardware String Code. Example: Mobile Web Subscribers will have `Linux armv` |   | ad_id | Based on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut means user turned off Advertising tracking on the device. |   | tags | Current OneSignal Data Tags on the device. |   | last_active | Date and time the user last opened the mobile app or visited the site. |   | playtime | Total amount of time in seconds the user had the mobile app open. |   | amount_spent |  Mobile only - amount spent in USD on In-App Purchases. |    | created_at | Date and time the device record was created in OneSignal. Mobile - first time they opened the app with OneSignal SDK. Web - first time the user subscribed to the site. |   | invalid_identifier | t = unsubscribed, f = subscibed |   | badge_count | Current number of badges on the device | - Extra Columns:   | Field | Details |   | --- | --- |   | external_user_id | Your User Id set on the device |   | notification_types | Notification types |   | location | Location points (Latitude and Longitude) set on the device. |   | country | Country code |   | rooted | Android device rooted or not |   | ip | IP Address of the device if being tracked. See Handling Personal Data. |   | web_auth | Web Only authorization key. |   | web_p256 | Web Only p256 key. | 
@@ -257,7 +257,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2008**](inline_response_200_8.md)
+[**crate::models::ExportPlayersSuccessResponse**](ExportPlayersSuccessResponse.md)
 
 ### Authorization
 
@@ -361,7 +361,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_notification_history
 
-> crate::models::InlineResponse2002 get_notification_history(notification_id, get_notification_request_body)
+> crate::models::NotificationHistorySuccessResponse get_notification_history(notification_id, get_notification_request_body)
 Notification History
 
 -> View the devices sent a message - OneSignal Paid Plan Required This method will return all devices that were sent the given notification_id of an Email or Push Notification if used within 7 days of the date sent. After 7 days of the sending date, the message history data will be unavailable. After a successful response is received, the destination url may be polled until the file becomes available. Most exports are done in ~1-3 minutes, so setting a poll interval of 10 seconds should be adequate. For use cases that are not meant to be consumed by a script, an email will be sent to the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan. Turn on Send History via OneSignal API in Settings -> Analytics. Cannot get data before this was turned on. Must be called within 7 days after sending the message. Messages targeting under 1000 recipients will not have \"sent\" events recorded, but will show \"clicked\" events. Requires your OneSignal App's REST API Key, available in Keys & IDs.
@@ -376,7 +376,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2002**](inline_response_200_2.md)
+[**crate::models::NotificationHistorySuccessResponse**](NotificationHistorySuccessResponse.md)
 
 ### Authorization
 
@@ -555,7 +555,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_player
 
-> crate::models::InlineResponse2001 update_player(player_id, player)
+> crate::models::UpdatePlayerSuccessResponse update_player(player_id, player)
 Edit device
 
 Update an existing device in one of your OneSignal apps
@@ -570,7 +570,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2001**](inline_response_200_1.md)
+[**crate::models::UpdatePlayerSuccessResponse**](UpdatePlayerSuccessResponse.md)
 
 ### Authorization
 
@@ -586,7 +586,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_player_tags
 
-> crate::models::InlineResponse2001 update_player_tags(app_id, external_user_id, update_player_tags_request_body)
+> crate::models::UpdatePlayerTagsSuccessResponse update_player_tags(app_id, external_user_id, update_player_tags_request_body)
 Edit tags with external user id
 
 Update an existing device's tags in one of your OneSignal apps using the External User ID. Warning - Android SDK Data Synchronization Tags added through the Android SDK tagging methods may not update if using the API to change or update the same tag. For example, if you use SDK method sendTag(\"key\", \"value1\") then update the tag value to \"value2\" with this API endpoint. You will not be able to set the value back to \"value1\" through the SDK, you will need to change it to something different through the SDK to be reset. Recommendations if using this Endpoint on Android Mobile Apps: 1 - Do not use the same tag keys for SDK and API updates 2 - If you want to use the same key for both SDK and API updates, call the SDK getTags method first to update the device's tags. This is only applicable on the Android Mobile App SDKs. &#128216; Deleting Tags To delete a tag, include its key and set its value to blank. Omitting a key/value will not delete it. For example, if I wanted to delete two existing tags rank and category while simultaneously adding a new tag class, the tags JSON would look like the following: \"tags\": {    \"rank\": \"\",    \"category\": \"\",    \"class\": \"my_new_value\" } 
@@ -602,7 +602,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2001**](inline_response_200_1.md)
+[**crate::models::UpdatePlayerTagsSuccessResponse**](UpdatePlayerTagsSuccessResponse.md)
 
 ### Authorization
 

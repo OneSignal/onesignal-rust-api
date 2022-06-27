@@ -12,19 +12,18 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse201 {
+pub struct NotificationHistoryBadRequestResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
-    pub success: Option<bool>,
-    /// UUID of created segment
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<String>,
+    pub success: Option<String>,
+    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    pub errors: Option<Vec<String>>,
 }
 
-impl InlineResponse201 {
-    pub fn new() -> InlineResponse201 {
-        InlineResponse201 {
+impl NotificationHistoryBadRequestResponse {
+    pub fn new() -> NotificationHistoryBadRequestResponse {
+        NotificationHistoryBadRequestResponse {
             success: None,
-            id: None,
+            errors: None,
         }
     }
 }
