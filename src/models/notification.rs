@@ -89,6 +89,9 @@ pub struct Notification {
     pub id: Option<String>,
     #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
     pub value: Option<i32>,
+    /// Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user.
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
     #[serde(rename = "aggregation", skip_serializing_if = "Option::is_none")]
     pub aggregation: Option<AggregationType>,
     /// Indicates whether to send to all devices registered under your app's Apple iOS platform.
@@ -373,6 +376,7 @@ impl Notification {
             include_android_reg_ids: None,
             id: None,
             value: None,
+            name: None,
             aggregation: None,
             is_ios: None,
             is_android: None,

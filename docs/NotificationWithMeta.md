@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **include_android_reg_ids** | Option<**Vec<String>**> | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional]
 **id** | Option<**String**> |  | [optional]
 **value** | Option<**i32**> |  | [optional][readonly]
+**name** | Option<**String**> | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional]
 **aggregation** | Option<**String**> |  | [optional][readonly]
 **is_ios** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Apple iOS platform. | [optional][default to true]
 **is_android** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Google Android platform. | [optional]

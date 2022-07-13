@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | Option<**String**> |  | [optional]
 **value** | Option<**i32**> |  | [optional][readonly]
+**name** | Option<**String**> | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional]
 **aggregation** | Option<**String**> |  | [optional][readonly]
 **is_ios** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Apple iOS platform. | [optional][default to true]
 **is_android** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Google Android platform. | [optional]
