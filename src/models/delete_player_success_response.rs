@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DeletePlayerSuccessResponse {
     #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
-    pub success: Option<String>,
+    pub success: Option<bool>,
 }
 
 impl DeletePlayerSuccessResponse {

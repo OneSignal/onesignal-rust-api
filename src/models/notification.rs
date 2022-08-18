@@ -206,7 +206,7 @@ pub struct Notification {
     #[serde(rename = "huawei_existing_channel_id", skip_serializing_if = "Option::is_none")]
     pub huawei_existing_channel_id: Option<String>,
     #[serde(rename = "android_background_layout", skip_serializing_if = "Option::is_none")]
-    pub android_background_layout: Option<Box<crate::models::NotificationAllOfAndroidBackgroundLayout>>,
+    pub android_background_layout: Option<Box<crate::models::BasicNotificationAllOfAndroidBackgroundLayout>>,
     /// Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons 
     #[serde(rename = "small_icon", skip_serializing_if = "Option::is_none")]
     pub small_icon: Option<String>,
@@ -285,9 +285,6 @@ pub struct Notification {
     /// Channel: Push Notifications Platform: iOS 10+ iOS can localize push notification messages on the client using special parameters such as loc-key. When using the Create Notification endpoint, you must include these parameters inside of a field called apns_alert. Please see Apple's guide on localizing push notifications to learn more. 
     #[serde(rename = "apns_alert", skip_serializing_if = "Option::is_none")]
     pub apns_alert: Option<serde_json::Value>,
-    /// Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter. 
-    #[serde(rename = "send_after", skip_serializing_if = "Option::is_none")]
-    pub send_after: Option<String>,
     /// Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed. 
     #[serde(rename = "delayed_option", skip_serializing_if = "Option::is_none")]
     pub delayed_option: Option<String>,
@@ -345,6 +342,9 @@ pub struct Notification {
     /// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
     #[serde(rename = "sms_media_urls", skip_serializing_if = "Option::is_none")]
     pub sms_media_urls: Option<Vec<String>>,
+    /// Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter. 
+    #[serde(rename = "send_after", skip_serializing_if = "Option::is_none")]
+    pub send_after: Option<String>,
 }
 
 impl Notification {
@@ -443,7 +443,6 @@ impl Notification {
             collapse_id: None,
             web_push_topic: None,
             apns_alert: None,
-            send_after: None,
             delayed_option: None,
             delivery_time_of_day: None,
             ttl: None,
@@ -463,6 +462,7 @@ impl Notification {
             email_from_address: None,
             sms_from: None,
             sms_media_urls: None,
+            send_after: None,
         }
     }
 }

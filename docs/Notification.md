@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 **value** | Option<**i32**> |  | [optional][readonly]
 **name** | Option<**String**> | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional]
 **aggregation** | Option<**String**> |  | [optional][readonly]
-**is_ios** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Apple iOS platform. | [optional][default to true]
+**is_ios** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Apple iOS platform. | [optional]
 **is_android** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Google Android platform. | [optional]
 **is_huawei** | Option<**bool**> | Indicates whether to send to all devices registered under your app's Huawei Android platform. | [optional]
 **is_any_web** | Option<**bool**> | Indicates whether to send to all subscribed web browser users, including Chrome, Firefox, and Safari. You may use this instead as a combined flag instead of separately enabling isChromeWeb, isFirefox, and isSafari, though the three options are equivalent to this one.  | [optional]
@@ -70,7 +70,7 @@ Name | Type | Description | Notes
 **huawei_channel_id** | Option<**String**> | Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id.  | [optional]
 **existing_android_channel_id** | Option<**String**> | Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional]
 **huawei_existing_channel_id** | Option<**String**> | Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional]
-**android_background_layout** | Option<[**crate::models::NotificationAllOfAndroidBackgroundLayout**](Notification_allOf_android_background_layout.md)> |  | [optional]
+**android_background_layout** | Option<[**crate::models::BasicNotificationAllOfAndroidBackgroundLayout**](BasicNotification_allOf_android_background_layout.md)> |  | [optional]
 **small_icon** | Option<**String**> | Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional]
 **huawei_small_icon** | Option<**String**> | Channel: Push Notifications Platform: Huawei Icon shown in the status bar and on the top left of the notification. Use an Android resource path (E.g. /drawable/small_icon). Defaults to your app icon if not set.  | [optional]
 **large_icon** | Option<**String**> | Channel: Push Notifications Platform: Android Can be a drawable resource name or a URL. See: How to create large icons  | [optional]
@@ -97,7 +97,6 @@ Name | Type | Description | Notes
 **collapse_id** | Option<**String**> | Channel: Push Notifications Platform: iOS 10+, Android Only one notification with the same id will be shown on the device. Use the same id to update an existing notification instead of showing a new one. Limit of 64 characters.  | [optional]
 **web_push_topic** | Option<**String**> | Channel: Push Notifications Platform: All Browsers Display multiple notifications at once with different topics.  | [optional]
 **apns_alert** | Option<[**serde_json::Value**](.md)> | Channel: Push Notifications Platform: iOS 10+ iOS can localize push notification messages on the client using special parameters such as loc-key. When using the Create Notification endpoint, you must include these parameters inside of a field called apns_alert. Please see Apple's guide on localizing push notifications to learn more.  | [optional]
-**send_after** | Option<**String**> | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter.  | [optional]
 **delayed_option** | Option<**String**> | Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed.  | [optional]
 **delivery_time_of_day** | Option<**String**> | Channel: All Use with delayed_option=timezone. Examples: \"9:00AM\" \"21:45\" \"9:45:30\"  | [optional]
 **ttl** | Option<**i32**> | Channel: Push Notifications Platform: iOS, Android, Chrome, Firefox, Safari, ChromeWeb Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days). Max value to set is 2419200 seconds (28 days).  | [optional]
@@ -117,6 +116,7 @@ Name | Type | Description | Notes
 **email_from_address** | Option<**String**> | Channel: Email The email address the email is from. If not specified, will default to \"from email\" set in the OneSignal Dashboard Email Settings.  | [optional]
 **sms_from** | Option<**String**> | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional]
 **sms_media_urls** | Option<**Vec<String>**> | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional]
+**send_after** | Option<**String**> | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter.  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

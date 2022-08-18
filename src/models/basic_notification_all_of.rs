@@ -12,79 +12,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct NotificationWithMeta {
-    /// The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\"Active Users\", \"Inactive Users\"] 
-    #[serde(rename = "included_segments", skip_serializing_if = "Option::is_none")]
-    pub included_segments: Option<Vec<String>>,
-    /// Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\"Active Users\", \"Inactive Users\"] 
-    #[serde(rename = "excluded_segments", skip_serializing_if = "Option::is_none")]
-    pub excluded_segments: Option<Vec<String>>,
-    /// relation = \">\" or \"<\" hours_ago = number of hours before or after the users last session. Example: \"1.1\" 
-    #[serde(rename = "last_session", skip_serializing_if = "Option::is_none")]
-    pub last_session: Option<String>,
-    /// relation = \">\" or \"<\" hours_ago = number of hours before or after the users first session. Example: \"1.1\" 
-    #[serde(rename = "first_session", skip_serializing_if = "Option::is_none")]
-    pub first_session: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = number sessions. Example: \"1\" 
-    #[serde(rename = "session_count", skip_serializing_if = "Option::is_none")]
-    pub session_count: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = Time in seconds the user has been in your app. Example: \"3600\" 
-    #[serde(rename = "session_time", skip_serializing_if = "Option::is_none")]
-    pub session_time: Option<String>,
-    /// relation = \">\", \"<\", or \"=\" value = Amount in USD a user has spent on IAP (In App Purchases). Example: \"0.99\" 
-    #[serde(rename = "amount_spent", skip_serializing_if = "Option::is_none")]
-    pub amount_spent: Option<String>,
-    /// relation = \">\", \"<\" or \"=\" key = SKU purchased in your app as an IAP (In App Purchases). Example: \"com.domain.100coinpack\" value = value of SKU to compare to. Example: \"0.99\" 
-    #[serde(rename = "bought_sku", skip_serializing_if = "Option::is_none")]
-    pub bought_sku: Option<String>,
-    /// relation = \">\", \"<\", \"=\", \"!=\", \"exists\", \"not_exists\", \"time_elapsed_gt\" (paid plan only) or \"time_elapsed_lt\" (paid plan only) See Time Operators key = Tag key to compare. value = Tag value to compare. Not required for \"exists\" or \"not_exists\". Example: See Formatting Filters 
-    #[serde(rename = "tag", skip_serializing_if = "Option::is_none")]
-    pub tag: Option<String>,
-    /// relation = \"=\" or \"!=\" value = 2 character language code. Example: \"en\". For a list of all language codes see Language & Localization. 
-    #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
-    pub language: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = app version. Example: \"1.0.0\" 
-    #[serde(rename = "app_version", skip_serializing_if = "Option::is_none")]
-    pub app_version: Option<String>,
-    /// radius = in meters lat = latitude long = longitude 
-    #[serde(rename = "location", skip_serializing_if = "Option::is_none")]
-    pub location: Option<String>,
-    /// value = email address Only for sending Push Notifications Use this for targeting push subscribers associated with an email set with all SDK setEmail methods To send emails to specific email addresses use include_email_tokens parameter 
-    #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
-    pub email: Option<String>,
-    /// relation = \"=\" value = 2-digit Country code Example: \"field\": \"country\", \"relation\": \"=\", \"value\", \"US\" 
-    #[serde(rename = "country", skip_serializing_if = "Option::is_none")]
-    pub country: Option<String>,
-    /// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_player_ids", skip_serializing_if = "Option::is_none")]
-    pub include_player_ids: Option<Vec<String>>,
-    /// Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\"custom-id-assigned-by-api\"] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms. 
-    #[serde(rename = "include_external_user_ids", skip_serializing_if = "Option::is_none")]
-    pub include_external_user_ids: Option<Vec<String>>,
-    /// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_email_tokens", skip_serializing_if = "Option::is_none")]
-    pub include_email_tokens: Option<Vec<String>>,
-    /// Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_phone_numbers", skip_serializing_if = "Option::is_none")]
-    pub include_phone_numbers: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_ios_tokens", skip_serializing_if = "Option::is_none")]
-    pub include_ios_tokens: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_wp_wns_uris", skip_serializing_if = "Option::is_none")]
-    pub include_wp_wns_uris: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_amazon_reg_ids", skip_serializing_if = "Option::is_none")]
-    pub include_amazon_reg_ids: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_chrome_reg_ids", skip_serializing_if = "Option::is_none")]
-    pub include_chrome_reg_ids: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_chrome_web_reg_ids", skip_serializing_if = "Option::is_none")]
-    pub include_chrome_web_reg_ids: Option<Vec<String>>,
-    /// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-    #[serde(rename = "include_android_reg_ids", skip_serializing_if = "Option::is_none")]
-    pub include_android_reg_ids: Option<Vec<String>>,
+pub struct BasicNotificationAllOf {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
@@ -128,8 +56,8 @@ pub struct NotificationWithMeta {
     #[serde(rename = "channel_for_external_user_ids", skip_serializing_if = "Option::is_none")]
     pub channel_for_external_user_ids: Option<String>,
     /// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
-    #[serde(rename = "app_id")]
-    pub app_id: String,
+    #[serde(rename = "app_id", skip_serializing_if = "Option::is_none")]
+    pub app_id: Option<String>,
     /// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
     #[serde(rename = "external_id", skip_serializing_if = "Option::is_none")]
     pub external_id: Option<String>,
@@ -300,9 +228,9 @@ pub struct NotificationWithMeta {
     /// Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal 
     #[serde(rename = "apns_push_type_override", skip_serializing_if = "Option::is_none")]
     pub apns_push_type_override: Option<String>,
-    /// number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details.
+    /// Channel: All Apps with throttling enabled:   - the parameter value will be used to override the default application throttling value set from the dashboard settings.   - parameter value 0 indicates not to apply throttling to the notification.   - if the parameter is not passed then the default app throttling value will be applied to the notification. Apps with throttling disabled:   - this parameter can be used to throttle delivery for the notification even though throttling is not enabled at the application level. Refer to throttling for more details. 
     #[serde(rename = "throttle_rate_per_minute", skip_serializing_if = "Option::is_none")]
-    pub throttle_rate_per_minute: Option<i32>,
+    pub throttle_rate_per_minute: Option<String>,
     /// Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android's Notification Grouping feature. 
     #[serde(rename = "android_group", skip_serializing_if = "Option::is_none")]
     pub android_group: Option<String>,
@@ -342,66 +270,11 @@ pub struct NotificationWithMeta {
     /// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
     #[serde(rename = "sms_media_urls", skip_serializing_if = "Option::is_none")]
     pub sms_media_urls: Option<Vec<String>>,
-    /// Number of notifications that were successfully delivered.
-    #[serde(rename = "successful", skip_serializing_if = "Option::is_none")]
-    pub successful: Option<i32>,
-    /// Number of notifications that could not be delivered due to those devices being unsubscribed.
-    #[serde(rename = "failed", skip_serializing_if = "Option::is_none")]
-    pub failed: Option<i32>,
-    /// Number of notifications that could not be delivered due to an error. You can find more information by viewing the notification in the dashboard.
-    #[serde(rename = "errored", skip_serializing_if = "Option::is_none")]
-    pub errored: Option<i32>,
-    /// Number of users who have clicked / tapped on your notification.
-    #[serde(rename = "converted", skip_serializing_if = "Option::is_none")]
-    pub converted: Option<i32>,
-    /// Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0.
-    #[serde(rename = "received", skip_serializing_if = "Option::is_none")]
-    pub received: Option<i32>,
-    #[serde(rename = "outcomes", skip_serializing_if = "Option::is_none")]
-    pub outcomes: Option<Vec<crate::models::OutcomeData>>,
-    /// Number of notifications that have not been sent out yet. This can mean either our system is still processing the notification or you have delayed options set.
-    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none")]
-    pub remaining: Option<i32>,
-    /// Unix timestamp indicating when the notification was created.
-    #[serde(rename = "queued_at", skip_serializing_if = "Option::is_none")]
-    pub queued_at: Option<i64>,
-    /// Unix timestamp indicating when notification delivery should begin.
-    #[serde(rename = "send_after", skip_serializing_if = "Option::is_none")]
-    pub send_after: Option<i64>,
-    /// Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after.
-    #[serde(rename = "completed_at", skip_serializing_if = "Option::is_none")]
-    pub completed_at: Option<i64>,
-    #[serde(rename = "platform_delivery_stats", skip_serializing_if = "Option::is_none")]
-    pub platform_delivery_stats: Option<Box<crate::models::PlatformDeliveryData>>,
 }
 
-impl NotificationWithMeta {
-    pub fn new(app_id: String) -> NotificationWithMeta {
-        NotificationWithMeta {
-            included_segments: None,
-            excluded_segments: None,
-            last_session: None,
-            first_session: None,
-            session_count: None,
-            session_time: None,
-            amount_spent: None,
-            bought_sku: None,
-            tag: None,
-            language: None,
-            app_version: None,
-            location: None,
-            email: None,
-            country: None,
-            include_player_ids: None,
-            include_external_user_ids: None,
-            include_email_tokens: None,
-            include_phone_numbers: None,
-            include_ios_tokens: None,
-            include_wp_wns_uris: None,
-            include_amazon_reg_ids: None,
-            include_chrome_reg_ids: None,
-            include_chrome_web_reg_ids: None,
-            include_android_reg_ids: None,
+impl BasicNotificationAllOf {
+    pub fn new() -> BasicNotificationAllOf {
+        BasicNotificationAllOf {
             id: None,
             value: None,
             name: None,
@@ -417,7 +290,7 @@ impl NotificationWithMeta {
             is_adm: None,
             is_chrome: None,
             channel_for_external_user_ids: None,
-            app_id,
+            app_id: None,
             external_id: None,
             contents: None,
             headings: None,
@@ -490,17 +363,6 @@ impl NotificationWithMeta {
             email_from_address: None,
             sms_from: None,
             sms_media_urls: None,
-            successful: None,
-            failed: None,
-            errored: None,
-            converted: None,
-            received: None,
-            outcomes: None,
-            remaining: None,
-            queued_at: None,
-            send_after: None,
-            completed_at: None,
-            platform_delivery_stats: None,
         }
     }
 }

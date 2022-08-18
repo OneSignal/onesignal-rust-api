@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DeletePlayerBadRequestResponse {
     #[serde(rename = "erorrs", skip_serializing_if = "Option::is_none")]
-    pub erorrs: Option<Vec<String>>,
+    pub erorrs: Option<Vec<bool>>,
 }
 
 impl DeletePlayerBadRequestResponse {
