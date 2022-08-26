@@ -26,6 +26,10 @@ pub struct PlatformDeliveryData {
     pub android: Option<Box<crate::models::DeliveryData>>,
     #[serde(rename = "ios", skip_serializing_if = "Option::is_none")]
     pub ios: Option<Box<crate::models::DeliveryData>>,
+    #[serde(rename = "sms", skip_serializing_if = "Option::is_none")]
+    pub sms: Option<Box<crate::models::DeliveryData>>,
+    #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
+    pub email: Option<Box<crate::models::DeliveryData>>,
 }
 
 impl PlatformDeliveryData {
@@ -38,6 +42,8 @@ impl PlatformDeliveryData {
             safari_web_push: None,
             android: None,
             ios: None,
+            sms: None,
+            email: None,
         }
     }
 }

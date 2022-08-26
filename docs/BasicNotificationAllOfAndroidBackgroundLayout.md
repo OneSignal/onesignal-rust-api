@@ -1,4 +1,4 @@
-# NotificationAllOfAndroidBackgroundLayout
+# BasicNotificationAllOfAndroidBackgroundLayout
 
 ## Properties
 

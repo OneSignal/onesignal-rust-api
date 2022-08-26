@@ -12,7 +12,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct NotificationWithMeta {
+pub struct BasicNotification {
     /// The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\"Active Users\", \"Inactive Users\"] 
     #[serde(rename = "included_segments", skip_serializing_if = "Option::is_none")]
     pub included_segments: Option<Vec<String>>,
@@ -300,9 +300,9 @@ pub struct NotificationWithMeta {
     /// Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal 
     #[serde(rename = "apns_push_type_override", skip_serializing_if = "Option::is_none")]
     pub apns_push_type_override: Option<String>,
-    /// number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details.
+    /// Channel: All Apps with throttling enabled:   - the parameter value will be used to override the default application throttling value set from the dashboard settings.   - parameter value 0 indicates not to apply throttling to the notification.   - if the parameter is not passed then the default app throttling value will be applied to the notification. Apps with throttling disabled:   - this parameter can be used to throttle delivery for the notification even though throttling is not enabled at the application level. Refer to throttling for more details. 
     #[serde(rename = "throttle_rate_per_minute", skip_serializing_if = "Option::is_none")]
-    pub throttle_rate_per_minute: Option<i32>,
+    pub throttle_rate_per_minute: Option<String>,
     /// Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android's Notification Grouping feature. 
     #[serde(rename = "android_group", skip_serializing_if = "Option::is_none")]
     pub android_group: Option<String>,
@@ -342,42 +342,11 @@ pub struct NotificationWithMeta {
     /// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
     #[serde(rename = "sms_media_urls", skip_serializing_if = "Option::is_none")]
     pub sms_media_urls: Option<Vec<String>>,
-    /// Number of notifications that were successfully delivered.
-    #[serde(rename = "successful", skip_serializing_if = "Option::is_none")]
-    pub successful: Option<i32>,
-    /// Number of notifications that could not be delivered due to those devices being unsubscribed.
-    #[serde(rename = "failed", skip_serializing_if = "Option::is_none")]
-    pub failed: Option<i32>,
-    /// Number of notifications that could not be delivered due to an error. You can find more information by viewing the notification in the dashboard.
-    #[serde(rename = "errored", skip_serializing_if = "Option::is_none")]
-    pub errored: Option<i32>,
-    /// Number of users who have clicked / tapped on your notification.
-    #[serde(rename = "converted", skip_serializing_if = "Option::is_none")]
-    pub converted: Option<i32>,
-    /// Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0.
-    #[serde(rename = "received", skip_serializing_if = "Option::is_none")]
-    pub received: Option<i32>,
-    #[serde(rename = "outcomes", skip_serializing_if = "Option::is_none")]
-    pub outcomes: Option<Vec<crate::models::OutcomeData>>,
-    /// Number of notifications that have not been sent out yet. This can mean either our system is still processing the notification or you have delayed options set.
-    #[serde(rename = "remaining", skip_serializing_if = "Option::is_none")]
-    pub remaining: Option<i32>,
-    /// Unix timestamp indicating when the notification was created.
-    #[serde(rename = "queued_at", skip_serializing_if = "Option::is_none")]
-    pub queued_at: Option<i64>,
-    /// Unix timestamp indicating when notification delivery should begin.
-    #[serde(rename = "send_after", skip_serializing_if = "Option::is_none")]
-    pub send_after: Option<i64>,
-    /// Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after.
-    #[serde(rename = "completed_at", skip_serializing_if = "Option::is_none")]
-    pub completed_at: Option<i64>,
-    #[serde(rename = "platform_delivery_stats", skip_serializing_if = "Option::is_none")]
-    pub platform_delivery_stats: Option<Box<crate::models::PlatformDeliveryData>>,
 }
 
-impl NotificationWithMeta {
-    pub fn new(app_id: String) -> NotificationWithMeta {
-        NotificationWithMeta {
+impl BasicNotification {
+    pub fn new(app_id: String) -> BasicNotification {
+        BasicNotification {
             included_segments: None,
             excluded_segments: None,
             last_session: None,
@@ -490,17 +459,6 @@ impl NotificationWithMeta {
             email_from_address: None,
             sms_from: None,
             sms_media_urls: None,
-            successful: None,
-            failed: None,
-            errored: None,
-            converted: None,
-            received: None,
-            outcomes: None,
-            remaining: None,
-            queued_at: None,
-            send_after: None,
-            completed_at: None,
-            platform_delivery_stats: None,
         }
     }
 }
