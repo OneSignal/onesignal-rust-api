@@ -1,8 +1,10 @@
 [package]
-name = "onesignal"
-version = "1.0.0"
-authors = ["OpenAPI Generator team and contributors"]
+name = "onesignal-rust-api"
+version = "1.0.1"
+authors = ["devrel@onesignal.com"]
 edition = "2018"
+description = "A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com"
+license = "MIT"
 
 [dependencies]
 serde = "^1.0"
