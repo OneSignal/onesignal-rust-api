@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** | The device's OneSignal ID | [readonly]
+**id** | Option<**String**> | The device's OneSignal ID | [optional][readonly]
 **invalid_identifier** | Option<**bool**> | If true, this is the equivalent of a user being Unsubscribed | [optional][readonly]
 **app_id** | Option<**String**> |  | [optional]
 **device_type** | **i32** | Required The device's platform:   0 = iOS   1 = Android   2 = Amazon   3 = WindowsPhone (MPNS)   4 = Chrome Apps / Extensions   5 = Chrome Web Push   6 = Windows (WNS)   7 = Safari   8 = Firefox   9 = MacOS   10 = Alexa   11 = Email   13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 = SMS  | 

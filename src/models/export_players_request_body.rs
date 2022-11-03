@@ -19,7 +19,7 @@ pub struct ExportPlayersRequestBody {
     /// Export all devices with a last_active timestamp greater than this time.  Unixtime in seconds.
     #[serde(rename = "last_active_since", skip_serializing_if = "Option::is_none")]
     pub last_active_since: Option<String>,
-    /// Export al ldevices belonging to the segment.
+    /// Export all devices belonging to the segment.
     #[serde(rename = "segment_name", skip_serializing_if = "Option::is_none")]
     pub segment_name: Option<String>,
 }

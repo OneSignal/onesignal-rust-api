@@ -14,8 +14,8 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct Player {
     /// The device's OneSignal ID
-    #[serde(rename = "id")]
-    pub id: String,
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
     /// If true, this is the equivalent of a user being Unsubscribed
     #[serde(rename = "invalid_identifier", skip_serializing_if = "Option::is_none")]
     pub invalid_identifier: Option<bool>,
@@ -96,9 +96,9 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(id: String, device_type: i32) -> Player {
+    pub fn new(device_type: i32) -> Player {
         Player {
-            id,
+            id: None,
             invalid_identifier: None,
             app_id: None,
             device_type,
