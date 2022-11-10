@@ -270,6 +270,8 @@ pub struct BasicNotificationAllOf {
     /// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
     #[serde(rename = "sms_media_urls", skip_serializing_if = "Option::is_none")]
     pub sms_media_urls: Option<Vec<String>>,
+    #[serde(rename = "filters", skip_serializing_if = "Option::is_none")]
+    pub filters: Option<Vec<crate::models::Filter>>,
 }
 
 impl BasicNotificationAllOf {
@@ -363,6 +365,7 @@ impl BasicNotificationAllOf {
             email_from_address: None,
             sms_from: None,
             sms_media_urls: None,
+            filters: None,
         }
     }
 }

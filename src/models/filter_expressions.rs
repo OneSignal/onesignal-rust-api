@@ -19,7 +19,7 @@ pub struct FilterExpressions {
     /// If `field` is `tag`, this field is *required* to specify `key` inside the tags.
     #[serde(rename = "key", skip_serializing_if = "Option::is_none")]
     pub key: Option<String>,
-    /// Constant value to use as the second operand in the filter expression.  This value is *required* when the relation operator is a binary operator.
+    /// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator.
     #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
     pub value: Option<String>,
     /// Operator of a filter expression.
