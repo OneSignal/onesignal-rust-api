@@ -90,6 +90,37 @@ async fn send_notification() {
 }
 ```
 
+### Sending a notification using filters:
+Send this notification only to the users that have not spent any USD on IAP.
+```rust
+async fn send_notification() {
+    // Prepare configuration and the notification objects
+    let configuration = create_configuration();
+    let mut notification = create_notification();
+
+    notification.filters = Some(vec![
+        Filter {
+            field: "amount_spent".to_owned(),
+            relation: onesignal_rust_api::models::filter::RelationType::Equal,
+            value: Some("0".to_owned()),
+            key: None
+        },
+    ]);
+
+    // Send notification to the server
+    let create_notification_response = apis::default_api::create_notification(&configuration, *notification).await;
+
+    // Check the result
+    if let Ok(ref created_notification) = create_notification_response {
+        println!("Created notification id: {}", created_notification.id);
+    }
+
+    if let Err(ref created_notification_error) = create_notification_response {
+        println!("Created notification error: {}", created_notification_error.to_string());
+    }
+}
+```
+
 ### Canceling a scheduled notification
 ```rust
 async fn cancel_scheduled_notification() {
@@ -452,7 +483,6 @@ Class | Method | HTTP request | Description
  - [ExportPlayersSuccessResponse](docs/ExportPlayersSuccessResponse.md)
  - [Filter](docs/Filter.md)
  - [FilterExpressions](docs/FilterExpressions.md)
- - [FilterNotificationTarget](docs/FilterNotificationTarget.md)
  - [GetNotificationRequestBody](docs/GetNotificationRequestBody.md)
  - [InvalidIdentifierError](docs/InvalidIdentifierError.md)
  - [Notification](docs/Notification.md)

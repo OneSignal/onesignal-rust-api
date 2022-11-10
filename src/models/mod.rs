@@ -44,8 +44,6 @@ pub mod filter;
 pub use self::filter::Filter;
 pub mod filter_expressions;
 pub use self::filter_expressions::FilterExpressions;
-pub mod filter_notification_target;
-pub use self::filter_notification_target::FilterNotificationTarget;
 pub mod get_notification_request_body;
 pub use self::get_notification_request_body::GetNotificationRequestBody;
 pub mod invalid_identifier_error;

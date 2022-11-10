@@ -13,8 +13,8 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct App {
-    #[serde(rename = "id")]
-    pub id: String,
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
     /// The name of your app, as displayed on your apps list on the dashboard.  This can be renamed.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -93,9 +93,9 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(id: String) -> App {
+    pub fn new() -> App {
         App {
-            id,
+            id: None,
             name: None,
             players: None,
             messageable_players: None,

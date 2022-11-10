@@ -19,42 +19,6 @@ pub struct NotificationTarget {
     /// Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\"Active Users\", \"Inactive Users\"] 
     #[serde(rename = "excluded_segments", skip_serializing_if = "Option::is_none")]
     pub excluded_segments: Option<Vec<String>>,
-    /// relation = \">\" or \"<\" hours_ago = number of hours before or after the users last session. Example: \"1.1\" 
-    #[serde(rename = "last_session", skip_serializing_if = "Option::is_none")]
-    pub last_session: Option<String>,
-    /// relation = \">\" or \"<\" hours_ago = number of hours before or after the users first session. Example: \"1.1\" 
-    #[serde(rename = "first_session", skip_serializing_if = "Option::is_none")]
-    pub first_session: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = number sessions. Example: \"1\" 
-    #[serde(rename = "session_count", skip_serializing_if = "Option::is_none")]
-    pub session_count: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = Time in seconds the user has been in your app. Example: \"3600\" 
-    #[serde(rename = "session_time", skip_serializing_if = "Option::is_none")]
-    pub session_time: Option<String>,
-    /// relation = \">\", \"<\", or \"=\" value = Amount in USD a user has spent on IAP (In App Purchases). Example: \"0.99\" 
-    #[serde(rename = "amount_spent", skip_serializing_if = "Option::is_none")]
-    pub amount_spent: Option<String>,
-    /// relation = \">\", \"<\" or \"=\" key = SKU purchased in your app as an IAP (In App Purchases). Example: \"com.domain.100coinpack\" value = value of SKU to compare to. Example: \"0.99\" 
-    #[serde(rename = "bought_sku", skip_serializing_if = "Option::is_none")]
-    pub bought_sku: Option<String>,
-    /// relation = \">\", \"<\", \"=\", \"!=\", \"exists\", \"not_exists\", \"time_elapsed_gt\" (paid plan only) or \"time_elapsed_lt\" (paid plan only) See Time Operators key = Tag key to compare. value = Tag value to compare. Not required for \"exists\" or \"not_exists\". Example: See Formatting Filters 
-    #[serde(rename = "tag", skip_serializing_if = "Option::is_none")]
-    pub tag: Option<String>,
-    /// relation = \"=\" or \"!=\" value = 2 character language code. Example: \"en\". For a list of all language codes see Language & Localization. 
-    #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
-    pub language: Option<String>,
-    /// relation = \">\", \"<\", \"=\" or \"!=\" value = app version. Example: \"1.0.0\" 
-    #[serde(rename = "app_version", skip_serializing_if = "Option::is_none")]
-    pub app_version: Option<String>,
-    /// radius = in meters lat = latitude long = longitude 
-    #[serde(rename = "location", skip_serializing_if = "Option::is_none")]
-    pub location: Option<String>,
-    /// value = email address Only for sending Push Notifications Use this for targeting push subscribers associated with an email set with all SDK setEmail methods To send emails to specific email addresses use include_email_tokens parameter 
-    #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
-    pub email: Option<String>,
-    /// relation = \"=\" value = 2-digit Country code Example: \"field\": \"country\", \"relation\": \"=\", \"value\", \"US\" 
-    #[serde(rename = "country", skip_serializing_if = "Option::is_none")]
-    pub country: Option<String>,
     /// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
     #[serde(rename = "include_player_ids", skip_serializing_if = "Option::is_none")]
     pub include_player_ids: Option<Vec<String>>,
@@ -92,18 +56,6 @@ impl NotificationTarget {
         NotificationTarget {
             included_segments: None,
             excluded_segments: None,
-            last_session: None,
-            first_session: None,
-            session_count: None,
-            session_time: None,
-            amount_spent: None,
-            bought_sku: None,
-            tag: None,
-            language: None,
-            app_version: None,
-            location: None,
-            email: None,
-            country: None,
             include_player_ids: None,
             include_external_user_ids: None,
             include_email_tokens: None,
