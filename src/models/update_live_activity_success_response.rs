@@ -12,17 +12,17 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct CreateSegmentConflictResponse {
-    #[serde(rename = "success", skip_serializing_if = "Option::is_none")]
-    pub success: Option<bool>,
+pub struct UpdateLiveActivitySuccessResponse {
+    #[serde(rename = "notification_id", skip_serializing_if = "Option::is_none")]
+    pub notification_id: Option<String>,
     #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
-    pub errors: Option<Vec<String>>,
+    pub errors: Option<Box<crate::models::Notification200Errors>>,
 }
 
-impl CreateSegmentConflictResponse {
-    pub fn new() -> CreateSegmentConflictResponse {
-        CreateSegmentConflictResponse {
-            success: None,
+impl UpdateLiveActivitySuccessResponse {
+    pub fn new() -> UpdateLiveActivitySuccessResponse {
+        UpdateLiveActivitySuccessResponse {
+            notification_id: None,
             errors: None,
         }
     }

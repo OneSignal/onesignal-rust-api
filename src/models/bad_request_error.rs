@@ -12,15 +12,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct ExportPlayersSuccessResponse {
-    #[serde(rename = "csv_file_url", skip_serializing_if = "Option::is_none")]
-    pub csv_file_url: Option<String>,
+pub struct BadRequestError {
+    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    pub errors: Option<Vec<String>>,
 }
 
-impl ExportPlayersSuccessResponse {
-    pub fn new() -> ExportPlayersSuccessResponse {
-        ExportPlayersSuccessResponse {
-            csv_file_url: None,
+impl BadRequestError {
+    pub fn new() -> BadRequestError {
+        BadRequestError {
+            errors: None,
         }
     }
 }

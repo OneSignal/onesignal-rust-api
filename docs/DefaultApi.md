@@ -4,6 +4,7 @@ All URIs are relative to *https://onesignal.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**begin_live_activity**](DefaultApi.md#begin_live_activity) | **POST** /apps/{app_id}/live_activities/{activity_id}/token | Start Live Activity
 [**cancel_notification**](DefaultApi.md#cancel_notification) | **DELETE** /notifications/{notification_id} | Stop a scheduled or currently outgoing notification
 [**create_app**](DefaultApi.md#create_app) | **POST** /apps | Create an app
 [**create_notification**](DefaultApi.md#create_notification) | **POST** /notifications | Create notification
@@ -11,6 +12,7 @@ Method | HTTP request | Description
 [**create_segments**](DefaultApi.md#create_segments) | **POST** /apps/{app_id}/segments | Create Segments
 [**delete_player**](DefaultApi.md#delete_player) | **DELETE** /players/{player_id} | Delete a user record
 [**delete_segments**](DefaultApi.md#delete_segments) | **DELETE** /apps/{app_id}/segments/{segment_id} | Delete Segments
+[**end_live_activity**](DefaultApi.md#end_live_activity) | **DELETE** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
 [**export_players**](DefaultApi.md#export_players) | **POST** /players/csv_export?app_id={app_id} | CSV export
 [**get_app**](DefaultApi.md#get_app) | **GET** /apps/{app_id} | View an app
 [**get_apps**](DefaultApi.md#get_apps) | **GET** /apps | View apps
@@ -21,9 +23,42 @@ Method | HTTP request | Description
 [**get_player**](DefaultApi.md#get_player) | **GET** /players/{player_id} | View device
 [**get_players**](DefaultApi.md#get_players) | **GET** /players | View devices
 [**update_app**](DefaultApi.md#update_app) | **PUT** /apps/{app_id} | Update an app
+[**update_live_activity**](DefaultApi.md#update_live_activity) | **POST** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**update_player**](DefaultApi.md#update_player) | **PUT** /players/{player_id} | Edit device
 [**update_player_tags**](DefaultApi.md#update_player_tags) | **PUT** /apps/{app_id}/users/{external_user_id} | Edit tags with external user id
 
+
+
+## begin_live_activity
+
+> begin_live_activity(app_id, activity_id, begin_live_activity_request)
+Start Live Activity
+
+Starts a Live Activity
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**activity_id** | **String** | Live Activity record ID | [required] |
+**begin_live_activity_request** | [**BeginLiveActivityRequest**](BeginLiveActivityRequest.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## cancel_notification
@@ -227,6 +262,38 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::DeleteSegmentSuccessResponse**](DeleteSegmentSuccessResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## end_live_activity
+
+> end_live_activity(app_id, activity_id, subscription_id)
+Stop Live Activity
+
+Stops a Live Activity
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**activity_id** | **String** | Live Activity record ID | [required] |
+**subscription_id** | **String** | Subscription ID | [required] |
+
+### Return type
+
+ (empty response body)
 
 ### Authorization
 
@@ -544,6 +611,38 @@ Name | Type | Description  | Required | Notes
 ### Authorization
 
 [user_key](../README.md#user_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_live_activity
+
+> crate::models::UpdateLiveActivitySuccessResponse update_live_activity(app_id, activity_id, update_live_activity_request)
+Update a Live Activity via Push
+
+Updates a specified live activity.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**activity_id** | **String** | Live Activity record ID | [required] |
+**update_live_activity_request** | [**UpdateLiveActivityRequest**](UpdateLiveActivityRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::UpdateLiveActivitySuccessResponse**](UpdateLiveActivitySuccessResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
 
 ### HTTP request headers
 
