@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | 
-**recipients** | **i32** | Estimated number of subscribers targetted by notification. | 
+**id** | Option<**String**> |  | [optional]
+**recipients** | Option<**i32**> | Estimated number of subscribers targetted by notification. | [optional]
 **external_id** | Option<**String**> |  | [optional]
 **errors** | Option<[**crate::models::Notification200Errors**](Notification200Errors.md)> |  | [optional]
 

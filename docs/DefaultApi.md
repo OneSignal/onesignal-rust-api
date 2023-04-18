@@ -10,22 +10,36 @@ Method | HTTP request | Description
 [**create_notification**](DefaultApi.md#create_notification) | **POST** /notifications | Create notification
 [**create_player**](DefaultApi.md#create_player) | **POST** /players | Add a device
 [**create_segments**](DefaultApi.md#create_segments) | **POST** /apps/{app_id}/segments | Create Segments
+[**create_subscription**](DefaultApi.md#create_subscription) | **POST** /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions | 
+[**create_user**](DefaultApi.md#create_user) | **POST** /apps/{app_id}/users | 
+[**delete_alias**](DefaultApi.md#delete_alias) | **DELETE** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete} | 
 [**delete_player**](DefaultApi.md#delete_player) | **DELETE** /players/{player_id} | Delete a user record
 [**delete_segments**](DefaultApi.md#delete_segments) | **DELETE** /apps/{app_id}/segments/{segment_id} | Delete Segments
+[**delete_subscription**](DefaultApi.md#delete_subscription) | **DELETE** /apps/{app_id}/subscriptions/{subscription_id} | 
+[**delete_user**](DefaultApi.md#delete_user) | **DELETE** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**end_live_activity**](DefaultApi.md#end_live_activity) | **DELETE** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
 [**export_players**](DefaultApi.md#export_players) | **POST** /players/csv_export?app_id={app_id} | CSV export
+[**fetch_aliases**](DefaultApi.md#fetch_aliases) | **GET** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
+[**fetch_user**](DefaultApi.md#fetch_user) | **GET** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**fetch_user_identity**](DefaultApi.md#fetch_user_identity) | **GET** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
 [**get_app**](DefaultApi.md#get_app) | **GET** /apps/{app_id} | View an app
 [**get_apps**](DefaultApi.md#get_apps) | **GET** /apps | View apps
+[**get_eligible_iams**](DefaultApi.md#get_eligible_iams) | **GET** /apps/{app_id}/subscriptions/{subscription_id}/iams | 
 [**get_notification**](DefaultApi.md#get_notification) | **GET** /notifications/{notification_id} | View notification
 [**get_notification_history**](DefaultApi.md#get_notification_history) | **POST** /notifications/{notification_id}/history | Notification History
 [**get_notifications**](DefaultApi.md#get_notifications) | **GET** /notifications | View notifications
 [**get_outcomes**](DefaultApi.md#get_outcomes) | **GET** /apps/{app_id}/outcomes | View Outcomes
 [**get_player**](DefaultApi.md#get_player) | **GET** /players/{player_id} | View device
 [**get_players**](DefaultApi.md#get_players) | **GET** /players | View devices
+[**identify_user_by_alias**](DefaultApi.md#identify_user_by_alias) | **PATCH** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
+[**identify_user_by_subscription_id**](DefaultApi.md#identify_user_by_subscription_id) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
+[**transfer_subscription**](DefaultApi.md#transfer_subscription) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id}/owner | 
 [**update_app**](DefaultApi.md#update_app) | **PUT** /apps/{app_id} | Update an app
 [**update_live_activity**](DefaultApi.md#update_live_activity) | **POST** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**update_player**](DefaultApi.md#update_player) | **PUT** /players/{player_id} | Edit device
 [**update_player_tags**](DefaultApi.md#update_player_tags) | **PUT** /apps/{app_id}/users/{external_user_id} | Edit tags with external user id
+[**update_subscription**](DefaultApi.md#update_subscription) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id} | 
+[**update_user**](DefaultApi.md#update_user) | **PATCH** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 
 
 
@@ -213,6 +227,103 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## create_subscription
+
+> crate::models::InlineResponse201 create_subscription(app_id, alias_label, alias_id, create_subscription_request_body)
+
+
+Creates a new Subscription under the User provided. Useful to add email addresses and SMS numbers to the User.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+**create_subscription_request_body** | [**CreateSubscriptionRequestBody**](CreateSubscriptionRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse201**](inline_response_201.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## create_user
+
+> crate::models::User create_user(app_id, user)
+
+
+Creates a User, optionally Subscriptions owned by the User as well as Aliases. Aliases provided in the payload will be used to look up an existing User.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**user** | [**User**](User.md) |  | [required] |
+
+### Return type
+
+[**crate::models::User**](User.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_alias
+
+> crate::models::InlineResponse200 delete_alias(app_id, alias_label, alias_id, alias_label_to_delete)
+
+
+Deletes an alias by alias label
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+**alias_label_to_delete** | **String** |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse200**](inline_response_200.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## delete_player
 
 > crate::models::DeletePlayerSuccessResponse delete_player(app_id, player_id)
@@ -271,6 +382,69 @@ Name | Type | Description  | Required | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_subscription
+
+> delete_subscription(app_id, subscription_id)
+
+
+Deletes the Subscription.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## delete_user
+
+> delete_user(app_id, alias_label, alias_id)
+
+
+Removes the User identified by (:alias_label, :alias_id), and all Subscriptions and Aliases
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -338,6 +512,101 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## fetch_aliases
+
+> crate::models::UserIdentityResponse fetch_aliases(app_id, subscription_id)
+
+
+Lists all Aliases for the User identified by :subscription_id.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+
+### Return type
+
+[**crate::models::UserIdentityResponse**](UserIdentityResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## fetch_user
+
+> crate::models::User fetch_user(app_id, alias_label, alias_id)
+
+
+Returns the User’s properties, Aliases, and Subscriptions.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+
+### Return type
+
+[**crate::models::User**](User.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## fetch_user_identity
+
+> crate::models::InlineResponse200 fetch_user_identity(app_id, alias_label, alias_id)
+
+
+Lists all Aliases for the User identified by (:alias_label, :alias_id).
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse200**](inline_response_200.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## get_app
 
 > crate::models::App get_app(app_id)
@@ -386,6 +655,37 @@ This endpoint does not need any parameter.
 ### Authorization
 
 [user_key](../README.md#user_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_eligible_iams
+
+> crate::models::InlineResponse2003 get_eligible_iams(app_id, subscription_id)
+
+
+Manifest of In-App Messages the Subscription is eligible to display by the SDK.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse2003**](inline_response_200_3.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
 
 ### HTTP request headers
 
@@ -589,6 +889,103 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## identify_user_by_alias
+
+> crate::models::InlineResponse200 identify_user_by_alias(app_id, alias_label, alias_id, user_identity_request_body)
+
+
+Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+**user_identity_request_body** | [**UserIdentityRequestBody**](UserIdentityRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse200**](inline_response_200.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## identify_user_by_subscription_id
+
+> crate::models::UserIdentityResponse identify_user_by_subscription_id(app_id, subscription_id, user_identity_request_body)
+
+
+Upserts one or more Aliases for the User identified by :subscription_id.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+**user_identity_request_body** | [**UserIdentityRequestBody**](UserIdentityRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::UserIdentityResponse**](UserIdentityResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## transfer_subscription
+
+> crate::models::UserIdentityResponse transfer_subscription(app_id, subscription_id, transfer_subscription_request_body)
+
+
+Transfers this Subscription to the User identified by the identity in the payload.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+**transfer_subscription_request_body** | [**TransferSubscriptionRequestBody**](TransferSubscriptionRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::UserIdentityResponse**](UserIdentityResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## update_app
 
 > crate::models::App update_app(app_id, app)
@@ -702,6 +1099,71 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::UpdatePlayerTagsSuccessResponse**](UpdatePlayerTagsSuccessResponse.md)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_subscription
+
+> update_subscription(app_id, subscription_id, update_subscription_request_body)
+
+
+Updates an existing Subscription’s properties.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**subscription_id** | **String** |  | [required] |
+**update_subscription_request_body** | [**UpdateSubscriptionRequestBody**](UpdateSubscriptionRequestBody.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_user
+
+> crate::models::InlineResponse202 update_user(app_id, alias_label, alias_id, update_user_request)
+
+
+Updates an existing User’s properties.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** |  | [required] |
+**alias_label** | **String** |  | [required] |
+**alias_id** | **String** |  | [required] |
+**update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::InlineResponse202**](inline_response_202.md)
 
 ### Authorization
 
