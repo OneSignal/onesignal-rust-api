@@ -12,14 +12,14 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct ExportPlayersSuccessResponse {
+pub struct ExportEventsSuccessResponse {
     #[serde(rename = "csv_file_url", skip_serializing_if = "Option::is_none")]
     pub csv_file_url: Option<String>,
 }
 
-impl ExportPlayersSuccessResponse {
-    pub fn new() -> ExportPlayersSuccessResponse {
-        ExportPlayersSuccessResponse {
+impl ExportEventsSuccessResponse {
+    pub fn new() -> ExportEventsSuccessResponse {
+        ExportEventsSuccessResponse {
             csv_file_url: None,
         }
     }
