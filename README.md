@@ -36,8 +36,8 @@ use onesignal::models::{App, FilterExpressions, Notification, Player, Segment, S
 ### Define the constants. You can find all the values on the dashboard page of your app.
 ```rust
 const APP_ID: &str = "<YOUR_APP_ID>";
-const APP_KEY_TOKEN: &str = "<YOUR_APP_KEY_TOKEN>";
-const USER_KEY_TOKEN: &str = "<YOUR_USER_KEY_TOKEN>";
+const REST_KEY_TOKEN: &str = "<YOUR_REST_API_KEY>"; // App REST API key required for most endpoints
+const ORG_KEY_TOKEN: &str = "<YOUR_ORGANIZATION_API_KEY>"; // Organization key is only required for creating new apps and other top-level endpoints
 
 ```
 
@@ -45,8 +45,8 @@ const USER_KEY_TOKEN: &str = "<YOUR_USER_KEY_TOKEN>";
 ```rust
 fn create_configuration() -> Box<Configuration> {
     let mut configuration = apis::configuration::Configuration::new();
-    configuration.app_key_token = Some(String::from(APP_KEY_TOKEN));
-    configuration.user_key_token = Some(String::from(USER_KEY_TOKEN));
+    configuration.app_key_token = Some(String::from(REST_KEY_TOKEN));
+    configuration.user_key_token = Some(String::from(ORG_KEY_TOKEN));
     Box::new(configuration)
 }
 ```
