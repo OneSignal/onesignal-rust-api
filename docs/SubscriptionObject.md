@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **_type** | Option<**String**> |  | [optional]
 **token** | Option<**String**> |  | [optional]
 **enabled** | Option<**bool**> |  | [optional]
-**notification_types** | Option<**f32**> |  | [optional]
+**notification_types** | Option<**i32**> |  | [optional]
 **session_time** | Option<**f32**> |  | [optional]
 **session_count** | Option<**f32**> |  | [optional]
 **sdk** | Option<**String**> |  | [optional]
