@@ -153,7 +153,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### HTTP request headers
 
@@ -560,7 +560,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### HTTP request headers
 
@@ -587,7 +587,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### HTTP request headers
 
@@ -876,7 +876,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### HTTP request headers
 
