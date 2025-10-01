@@ -123,6 +123,7 @@ Name | Type | Description | Notes
 **send_after** | Option<**i64**> | Unix timestamp indicating when notification delivery should begin. | [optional]
 **completed_at** | Option<**i64**> | Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after. | [optional]
 **platform_delivery_stats** | Option<[**crate::models::PlatformDeliveryData**](PlatformDeliveryData.md)> |  | [optional]
+**canceled** | Option<**bool**> | Indicates whether the notification was canceled before it could be sent. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
