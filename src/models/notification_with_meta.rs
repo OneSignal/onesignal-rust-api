@@ -308,6 +308,9 @@ pub struct NotificationWithMeta {
     /// Channel: Email The email address the email is from. If not specified, will default to \"from email\" set in the OneSignal Dashboard Email Settings. 
     #[serde(rename = "email_from_address", skip_serializing_if = "Option::is_none")]
     pub email_from_address: Option<String>,
+    /// Channel: Email The email address where replies should be sent. If not specified, replies will go to the from address. 
+    #[serde(rename = "email_reply_to_address", skip_serializing_if = "Option::is_none")]
+    pub email_reply_to_address: Option<String>,
     /// Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null. 
     #[serde(rename = "email_preheader", skip_serializing_if = "Option::is_none")]
     pub email_preheader: Option<String>,
@@ -328,6 +331,21 @@ pub struct NotificationWithMeta {
     /// Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\"order_id\": 123, \"currency\": \"USD\", \"amount\": 25} 
     #[serde(rename = "custom_data", skip_serializing_if = "Option::is_none")]
     pub custom_data: Option<serde_json::Value>,
+    /// Channel: Push Notifications Platform: Huawei Full path of the app entry activity class
+    #[serde(rename = "huawei_badge_class", skip_serializing_if = "Option::is_none")]
+    pub huawei_badge_class: Option<String>,
+    /// Channel: Push Notifications Platform: Huawei Accumulative badge number, which is an integer ranging from 1 to 99
+    #[serde(rename = "huawei_badge_add_num", skip_serializing_if = "Option::is_none")]
+    pub huawei_badge_add_num: Option<i32>,
+    /// Channel: Push Notifications Platform: Huawei Badge number, which is an integer ranging from 0 to 99
+    #[serde(rename = "huawei_badge_set_num", skip_serializing_if = "Option::is_none")]
+    pub huawei_badge_set_num: Option<i32>,
+    /// Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification.
+    #[serde(rename = "huawei_category", skip_serializing_if = "Option::is_none")]
+    pub huawei_category: Option<HuaweiCategoryType>,
+    /// Channel: Push Notifications Platform: Huawei A tag used for Huawei business intelligence and analytics.
+    #[serde(rename = "huawei_bi_tag", skip_serializing_if = "Option::is_none")]
+    pub huawei_bi_tag: Option<String>,
     /// Number of notifications that were successfully delivered.
     #[serde(rename = "successful", skip_serializing_if = "Option::is_none")]
     pub successful: Option<i32>,
@@ -468,6 +486,7 @@ impl NotificationWithMeta {
             email_body: None,
             email_from_name: None,
             email_from_address: None,
+            email_reply_to_address: None,
             email_preheader: None,
             disable_email_click_tracking: None,
             include_unsubscribed: None,
@@ -475,6 +494,11 @@ impl NotificationWithMeta {
             sms_media_urls: None,
             filters: None,
             custom_data: None,
+            huawei_badge_class: None,
+            huawei_badge_add_num: None,
+            huawei_badge_set_num: None,
+            huawei_category: None,
+            huawei_bi_tag: None,
             successful: None,
             failed: None,
             errored: None,
@@ -519,6 +543,40 @@ pub enum AggregationType {
 impl Default for AggregationType {
     fn default() -> AggregationType {
         Self::Sum
+    }
+}
+/// Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum HuaweiCategoryType {
+    #[serde(rename = "IM")]
+    IM,
+    #[serde(rename = "VOIP")]
+    VOIP,
+    #[serde(rename = "SUBSCRIPTION")]
+    SUBSCRIPTION,
+    #[serde(rename = "TRAVEL")]
+    TRAVEL,
+    #[serde(rename = "HEALTH")]
+    HEALTH,
+    #[serde(rename = "WORK")]
+    WORK,
+    #[serde(rename = "ACCOUNT")]
+    ACCOUNT,
+    #[serde(rename = "EXPRESS")]
+    EXPRESS,
+    #[serde(rename = "FINANCE")]
+    FINANCE,
+    #[serde(rename = "DEVICE_REMINDER")]
+    DEVICEREMINDER,
+    #[serde(rename = "MAIL")]
+    MAIL,
+    #[serde(rename = "MARKETING")]
+    MARKETING,
+}
+
+impl Default for HuaweiCategoryType {
+    fn default() -> HuaweiCategoryType {
+        Self::IM
     }
 }
 
