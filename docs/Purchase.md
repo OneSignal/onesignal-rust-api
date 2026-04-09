@@ -9,6 +9,6 @@ Name | Type | Description | Notes
 **iso** | **String** | The 3-letter ISO 4217 currency code. Required for correct storage and conversion of amount. | 
 **count** | Option<**i32**> |  | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

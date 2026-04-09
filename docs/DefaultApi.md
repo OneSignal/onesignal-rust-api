@@ -72,14 +72,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## copy_template_to_app
@@ -104,14 +104,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_alias
@@ -137,14 +137,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_alias_by_subscription
@@ -169,14 +169,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_api_key
@@ -200,14 +200,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_app
@@ -230,14 +230,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_custom_events
@@ -261,14 +261,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_notification
@@ -291,14 +291,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_segment
@@ -322,14 +322,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_subscription
@@ -355,14 +355,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_template
@@ -385,14 +385,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## create_user
@@ -416,14 +416,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_alias
@@ -449,14 +449,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_api_key
@@ -480,14 +480,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_segment
@@ -511,14 +511,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_subscription
@@ -542,14 +542,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_template
@@ -573,14 +573,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## delete_user
@@ -605,14 +605,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## export_events
@@ -636,14 +636,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## export_subscriptions
@@ -667,14 +667,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_aliases
@@ -699,14 +699,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_aliases_by_subscription
@@ -730,14 +730,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_app
@@ -760,14 +760,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_apps
@@ -787,14 +787,14 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_notification
@@ -818,14 +818,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_notification_history
@@ -849,14 +849,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_notifications
@@ -882,14 +882,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_outcomes
@@ -917,14 +917,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_segments
@@ -949,14 +949,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## get_user
@@ -981,14 +981,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## rotate_api_key
@@ -1012,14 +1012,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## start_live_activity
@@ -1044,14 +1044,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## transfer_subscription
@@ -1076,14 +1076,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## unsubscribe_email_with_token
@@ -1108,14 +1108,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_api_key
@@ -1140,14 +1140,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_app
@@ -1171,14 +1171,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_live_activity
@@ -1203,14 +1203,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_subscription
@@ -1235,14 +1235,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_subscription_by_token
@@ -1268,14 +1268,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_template
@@ -1300,14 +1300,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## update_user
@@ -1333,14 +1333,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## view_api_keys
@@ -1363,14 +1363,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## view_template
@@ -1394,14 +1394,14 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
 ## view_templates
@@ -1427,12 +1427,12 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 

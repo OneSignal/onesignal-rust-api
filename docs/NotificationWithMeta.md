@@ -131,6 +131,6 @@ Name | Type | Description | Notes
 **platform_delivery_stats** | Option<[**crate::models::PlatformDeliveryData**](PlatformDeliveryData.md)> |  | [optional]
 **canceled** | Option<**bool**> | Indicates whether the notification was canceled before it could be sent. | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

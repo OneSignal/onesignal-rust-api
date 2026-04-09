@@ -106,6 +106,6 @@ Name | Type | Description | Notes
 **huawei_category** | Option<**String**> | Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification. | [optional]
 **huawei_bi_tag** | Option<**String**> | Channel: Push Notifications Platform: Huawei A tag used for Huawei business intelligence and analytics. | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
