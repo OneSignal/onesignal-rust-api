@@ -21,6 +21,6 @@ Name | Type | Description | Notes
 **excluded_segments** | Option<**Vec<String>**> | Segment names to exclude. Only compatible with included_segments. | [optional]
 **filters** | Option<[**Vec<crate::models::FilterExpression>**](FilterExpression.md)> |  | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

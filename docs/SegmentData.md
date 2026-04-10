@@ -12,6 +12,6 @@ Name | Type | Description | Notes
 **read_only** | Option<**bool**> | Is the segment read only? | [optional]
 **is_active** | Option<**bool**> | Is the segment active? | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

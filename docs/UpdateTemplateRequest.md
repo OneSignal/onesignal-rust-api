@@ -12,6 +12,6 @@ Name | Type | Description | Notes
 **is_sms** | Option<**bool**> | Set true for an SMS template. | [optional]
 **dynamic_content** | Option<**String**> | JSON string for dynamic content personalization. | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

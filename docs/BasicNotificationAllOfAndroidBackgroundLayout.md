@@ -8,6 +8,6 @@ Name | Type | Description | Notes
 **headings_color** | Option<**String**> | Title text color ARGB Hex format. Example(Blue) \"FF0000FF\". | [optional]
 **contents_color** | Option<**String**> | Body text color ARGB Hex format. Example(Red) \"FFFF0000\". | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 

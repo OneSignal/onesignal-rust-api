@@ -11,6 +11,6 @@ Name | Type | Description | Notes
 **channel** | Option<**String**> |  | [optional]
 **content** | Option<[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Rendered content and channel/platform flags for the template. | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
