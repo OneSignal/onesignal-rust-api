@@ -21,6 +21,10 @@ pub struct CreateTemplateRequest {
     pub name: String,
     #[serde(rename = "contents")]
     pub contents: Box<crate::models::LanguageStringMap>,
+    #[serde(rename = "headings", skip_serializing_if = "Option::is_none")]
+    pub headings: Option<Box<crate::models::LanguageStringMap>>,
+    #[serde(rename = "subtitle", skip_serializing_if = "Option::is_none")]
+    pub subtitle: Option<Box<crate::models::LanguageStringMap>>,
     /// Set true for an Email template.
     #[serde(rename = "isEmail", skip_serializing_if = "Option::is_none")]
     pub is_email: Option<bool>,
@@ -44,6 +48,8 @@ impl CreateTemplateRequest {
             app_id,
             name,
             contents: Box::new(contents),
+            headings: None,
+            subtitle: None,
             is_email: None,
             email_subject: None,
             email_body: None,
