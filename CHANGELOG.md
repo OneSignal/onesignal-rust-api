@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.4.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.3.0...v5.4.0) (2026-04-17)
+
+### Features
+
+* add v5.4.0 package updates ([#42](https://github.com/OneSignal/onesignal-rust-api/issues/42)) ([6832bbd](https://github.com/OneSignal/onesignal-rust-api/commit/6832bbdb77c583fc765ffeb7e16679510e871571))
+
 ## [5.3.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.2.0...v5.3.0) (2026-03-24)
 
 ### Features
