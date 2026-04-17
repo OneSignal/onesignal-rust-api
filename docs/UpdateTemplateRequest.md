@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | Option<**String**> | Updated name of the template. | [optional]
 **contents** | Option<[**crate::models::LanguageStringMap**](LanguageStringMap.md)> |  | [optional]
+**headings** | Option<[**crate::models::LanguageStringMap**](LanguageStringMap.md)> |  | [optional]
+**subtitle** | Option<[**crate::models::LanguageStringMap**](LanguageStringMap.md)> |  | [optional]
 **is_email** | Option<**bool**> | Set true for an Email template. | [optional]
 **email_subject** | Option<**String**> | Subject of the email. | [optional]
 **email_body** | Option<**String**> | Body of the email (HTML supported). | [optional]
