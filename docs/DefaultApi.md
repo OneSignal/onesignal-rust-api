@@ -58,6 +58,7 @@ Stop a scheduled or currently outgoing notification
 
 Used to stop a scheduled or currently outgoing notification
 
+
 ### Parameters
 
 
@@ -88,6 +89,7 @@ Name | Type | Description  | Required | Notes
 Copy template to another app
 
 Copy a template to a destination app.
+
 
 ### Parameters
 
@@ -120,6 +122,7 @@ Name | Type | Description  | Required | Notes
 
 
 Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
+
 
 ### Parameters
 
@@ -154,6 +157,7 @@ Name | Type | Description  | Required | Notes
 
 Upserts one or more Aliases for the User identified by :subscription_id.
 
+
 ### Parameters
 
 
@@ -186,6 +190,7 @@ Create API key
 
 Use this API to create a new App API Key (also called a Rich Authentication Token) for a specific OneSignal app. These keys are used to authenticate API requests at the app level and offer enhanced security features, including optional IP allowlisting.
 
+
 ### Parameters
 
 
@@ -217,6 +222,7 @@ Create an app
 
 Creates a new OneSignal app
 
+
 ### Parameters
 
 
@@ -246,6 +252,7 @@ Name | Type | Description  | Required | Notes
 Create custom events
 
 The Custom Events API allows you to record user events. Custom events can represent any action users take in your application, such as completing a purchase, viewing content, or achieving milestones.
+
 
 ### Parameters
 
@@ -278,6 +285,39 @@ Create notification
 
 Sends notifications to your users 
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+use onesignal_rust_api::models::notification::TargetChannelType;
+use onesignal_rust_api::models::{LanguageStringMap, Notification};
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+    let mut notification = Notification::new("YOUR_APP_ID".to_string());
+    notification.contents = Some(Box::new(LanguageStringMap {
+        en: Some("Hello from OneSignal!".to_string()),
+        ..Default::default()
+    }));
+    let mut aliases = std::collections::HashMap::new();
+    aliases.insert(
+        "external_id".to_string(),
+        vec!["YOUR_USER_EXTERNAL_ID".to_string()],
+    );
+    notification.include_aliases = Some(aliases);
+    notification.target_channel = Some(TargetChannelType::Push);
+
+    match default_api::create_notification(&configuration, notification).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e) => eprintln!("create_notification failed: {:?}", e),
+    }
+}
+```
+
 ### Parameters
 
 
@@ -307,6 +347,7 @@ Name | Type | Description  | Required | Notes
 Create Segment
 
 Create a segment visible and usable in the dashboard and API - Required: OneSignal Paid Plan The Create Segment method is used when you want your server to programmatically create a segment instead of using the OneSignal Dashboard UI. Just like creating Segments from the dashboard you can pass in filters with multiple \"AND\" or \"OR\" operator's. &#x1F6A7; Does Not Update Segments This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segment endpoint and re-create it with this endpoint to edit. 
+
 
 ### Parameters
 
@@ -338,6 +379,7 @@ Name | Type | Description  | Required | Notes
 
 
 Creates a new Subscription under the User provided. Useful to add email addresses and SMS numbers to the User.
+
 
 ### Parameters
 
@@ -372,6 +414,7 @@ Create template
 
 Create reusable message templates for push, email, and SMS channels.
 
+
 ### Parameters
 
 
@@ -401,6 +444,7 @@ Name | Type | Description  | Required | Notes
 
 
 Creates a User, optionally Subscriptions owned by the User as well as Aliases. Aliases provided in the payload will be used to look up an existing User.
+
 
 ### Parameters
 
@@ -432,6 +476,7 @@ Name | Type | Description  | Required | Notes
 
 
 Deletes an alias by alias label
+
 
 ### Parameters
 
@@ -466,6 +511,7 @@ Delete API key
 
 Delete a specific Rich Authentication Token (App API Key) for a OneSignal app. Requires your Organization API Key and the token’s unique ID, not the token value itself.
 
+
 ### Parameters
 
 
@@ -496,6 +542,7 @@ Name | Type | Description  | Required | Notes
 Delete Segment
 
 Delete a segment (not user devices) - Required: OneSignal Paid Plan You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app. The segment_id can be found in the URL of the segment when viewing it in the dashboard. 
+
 
 ### Parameters
 
@@ -528,6 +575,7 @@ Name | Type | Description  | Required | Notes
 
 Deletes the Subscription.
 
+
 ### Parameters
 
 
@@ -559,6 +607,7 @@ Delete template
 
 Delete a template by id.
 
+
 ### Parameters
 
 
@@ -589,6 +638,7 @@ Name | Type | Description  | Required | Notes
 
 
 Removes the User identified by (:alias_label, :alias_id), and all Subscriptions and Aliases
+
 
 ### Parameters
 
@@ -622,6 +672,7 @@ Export CSV of Events
 
 Generate a compressed CSV report of all of the events data for a notification. This will return a URL immediately upon success but it may take several minutes for the CSV to become available at that URL depending on the volume of data. Only one export can be in-progress per OneSignal account at any given time.
 
+
 ### Parameters
 
 
@@ -653,6 +704,7 @@ Export CSV of Subscriptions
 
 Generate a compressed CSV export of all of your current user data This method can be used to generate a compressed CSV export of all of your current user data. It is a much faster alternative than retrieving this data using the /players API endpoint. The file will be compressed using GZip. The file may take several minutes to generate depending on the number of users in your app. The URL generated will be available for 3 days and includes random v4 uuid as part of the resource name to be unguessable. &#x1F6A7; 403 Error Responses          You can test if it is complete by making a GET request to the csv_file_url value. This file may take time to generate depending on how many device records are being pulled. If the file is not ready, a 403 error will be returned. Otherwise the file itself will be returned. &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs. &#x1F6A7; Concurrent Exports Only one concurrent export is allowed per OneSignal account. Please ensure you have successfully downloaded the .csv.gz file before exporting another app. CSV File Format: - Default Columns:   | Field | Details |   | --- | --- |   | id | OneSignal Player Id |   | identifier | Push Token |   | session_count | Number of times they visited the app or site   | language | Device language code |   | timezone | Number of seconds away from UTC. Example: -28800 |   | game_version | Version of your mobile app gathered from Android Studio versionCode in your App/build.gradle and iOS uses kCFBundleVersionKey in Xcode. |   | device_os | Device Operating System Version. Example: 80 = Chrome 80, 9 = Android 9 |   | device_type | Device Operating System Type |   | device_model | Device Hardware String Code. Example: Mobile Web Subscribers will have `Linux armv` |   | ad_id | Based on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut means user turned off Advertising tracking on the device. |   | tags | Current OneSignal Data Tags on the device. |   | last_active | Date and time the user last opened the mobile app or visited the site. |   | playtime | Total amount of time in seconds the user had the mobile app open. |   | amount_spent |  Mobile only - amount spent in USD on In-App Purchases. |    | created_at | Date and time the device record was created in OneSignal. Mobile - first time they opened the app with OneSignal SDK. Web - first time the user subscribed to the site. |   | invalid_identifier | t = unsubscribed, f = subscibed |   | badge_count | Current number of badges on the device | - Extra Columns:   | Field | Details |   | --- | --- |   | external_user_id | Your User Id set on the device |   | notification_types | Notification types |   | location | Location points (Latitude and Longitude) set on the device. |   | country | Country code |   | rooted | Android device rooted or not |   | ip | IP Address of the device if being tracked. See Handling Personal Data. |   | web_auth | Web Only authorization key. |   | web_p256 | Web Only p256 key. | 
 
+
 ### Parameters
 
 
@@ -683,6 +735,7 @@ Name | Type | Description  | Required | Notes
 
 
 Lists all Aliases for the User identified by (:alias_label, :alias_id).
+
 
 ### Parameters
 
@@ -716,6 +769,7 @@ Name | Type | Description  | Required | Notes
 
 Lists all Aliases for the User identified by :subscription_id.
 
+
 ### Parameters
 
 
@@ -747,6 +801,7 @@ View an app
 
 View the details of a single OneSignal app
 
+
 ### Parameters
 
 
@@ -777,6 +832,7 @@ View apps
 
 View the details of all of your current OneSignal apps
 
+
 ### Parameters
 
 This endpoint does not need any parameter.
@@ -803,6 +859,7 @@ This endpoint does not need any parameter.
 View notification
 
 View the details of a single notification and outcomes associated with it
+
 
 ### Parameters
 
@@ -835,6 +892,7 @@ Notification History
 
 -> View the devices sent a message - OneSignal Paid Plan Required This method will return all devices that were sent the given notification_id of an Email or Push Notification if used within 7 days of the date sent. After 7 days of the sending date, the message history data will be unavailable. After a successful response is received, the destination url may be polled until the file becomes available. Most exports are done in ~1-3 minutes, so setting a poll interval of 10 seconds should be adequate. For use cases that are not meant to be consumed by a script, an email will be sent to the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan. Turn on Send History via OneSignal API in Settings -> Analytics. Cannot get data before this was turned on. Must be called within 7 days after sending the message. Messages targeting under 1000 recipients will not have \"sent\" events recorded, but will show \"clicked\" events. Requires your OneSignal App's REST API Key, available in Keys & IDs.
 
+
 ### Parameters
 
 
@@ -865,6 +923,7 @@ Name | Type | Description  | Required | Notes
 View notifications
 
 View the details of multiple notifications
+
 
 ### Parameters
 
@@ -898,6 +957,7 @@ Name | Type | Description  | Required | Notes
 View Outcomes
 
 View the details of all the outcomes associated with your app  &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs.  &#x1F6A7; Outcome Data Limitations Outcomes are only accessible for around 30 days before deleted from our servers. You will need to export this data every month if you want to keep it. 
+
 
 ### Parameters
 
@@ -934,6 +994,7 @@ Get Segments
 
 Returns an array of segments from an app.
 
+
 ### Parameters
 
 
@@ -965,6 +1026,7 @@ Name | Type | Description  | Required | Notes
 
 
 Returns the User’s properties, Aliases, and Subscriptions.
+
 
 ### Parameters
 
@@ -998,6 +1060,7 @@ Rotate API key
 
 Rotate a Rich Authentication Token (App API Key) for a OneSignal app. Rotating a key revokes the current token and generates a new one under the same configuration—ideal when a token is lost or compromised but you don’t want to recreate and reconfigure it from scratch.
 
+
 ### Parameters
 
 
@@ -1028,6 +1091,7 @@ Name | Type | Description  | Required | Notes
 Start Live Activity
 
 Remotely start a Live Activity on iOS devices via OneSignal’s REST API.
+
 
 ### Parameters
 
@@ -1061,6 +1125,7 @@ Name | Type | Description  | Required | Notes
 
 Transfers this Subscription to the User identified by the identity in the payload.
 
+
 ### Parameters
 
 
@@ -1092,6 +1157,7 @@ Name | Type | Description  | Required | Notes
 Unsubscribe with token
 
 Unsubscribe an email with a token when using your own custom email unsubscribe landing page
+
 
 ### Parameters
 
@@ -1125,6 +1191,7 @@ Update API key
 
 Update a Rich Authentication Token (App API Key) for a OneSignal app.
 
+
 ### Parameters
 
 
@@ -1157,6 +1224,7 @@ Update an app
 
 Updates the name or configuration settings of an existing OneSignal app
 
+
 ### Parameters
 
 
@@ -1187,6 +1255,7 @@ Name | Type | Description  | Required | Notes
 Update a Live Activity via Push
 
 Updates a specified live activity.
+
 
 ### Parameters
 
@@ -1220,6 +1289,7 @@ Name | Type | Description  | Required | Notes
 
 Updates an existing Subscription’s properties.
 
+
 ### Parameters
 
 
@@ -1251,6 +1321,7 @@ Name | Type | Description  | Required | Notes
 Update subscription by token
 
 Update properties on an existing OneSignal subscription using its token.
+
 
 ### Parameters
 
@@ -1285,6 +1356,7 @@ Update template
 
 Update an existing template.
 
+
 ### Parameters
 
 
@@ -1316,6 +1388,7 @@ Name | Type | Description  | Required | Notes
 
 
 Updates an existing User’s properties.
+
 
 ### Parameters
 
@@ -1350,6 +1423,7 @@ View API keys
 
 View the details of all of your current app API keys (Rich Authentication Token) for a single OneSignal app.
 
+
 ### Parameters
 
 
@@ -1379,6 +1453,7 @@ Name | Type | Description  | Required | Notes
 View template
 
 Fetch a single template by id.
+
 
 ### Parameters
 
@@ -1410,6 +1485,7 @@ Name | Type | Description  | Required | Notes
 View templates
 
 List templates for an app.
+
 
 ### Parameters
 
