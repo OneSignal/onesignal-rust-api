@@ -684,7 +684,7 @@ pub async fn create_custom_events(configuration: &configuration::Configuration, 
     }
 }
 
-/// Sends notifications to your users 
+/// Sends notifications to your users.  **Target by External ID (push example):** set `include_aliases` to `{ \"external_id\": [\"your-user-id\"] }` and set `target_channel` to `push` (or `email` / `sms` for those channels). Alias object keys must match API labels exactly (for example `external_id`, not camelCase).  **Do not confuse** the notification-level `external_id` field with External ID targeting: top-level `external_id` / `idempotency_key` are for idempotent notification requests only, not for selecting recipients.  **Targeting compatibility:** `include_aliases` must not be combined with other targeting modes (segments, filters, subscription IDs, legacy player IDs, etc.). Clients should send only one targeting strategy per request. 
 pub async fn create_notification(configuration: &configuration::Configuration, notification: crate::models::Notification) -> Result<crate::models::CreateNotificationSuccessResponse, Error<CreateNotificationError>> {
     let configuration = configuration;
 
