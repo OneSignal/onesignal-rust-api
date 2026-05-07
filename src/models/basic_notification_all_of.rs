@@ -282,6 +282,9 @@ pub struct BasicNotificationAllOf {
     /// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
     #[serde(rename = "include_unsubscribed", skip_serializing_if = "Option::is_none")]
     pub include_unsubscribed: Option<bool>,
+    /// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
+    #[serde(rename = "email_bcc", skip_serializing_if = "Option::is_none")]
+    pub email_bcc: Option<Vec<String>>,
     /// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
     #[serde(rename = "sms_from", skip_serializing_if = "Option::is_none")]
     pub sms_from: Option<String>,
@@ -405,6 +408,7 @@ impl BasicNotificationAllOf {
             email_preheader: None,
             disable_email_click_tracking: None,
             include_unsubscribed: None,
+            email_bcc: None,
             sms_from: None,
             sms_media_urls: None,
             filters: None,

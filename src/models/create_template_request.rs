@@ -34,6 +34,9 @@ pub struct CreateTemplateRequest {
     /// Body of the email (HTML supported).
     #[serde(rename = "email_body", skip_serializing_if = "Option::is_none")]
     pub email_body: Option<String>,
+    /// BCC recipients for the email template. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email.
+    #[serde(rename = "email_bcc", skip_serializing_if = "Option::is_none")]
+    pub email_bcc: Option<Vec<String>>,
     /// Set true for an SMS template.
     #[serde(rename = "isSMS", skip_serializing_if = "Option::is_none")]
     pub is_sms: Option<bool>,
@@ -53,6 +56,7 @@ impl CreateTemplateRequest {
             is_email: None,
             email_subject: None,
             email_body: None,
+            email_bcc: None,
             is_sms: None,
             dynamic_content: None,
         }

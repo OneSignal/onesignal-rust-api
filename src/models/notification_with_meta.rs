@@ -320,6 +320,9 @@ pub struct NotificationWithMeta {
     /// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
     #[serde(rename = "include_unsubscribed", skip_serializing_if = "Option::is_none")]
     pub include_unsubscribed: Option<bool>,
+    /// BCC recipients that were set on this email notification.
+    #[serde(rename = "email_bcc", skip_serializing_if = "Option::is_none")]
+    pub email_bcc: Option<Vec<String>>,
     /// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
     #[serde(rename = "sms_from", skip_serializing_if = "Option::is_none")]
     pub sms_from: Option<String>,
@@ -380,6 +383,9 @@ pub struct NotificationWithMeta {
     /// Indicates whether the notification was canceled before it could be sent.
     #[serde(rename = "canceled", skip_serializing_if = "Option::is_none")]
     pub canceled: Option<bool>,
+    /// Number of BCC copies successfully sent for this notification.
+    #[serde(rename = "bcc_sent", skip_serializing_if = "Option::is_none")]
+    pub bcc_sent: Option<i32>,
 }
 
 impl NotificationWithMeta {
@@ -490,6 +496,7 @@ impl NotificationWithMeta {
             email_preheader: None,
             disable_email_click_tracking: None,
             include_unsubscribed: None,
+            email_bcc: None,
             sms_from: None,
             sms_media_urls: None,
             filters: None,
@@ -511,6 +518,7 @@ impl NotificationWithMeta {
             completed_at: None,
             platform_delivery_stats: None,
             canceled: None,
+            bcc_sent: None,
         }
     }
 }
