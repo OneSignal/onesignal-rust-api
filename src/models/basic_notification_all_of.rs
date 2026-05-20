@@ -285,6 +285,9 @@ pub struct BasicNotificationAllOf {
     /// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
     #[serde(rename = "email_bcc", skip_serializing_if = "Option::is_none")]
     pub email_bcc: Option<Vec<String>>,
+    /// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
+    #[serde(rename = "email_sender_domain", skip_serializing_if = "Option::is_none")]
+    pub email_sender_domain: Option<String>,
     /// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
     #[serde(rename = "sms_from", skip_serializing_if = "Option::is_none")]
     pub sms_from: Option<String>,
@@ -409,6 +412,7 @@ impl BasicNotificationAllOf {
             disable_email_click_tracking: None,
             include_unsubscribed: None,
             email_bcc: None,
+            email_sender_domain: None,
             sms_from: None,
             sms_media_urls: None,
             filters: None,

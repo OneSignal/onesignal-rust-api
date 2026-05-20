@@ -22,9 +22,12 @@ pub struct BasicNotification {
     /// Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
     #[serde(rename = "include_subscription_ids", skip_serializing_if = "Option::is_none")]
     pub include_subscription_ids: Option<Vec<String>>,
-    /// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
+    /// Deprecated alias for `email_to`. Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Prefer `email_to` in new integrations. 
     #[serde(rename = "include_email_tokens", skip_serializing_if = "Option::is_none")]
     pub include_email_tokens: Option<Vec<String>>,
+    /// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Supersedes the deprecated `include_email_tokens` field. 
+    #[serde(rename = "email_to", skip_serializing_if = "Option::is_none")]
+    pub email_to: Option<Vec<String>>,
     /// Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call 
     #[serde(rename = "include_phone_numbers", skip_serializing_if = "Option::is_none")]
     pub include_phone_numbers: Option<Vec<String>>,
@@ -323,6 +326,9 @@ pub struct BasicNotification {
     /// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
     #[serde(rename = "email_bcc", skip_serializing_if = "Option::is_none")]
     pub email_bcc: Option<Vec<String>>,
+    /// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
+    #[serde(rename = "email_sender_domain", skip_serializing_if = "Option::is_none")]
+    pub email_sender_domain: Option<String>,
     /// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
     #[serde(rename = "sms_from", skip_serializing_if = "Option::is_none")]
     pub sms_from: Option<String>,
@@ -358,6 +364,7 @@ impl BasicNotification {
             excluded_segments: None,
             include_subscription_ids: None,
             include_email_tokens: None,
+            email_to: None,
             include_phone_numbers: None,
             include_ios_tokens: None,
             include_wp_wns_uris: None,
@@ -460,6 +467,7 @@ impl BasicNotification {
             disable_email_click_tracking: None,
             include_unsubscribed: None,
             email_bcc: None,
+            email_sender_domain: None,
             sms_from: None,
             sms_media_urls: None,
             filters: None,
