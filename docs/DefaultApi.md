@@ -58,6 +58,33 @@ Stop a scheduled or currently outgoing notification
 
 Used to stop a scheduled or currently outgoing notification
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
+
+    match default_api::cancel_notification(&configuration, app_id, notification_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("cancel_notification failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("cancel_notification failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -90,6 +117,36 @@ Copy template to another app
 
 Copy a template to a destination app.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let copy_template_request: models::CopyTemplateRequest = todo!();
+
+    match default_api::copy_template_to_app(&configuration, template_id, app_id, copy_template_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("copy_template_to_app failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("copy_template_to_app failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -123,6 +180,37 @@ Name | Type | Description  | Required | Notes
 
 Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+    let user_identity_body: models::UserIdentityBody = todo!();
+
+    match default_api::create_alias(&configuration, app_id, alias_label, alias_id, user_identity_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_alias failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_alias failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -157,6 +245,36 @@ Name | Type | Description  | Required | Notes
 
 Upserts one or more Aliases for the User identified by :subscription_id.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
+    let user_identity_body: models::UserIdentityBody = todo!();
+
+    match default_api::create_alias_by_subscription(&configuration, app_id, subscription_id, user_identity_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_alias_by_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_alias_by_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -190,6 +308,35 @@ Create API key
 
 Use this API to create a new App API Key (also called a Rich Authentication Token) for a specific OneSignal app. These keys are used to authenticate API requests at the app level and offer enhanced security features, including optional IP allowlisting.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let create_api_key_request: models::CreateApiKeyRequest = todo!();
+
+    match default_api::create_api_key(&configuration, app_id, create_api_key_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_api_key failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_api_key failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -222,6 +369,34 @@ Create an app
 
 Creates a new OneSignal app
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app: models::App = todo!();
+
+    match default_api::create_app(&configuration, app).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_app failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_app failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -253,6 +428,35 @@ Create custom events
 
 The Custom Events API allows you to record user events. Custom events can represent any action users take in your application, such as completing a purchase, viewing content, or achieving milestones.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let custom_events_request: models::CustomEventsRequest = todo!();
+
+    match default_api::create_custom_events(&configuration, app_id, custom_events_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_custom_events failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_custom_events failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -292,6 +496,7 @@ use onesignal_rust_api::apis::configuration::Configuration;
 use onesignal_rust_api::apis::default_api;
 use onesignal_rust_api::models::notification::TargetChannelType;
 use onesignal_rust_api::models::{LanguageStringMap, Notification};
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
@@ -310,9 +515,35 @@ async fn main() {
     );
     notification.include_aliases = Some(aliases);
     notification.target_channel = Some(TargetChannelType::Push);
+    // Idempotency key: a client-generated UUID that lets you safely retry on network failure.
+    // If two requests arrive with the same key inside the 30-day window, only the first is
+    // sent and the second returns the original response. The `uuid` crate must be declared
+    // in your own Cargo.toml (Cargo doesn't expose transitive crates by name to downstream
+    // code) — add `uuid = { version = "1", features = ["v4"] }` to your `[dependencies]`.
+    // DO NOT reuse keys across logically distinct sends.
+    notification.idempotency_key = Some(Uuid::new_v4().to_string());
 
     match default_api::create_notification(&configuration, notification).await {
-        Ok(resp) => println!("{:?}", resp),
+        Ok(resp) => {
+            // `resp.id` discriminates the two HTTP 200 shapes. An empty string or `None`
+            // means no notification was created (e.g. all targets were unreachable / not
+            // subscribed). `resp.errors` is polymorphic (typed as `Option<serde_json::Value>`):
+            // a `Vec<String>` in the no-subscribers case, or an object keyed by
+            // recipient-identifier type (`invalid_player_ids`, `invalid_external_user_ids`,
+            // `invalid_aliases`, ...) when the notification WAS created but some recipients
+            // were skipped.
+            match resp.id.as_deref() {
+                Some("") | None => eprintln!("Notification was not sent: {:?}", resp.errors),
+                Some(id) if resp.errors.is_some() => {
+                    println!("Notification created: {} (partial failures: {:?})", id, resp.errors)
+                }
+                Some(id) => println!("Notification created: {}", id),
+            }
+        }
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_notification failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
         Err(e) => eprintln!("create_notification failed: {:?}", e),
     }
 }
@@ -348,6 +579,35 @@ Create Segment
 
 Create a segment visible and usable in the dashboard and API - Required: OneSignal Paid Plan The Create Segment method is used when you want your server to programmatically create a segment instead of using the OneSignal Dashboard UI. Just like creating Segments from the dashboard you can pass in filters with multiple \"AND\" or \"OR\" operator's. &#x1F6A7; Does Not Update Segments This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segment endpoint and re-create it with this endpoint to edit. 
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let segment: Option<models::Segment> = None;
+
+    match default_api::create_segment(&configuration, app_id, segment).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_segment failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_segment failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -380,6 +640,37 @@ Name | Type | Description  | Required | Notes
 
 Creates a new Subscription under the User provided. Useful to add email addresses and SMS numbers to the User.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+    let subscription_body: models::SubscriptionBody = todo!();
+
+    match default_api::create_subscription(&configuration, app_id, alias_label, alias_id, subscription_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -414,6 +705,34 @@ Create template
 
 Create reusable message templates for push, email, and SMS channels.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let create_template_request: models::CreateTemplateRequest = todo!();
+
+    match default_api::create_template(&configuration, create_template_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_template failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_template failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -445,6 +764,35 @@ Name | Type | Description  | Required | Notes
 
 Creates a User, optionally Subscriptions owned by the User as well as Aliases. Aliases provided in the payload will be used to look up an existing User.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let user: models::User = todo!();
+
+    match default_api::create_user(&configuration, app_id, user).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("create_user failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("create_user failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -477,6 +825,35 @@ Name | Type | Description  | Required | Notes
 
 Deletes an alias by alias label
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+    let alias_label_to_delete: &str = "external_id";
+
+    match default_api::delete_alias(&configuration, app_id, alias_label, alias_id, alias_label_to_delete).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_alias failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_alias failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -511,6 +888,33 @@ Delete API key
 
 Delete a specific Rich Authentication Token (App API Key) for a OneSignal app. Requires your Organization API Key and the token’s unique ID, not the token value itself.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
+
+    match default_api::delete_api_key(&configuration, app_id, token_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_api_key failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_api_key failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -543,6 +947,33 @@ Delete Segment
 
 Delete a segment (not user devices) - Required: OneSignal Paid Plan You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app. The segment_id can be found in the URL of the segment when viewing it in the dashboard. 
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let segment_id: &str = "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e";
+
+    match default_api::delete_segment(&configuration, app_id, segment_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_segment failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_segment failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -575,6 +1006,33 @@ Name | Type | Description  | Required | Notes
 
 Deletes the Subscription.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
+
+    match default_api::delete_subscription(&configuration, app_id, subscription_id).await {
+        Ok(_) => println!("delete_subscription succeeded"),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -607,6 +1065,33 @@ Delete template
 
 Delete a template by id.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+
+    match default_api::delete_template(&configuration, template_id, app_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_template failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_template failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -639,6 +1124,34 @@ Name | Type | Description  | Required | Notes
 
 Removes the User identified by (:alias_label, :alias_id), and all Subscriptions and Aliases
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+
+    match default_api::delete_user(&configuration, app_id, alias_label, alias_id).await {
+        Ok(_) => println!("delete_user succeeded"),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("delete_user failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("delete_user failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -672,6 +1185,33 @@ Export CSV of Events
 
 Generate a compressed CSV report of all of the events data for a notification. This will return a URL immediately upon success but it may take several minutes for the CSV to become available at that URL depending on the volume of data. Only one export can be in-progress per OneSignal account at any given time.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+
+    match default_api::export_events(&configuration, notification_id, app_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("export_events failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("export_events failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -704,6 +1244,35 @@ Export CSV of Subscriptions
 
 Generate a compressed CSV export of all of your current user data This method can be used to generate a compressed CSV export of all of your current user data. It is a much faster alternative than retrieving this data using the /players API endpoint. The file will be compressed using GZip. The file may take several minutes to generate depending on the number of users in your app. The URL generated will be available for 3 days and includes random v4 uuid as part of the resource name to be unguessable. &#x1F6A7; 403 Error Responses          You can test if it is complete by making a GET request to the csv_file_url value. This file may take time to generate depending on how many device records are being pulled. If the file is not ready, a 403 error will be returned. Otherwise the file itself will be returned. &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs. &#x1F6A7; Concurrent Exports Only one concurrent export is allowed per OneSignal account. Please ensure you have successfully downloaded the .csv.gz file before exporting another app. CSV File Format: - Default Columns:   | Field | Details |   | --- | --- |   | id | OneSignal Player Id |   | identifier | Push Token |   | session_count | Number of times they visited the app or site   | language | Device language code |   | timezone | Number of seconds away from UTC. Example: -28800 |   | game_version | Version of your mobile app gathered from Android Studio versionCode in your App/build.gradle and iOS uses kCFBundleVersionKey in Xcode. |   | device_os | Device Operating System Version. Example: 80 = Chrome 80, 9 = Android 9 |   | device_type | Device Operating System Type |   | device_model | Device Hardware String Code. Example: Mobile Web Subscribers will have `Linux armv` |   | ad_id | Based on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut means user turned off Advertising tracking on the device. |   | tags | Current OneSignal Data Tags on the device. |   | last_active | Date and time the user last opened the mobile app or visited the site. |   | playtime | Total amount of time in seconds the user had the mobile app open. |   | amount_spent |  Mobile only - amount spent in USD on In-App Purchases. |    | created_at | Date and time the device record was created in OneSignal. Mobile - first time they opened the app with OneSignal SDK. Web - first time the user subscribed to the site. |   | invalid_identifier | t = unsubscribed, f = subscibed |   | badge_count | Current number of badges on the device | - Extra Columns:   | Field | Details |   | --- | --- |   | external_user_id | Your User Id set on the device |   | notification_types | Notification types |   | location | Location points (Latitude and Longitude) set on the device. |   | country | Country code |   | rooted | Android device rooted or not |   | ip | IP Address of the device if being tracked. See Handling Personal Data. |   | web_auth | Web Only authorization key. |   | web_p256 | Web Only p256 key. | 
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let export_subscriptions_request_body: Option<models::ExportSubscriptionsRequestBody> = None;
+
+    match default_api::export_subscriptions(&configuration, app_id, export_subscriptions_request_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("export_subscriptions failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("export_subscriptions failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -736,6 +1305,34 @@ Name | Type | Description  | Required | Notes
 
 Lists all Aliases for the User identified by (:alias_label, :alias_id).
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+
+    match default_api::get_aliases(&configuration, app_id, alias_label, alias_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_aliases failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_aliases failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -769,6 +1366,33 @@ Name | Type | Description  | Required | Notes
 
 Lists all Aliases for the User identified by :subscription_id.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
+
+    match default_api::get_aliases_by_subscription(&configuration, app_id, subscription_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_aliases_by_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_aliases_by_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -801,6 +1425,32 @@ View an app
 
 View the details of a single OneSignal app
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+
+    match default_api::get_app(&configuration, app_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_app failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_app failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -832,6 +1482,29 @@ View apps
 
 View the details of all of your current OneSignal apps
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    match default_api::get_apps(&configuration).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_apps failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_apps failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -860,6 +1533,33 @@ View notification
 
 View the details of a single notification and outcomes associated with it
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
+
+    match default_api::get_notification(&configuration, app_id, notification_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_notification failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_notification failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -892,6 +1592,35 @@ Notification History
 
 -> View the devices sent a message - OneSignal Paid Plan Required This method will return all devices that were sent the given notification_id of an Email or Push Notification if used within 7 days of the date sent. After 7 days of the sending date, the message history data will be unavailable. After a successful response is received, the destination url may be polled until the file becomes available. Most exports are done in ~1-3 minutes, so setting a poll interval of 10 seconds should be adequate. For use cases that are not meant to be consumed by a script, an email will be sent to the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan. Turn on Send History via OneSignal API in Settings -> Analytics. Cannot get data before this was turned on. Must be called within 7 days after sending the message. Messages targeting under 1000 recipients will not have \"sent\" events recorded, but will show \"clicked\" events. Requires your OneSignal App's REST API Key, available in Keys & IDs.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
+    let get_notification_history_request_body: models::GetNotificationHistoryRequestBody = todo!();
+
+    match default_api::get_notification_history(&configuration, notification_id, get_notification_history_request_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_notification_history failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_notification_history failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -924,6 +1653,35 @@ View notifications
 
 View the details of multiple notifications
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let limit: Option<i32> = None;
+    let offset: Option<i32> = None;
+    let kind: Option<i32> = None;
+
+    match default_api::get_notifications(&configuration, app_id, limit, offset, kind).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_notifications failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_notifications failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -958,6 +1716,37 @@ View Outcomes
 
 View the details of all the outcomes associated with your app  &#x1F6A7; Requires Authentication Key Requires your OneSignal App's REST API Key, available in Keys & IDs.  &#x1F6A7; Outcome Data Limitations Outcomes are only accessible for around 30 days before deleted from our servers. You will need to export this data every month if you want to keep it. 
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let outcome_names: &str = "os__session_duration.count,os__click.count";
+    let outcome_names2: Option<&str> = None;
+    let outcome_time_range: Option<&str> = None;
+    let outcome_platforms: Option<&str> = None;
+    let outcome_attribution: Option<&str> = None;
+
+    match default_api::get_outcomes(&configuration, app_id, outcome_names, outcome_names2, outcome_time_range, outcome_platforms, outcome_attribution).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_outcomes failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_outcomes failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -994,6 +1783,34 @@ Get Segments
 
 Returns an array of segments from an app.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let offset: Option<i32> = None;
+    let limit: Option<i32> = None;
+
+    match default_api::get_segments(&configuration, app_id, offset, limit).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_segments failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_segments failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1027,6 +1844,34 @@ Name | Type | Description  | Required | Notes
 
 Returns the User’s properties, Aliases, and Subscriptions.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+
+    match default_api::get_user(&configuration, app_id, alias_label, alias_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("get_user failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("get_user failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1060,6 +1905,33 @@ Rotate API key
 
 Rotate a Rich Authentication Token (App API Key) for a OneSignal app. Rotating a key revokes the current token and generates a new one under the same configuration—ideal when a token is lost or compromised but you don’t want to recreate and reconfigure it from scratch.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
+
+    match default_api::rotate_api_key(&configuration, app_id, token_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("rotate_api_key failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("rotate_api_key failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1092,6 +1964,36 @@ Start Live Activity
 
 Remotely start a Live Activity on iOS devices via OneSignal’s REST API.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let activity_type: &str = "order_status";
+    let start_live_activity_request: models::StartLiveActivityRequest = todo!();
+
+    match default_api::start_live_activity(&configuration, app_id, activity_type, start_live_activity_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("start_live_activity failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("start_live_activity failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1125,6 +2027,36 @@ Name | Type | Description  | Required | Notes
 
 Transfers this Subscription to the User identified by the identity in the payload.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
+    let transfer_subscription_request_body: models::TransferSubscriptionRequestBody = todo!();
+
+    match default_api::transfer_subscription(&configuration, app_id, subscription_id, transfer_subscription_request_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("transfer_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("transfer_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1158,6 +2090,34 @@ Unsubscribe with token
 
 Unsubscribe an email with a token when using your own custom email unsubscribe landing page
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
+    let token: &str = "YOUR_TOKEN_ID";
+
+    match default_api::unsubscribe_email_with_token(&configuration, app_id, notification_id, token).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("unsubscribe_email_with_token failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("unsubscribe_email_with_token failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1191,6 +2151,36 @@ Update API key
 
 Update a Rich Authentication Token (App API Key) for a OneSignal app.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
+    let update_api_key_request: models::UpdateApiKeyRequest = todo!();
+
+    match default_api::update_api_key(&configuration, app_id, token_id, update_api_key_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_api_key failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_api_key failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1224,6 +2214,35 @@ Update an app
 
 Updates the name or configuration settings of an existing OneSignal app
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app: models::App = todo!();
+
+    match default_api::update_app(&configuration, app_id, app).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_app failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_app failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1256,6 +2275,36 @@ Update a Live Activity via Push
 
 Updates a specified live activity.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let activity_id: &str = "12345";
+    let update_live_activity_request: models::UpdateLiveActivityRequest = todo!();
+
+    match default_api::update_live_activity(&configuration, app_id, activity_id, update_live_activity_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_live_activity failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_live_activity failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1289,6 +2338,36 @@ Name | Type | Description  | Required | Notes
 
 Updates an existing Subscription’s properties.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
+    let subscription_body: models::SubscriptionBody = todo!();
+
+    match default_api::update_subscription(&configuration, app_id, subscription_id, subscription_body).await {
+        Ok(_) => println!("update_subscription succeeded"),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_subscription failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_subscription failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1322,6 +2401,37 @@ Update subscription by token
 
 Update properties on an existing OneSignal subscription using its token.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let token_type: &str = "Email";
+    let token: &str = "user@example.com";
+    let subscription_body: models::SubscriptionBody = todo!();
+
+    match default_api::update_subscription_by_token(&configuration, app_id, token_type, token, subscription_body).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_subscription_by_token failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_subscription_by_token failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1356,6 +2466,36 @@ Update template
 
 Update an existing template.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let update_template_request: models::UpdateTemplateRequest = todo!();
+
+    match default_api::update_template(&configuration, template_id, app_id, update_template_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_template failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_template failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1389,6 +2529,37 @@ Name | Type | Description  | Required | Notes
 
 Updates an existing User’s properties.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let alias_label: &str = "external_id";
+    let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
+    let update_user_request: models::UpdateUserRequest = todo!();
+
+    match default_api::update_user(&configuration, app_id, alias_label, alias_id, update_user_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("update_user failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("update_user failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1423,6 +2594,32 @@ View API keys
 
 View the details of all of your current app API keys (Rich Authentication Token) for a single OneSignal app.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+
+    match default_api::view_api_keys(&configuration, app_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("view_api_keys failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("view_api_keys failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1454,6 +2651,33 @@ View template
 
 Fetch a single template by id.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+
+    match default_api::view_template(&configuration, template_id, app_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("view_template failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("view_template failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
@@ -1486,6 +2710,35 @@ View templates
 
 List templates for an app.
 
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let limit: Option<i32> = None;
+    let offset: Option<i32> = None;
+    let channel: Option<&str> = None;
+
+    match default_api::view_templates(&configuration, app_id, limit, offset, channel).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
+            eprintln!("view_templates failed: HTTP {}", content.status);
+            eprintln!("Response Body: {}", content.content);
+        }
+        Err(e) => eprintln!("view_templates failed: {:?}", e),
+    }
+}
+```
 
 ### Parameters
 
