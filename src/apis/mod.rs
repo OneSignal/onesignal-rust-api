@@ -16,6 +16,63 @@ pub enum Error<T> {
     ResponseError(ResponseContent<T>),
 }
 
+impl <T> Error<T> {
+    /// The error messages carried by the response body, normalized to a flat
+    /// `Vec<String>` regardless of which envelope shape the API returned
+    /// (`{"errors": "..."}`, `{"errors": ["..."]}`,
+    /// `{"errors": [{"code": ..., "title": ...}]}`, or an object map such as
+    /// `{"errors": {"invalid_aliases": {...}}}`, surfaced as `"<key>: <value>"`
+    /// entries). Returns an empty `Vec` for non-response errors (network, serde,
+    /// IO) or when the body is not a recognizable error envelope. The raw
+    /// response remains available on the `ResponseError` variant.
+    pub fn error_messages(&self) -> Vec<String> {
+        let content = match self {
+            Error::ResponseError(response) => &response.content,
+            _ => return Vec::new(),
+        };
+
+        let parsed: serde_json::Value = match serde_json::from_str(content) {
+            Ok(value) => value,
+            Err(_) => return Vec::new(),
+        };
+
+        match parsed.get("errors") {
+            Some(serde_json::Value::String(message)) => vec![message.clone()],
+            Some(serde_json::Value::Array(items)) => items
+                .iter()
+                .filter_map(|item| match item {
+                    serde_json::Value::String(message) => Some(message.clone()),
+                    serde_json::Value::Object(object) => object
+                        .get("title")
+                        .filter(|value| !value.is_null() && value.as_str() != Some(""))
+                        .or_else(|| object.get("code"))
+                        .and_then(|value| match value {
+                            serde_json::Value::String(message) => Some(message.clone()),
+                            serde_json::Value::Null => None,
+                            other => Some(other.to_string()),
+                        }),
+                    _ => None,
+                })
+                .collect(),
+            Some(serde_json::Value::Object(map)) => {
+                // Object-shaped envelopes (e.g. {"invalid_aliases": {...}}) carry
+                // data under arbitrary keys; surface each so it isn't silently
+                // dropped. Key order is unspecified, so sort for deterministic output.
+                let mut messages: Vec<String> = map
+                    .iter()
+                    .map(|(key, value)| match value {
+                        serde_json::Value::String(message) => format!("{}: {}", key, message),
+                        other => format!("{}: {}", key, other),
+                    })
+                    .collect();
+                messages.sort();
+                messages
+            }
+            _ => Vec::new(),
+        }
+    }
+}
+
 impl <T> fmt::Display for Error<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let (module, e) = match self {
