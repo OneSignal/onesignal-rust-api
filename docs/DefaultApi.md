@@ -64,7 +64,7 @@ Every operation requires either a **REST API Key** (App-scoped, used by ~77% of 
 
 ### Error handling
 
-When a request fails, the future resolves to `Err(onesignal_rust_api::apis::Error<...>)`. Pattern-match on the `Error::ResponseError(content)` variant to access `content.status` (`reqwest::StatusCode`, the HTTP status code) and `content.content` (`String`, the raw JSON envelope). Other `Error` variants (`Reqwest`, `Serde`, `Io`) indicate transport or deserialization failures and don't carry a response body. Most envelopes match `{ "errors": ["..."] }` (an array of strings) but a few endpoints return `{ "errors": [{"code": ..., "title": ..., "meta": {...}}] }` (an array of structured error objects — used by `POST /apps/{app_id}/users` 409 conflict, see `CreateUserConflictResponse`), `{ "errors": "..." }` (string), or `{ "success": false }` (no `errors` field at all). Robust error-handling code should tolerate all four shapes.
+When a request fails, the future resolves to `Err(onesignal_rust_api::apis::Error<...>)`. Pattern-match on the `Error::ResponseError(content)` variant to access `content.status` (`reqwest::StatusCode`, the HTTP status code) and `content.content` (`String`, the raw JSON envelope). Other `Error` variants (`Reqwest`, `Serde`, `Io`) indicate transport or deserialization failures and don't carry a response body. Most envelopes match `{ "errors": ["..."] }` (an array of strings) but a few endpoints return `{ "errors": [{"code": ..., "title": ..., "meta": {...}}] }` (an array of structured error objects — used by `POST /apps/{app_id}/users` 409 conflict, see `CreateUserConflictResponse`), `{ "errors": "..." }` (string), or `{ "success": false }` (no `errors` field at all). Robust error-handling code should tolerate all four shapes. The `e.error_messages()` method does this for you, normalizing every shape to a flat `Vec<String>` (empty for non-response errors or a body with no `errors`).
 
 ### Polymorphic 200 from POST /notifications
 
@@ -105,9 +105,10 @@ async fn main() {
 
     match default_api::cancel_notification(&configuration, app_id, notification_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("cancel_notification failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("cancel_notification failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("cancel_notification failed: {:?}", e),
     }
@@ -167,9 +168,10 @@ async fn main() {
 
     match default_api::copy_template_to_app(&configuration, template_id, app_id, copy_template_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("copy_template_to_app failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("copy_template_to_app failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("copy_template_to_app failed: {:?}", e),
     }
@@ -231,9 +233,10 @@ async fn main() {
 
     match default_api::create_alias(&configuration, app_id, alias_label, alias_id, user_identity_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_alias failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_alias failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_alias failed: {:?}", e),
     }
@@ -295,9 +298,10 @@ async fn main() {
 
     match default_api::create_alias_by_subscription(&configuration, app_id, subscription_id, user_identity_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_alias_by_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_alias_by_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_alias_by_subscription failed: {:?}", e),
     }
@@ -357,9 +361,10 @@ async fn main() {
 
     match default_api::create_api_key(&configuration, app_id, create_api_key_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_api_key failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_api_key failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_api_key failed: {:?}", e),
     }
@@ -417,9 +422,10 @@ async fn main() {
 
     match default_api::create_app(&configuration, app).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_app failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_app failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_app failed: {:?}", e),
     }
@@ -477,9 +483,10 @@ async fn main() {
 
     match default_api::create_custom_events(&configuration, app_id, custom_events_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_custom_events failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_custom_events failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_custom_events failed: {:?}", e),
     }
@@ -628,9 +635,10 @@ async fn main() {
 
     match default_api::create_segment(&configuration, app_id, segment).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_segment failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_segment failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_segment failed: {:?}", e),
     }
@@ -691,9 +699,10 @@ async fn main() {
 
     match default_api::create_subscription(&configuration, app_id, alias_label, alias_id, subscription_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_subscription failed: {:?}", e),
     }
@@ -753,9 +762,10 @@ async fn main() {
 
     match default_api::create_template(&configuration, create_template_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_template failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_template failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_template failed: {:?}", e),
     }
@@ -813,9 +823,10 @@ async fn main() {
 
     match default_api::create_user(&configuration, app_id, user).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("create_user failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_user failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("create_user failed: {:?}", e),
     }
@@ -874,9 +885,10 @@ async fn main() {
 
     match default_api::delete_alias(&configuration, app_id, alias_label, alias_id, alias_label_to_delete).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_alias failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_alias failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_alias failed: {:?}", e),
     }
@@ -935,9 +947,10 @@ async fn main() {
 
     match default_api::delete_api_key(&configuration, app_id, token_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_api_key failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_api_key failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_api_key failed: {:?}", e),
     }
@@ -994,9 +1007,10 @@ async fn main() {
 
     match default_api::delete_segment(&configuration, app_id, segment_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_segment failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_segment failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_segment failed: {:?}", e),
     }
@@ -1053,9 +1067,10 @@ async fn main() {
 
     match default_api::delete_subscription(&configuration, app_id, subscription_id).await {
         Ok(_) => println!("delete_subscription succeeded"),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_subscription failed: {:?}", e),
     }
@@ -1112,9 +1127,10 @@ async fn main() {
 
     match default_api::delete_template(&configuration, template_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_template failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_template failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_template failed: {:?}", e),
     }
@@ -1172,9 +1188,10 @@ async fn main() {
 
     match default_api::delete_user(&configuration, app_id, alias_label, alias_id).await {
         Ok(_) => println!("delete_user succeeded"),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("delete_user failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_user failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("delete_user failed: {:?}", e),
     }
@@ -1232,9 +1249,10 @@ async fn main() {
 
     match default_api::export_events(&configuration, notification_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("export_events failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("export_events failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("export_events failed: {:?}", e),
     }
@@ -1293,9 +1311,10 @@ async fn main() {
 
     match default_api::export_subscriptions(&configuration, app_id, export_subscriptions_request_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("export_subscriptions failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("export_subscriptions failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("export_subscriptions failed: {:?}", e),
     }
@@ -1353,9 +1372,10 @@ async fn main() {
 
     match default_api::get_aliases(&configuration, app_id, alias_label, alias_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_aliases failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_aliases failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_aliases failed: {:?}", e),
     }
@@ -1413,9 +1433,10 @@ async fn main() {
 
     match default_api::get_aliases_by_subscription(&configuration, app_id, subscription_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_aliases_by_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_aliases_by_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_aliases_by_subscription failed: {:?}", e),
     }
@@ -1471,9 +1492,10 @@ async fn main() {
 
     match default_api::get_app(&configuration, app_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_app failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_app failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_app failed: {:?}", e),
     }
@@ -1525,9 +1547,10 @@ async fn main() {
 
     match default_api::get_apps(&configuration).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_apps failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_apps failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_apps failed: {:?}", e),
     }
@@ -1580,9 +1603,10 @@ async fn main() {
 
     match default_api::get_notification(&configuration, app_id, notification_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_notification failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_notification failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_notification failed: {:?}", e),
     }
@@ -1641,9 +1665,10 @@ async fn main() {
 
     match default_api::get_notification_history(&configuration, notification_id, get_notification_history_request_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_notification_history failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_notification_history failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_notification_history failed: {:?}", e),
     }
@@ -1702,9 +1727,10 @@ async fn main() {
 
     match default_api::get_notifications(&configuration, app_id, limit, offset, kind).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_notifications failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_notifications failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_notifications failed: {:?}", e),
     }
@@ -1767,9 +1793,10 @@ async fn main() {
 
     match default_api::get_outcomes(&configuration, app_id, outcome_names, outcome_names2, outcome_time_range, outcome_platforms, outcome_attribution).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_outcomes failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_outcomes failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_outcomes failed: {:?}", e),
     }
@@ -1831,9 +1858,10 @@ async fn main() {
 
     match default_api::get_segments(&configuration, app_id, offset, limit).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_segments failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_segments failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_segments failed: {:?}", e),
     }
@@ -1892,9 +1920,10 @@ async fn main() {
 
     match default_api::get_user(&configuration, app_id, alias_label, alias_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("get_user failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_user failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("get_user failed: {:?}", e),
     }
@@ -1952,9 +1981,10 @@ async fn main() {
 
     match default_api::rotate_api_key(&configuration, app_id, token_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("rotate_api_key failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("rotate_api_key failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("rotate_api_key failed: {:?}", e),
     }
@@ -2014,9 +2044,10 @@ async fn main() {
 
     match default_api::start_live_activity(&configuration, app_id, activity_type, start_live_activity_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("start_live_activity failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("start_live_activity failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("start_live_activity failed: {:?}", e),
     }
@@ -2077,9 +2108,10 @@ async fn main() {
 
     match default_api::transfer_subscription(&configuration, app_id, subscription_id, transfer_subscription_request_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("transfer_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("transfer_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("transfer_subscription failed: {:?}", e),
     }
@@ -2138,9 +2170,10 @@ async fn main() {
 
     match default_api::unsubscribe_email_with_token(&configuration, app_id, notification_id, token).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("unsubscribe_email_with_token failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("unsubscribe_email_with_token failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("unsubscribe_email_with_token failed: {:?}", e),
     }
@@ -2201,9 +2234,10 @@ async fn main() {
 
     match default_api::update_api_key(&configuration, app_id, token_id, update_api_key_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_api_key failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_api_key failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_api_key failed: {:?}", e),
     }
@@ -2263,9 +2297,10 @@ async fn main() {
 
     match default_api::update_app(&configuration, app_id, app).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_app failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_app failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_app failed: {:?}", e),
     }
@@ -2325,9 +2360,10 @@ async fn main() {
 
     match default_api::update_live_activity(&configuration, app_id, activity_id, update_live_activity_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_live_activity failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_live_activity failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_live_activity failed: {:?}", e),
     }
@@ -2388,9 +2424,10 @@ async fn main() {
 
     match default_api::update_subscription(&configuration, app_id, subscription_id, subscription_body).await {
         Ok(_) => println!("update_subscription succeeded"),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_subscription failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_subscription failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_subscription failed: {:?}", e),
     }
@@ -2452,9 +2489,10 @@ async fn main() {
 
     match default_api::update_subscription_by_token(&configuration, app_id, token_type, token, subscription_body).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_subscription_by_token failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_subscription_by_token failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_subscription_by_token failed: {:?}", e),
     }
@@ -2516,9 +2554,10 @@ async fn main() {
 
     match default_api::update_template(&configuration, template_id, app_id, update_template_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_template failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_template failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_template failed: {:?}", e),
     }
@@ -2580,9 +2619,10 @@ async fn main() {
 
     match default_api::update_user(&configuration, app_id, alias_label, alias_id, update_user_request).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("update_user failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_user failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("update_user failed: {:?}", e),
     }
@@ -2640,9 +2680,10 @@ async fn main() {
 
     match default_api::view_api_keys(&configuration, app_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("view_api_keys failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_api_keys failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("view_api_keys failed: {:?}", e),
     }
@@ -2698,9 +2739,10 @@ async fn main() {
 
     match default_api::view_template(&configuration, template_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("view_template failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_template failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("view_template failed: {:?}", e),
     }
@@ -2759,9 +2801,10 @@ async fn main() {
 
     match default_api::view_templates(&configuration, app_id, limit, offset, channel).await {
         Ok(resp) => println!("{:?}", resp),
-        Err(onesignal_rust_api::apis::Error::ResponseError(content)) => {
-            eprintln!("view_templates failed: HTTP {}", content.status);
-            eprintln!("Response Body: {}", content.content);
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_templates failed: {:?}", e.error_messages());
         }
         Err(e) => eprintln!("view_templates failed: {:?}", e),
     }
