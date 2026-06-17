@@ -7,4 +7,6 @@ extern crate url;
 extern crate reqwest;
 
 pub mod apis;
+pub mod helpers;
 pub mod models;
+pub mod errors;
