@@ -170,6 +170,53 @@ async fn send_once(
     }
 }
 
+/// The branch of a POST /notifications 200 response where a notification was
+/// created (`id` is a non-empty string). Shares the
+/// [`models::CreateNotificationSuccessResponse`] shape; see
+/// [`models::CreateNotificationSuccessResponse::as_sent`].
+pub type MessageSent = models::CreateNotificationSuccessResponse;
+
+/// The branch of a POST /notifications 200 response where NO notification was
+/// created (`id` is absent or empty); `errors` carries the reason. Shares the
+/// [`models::CreateNotificationSuccessResponse`] shape; see
+/// [`models::CreateNotificationSuccessResponse::as_not_sent`].
+pub type MessageNotSent = models::CreateNotificationSuccessResponse;
+
+impl models::CreateNotificationSuccessResponse {
+    /// Whether this is the [`MessageSent`] branch — a notification was created
+    /// (`id` is present and non-empty). Prefer this over inspecting `id`
+    /// directly.
+    pub fn is_message_sent(&self) -> bool {
+        self.id.as_deref().map_or(false, |id| !id.is_empty())
+    }
+
+    /// Whether this is the [`MessageNotSent`] branch — no notification was
+    /// created (`id` absent or empty); inspect `errors` for why.
+    pub fn is_message_not_sent(&self) -> bool {
+        !self.is_message_sent()
+    }
+
+    /// Returns `Some(self)` viewed as a [`MessageSent`] when a notification was
+    /// created, otherwise `None`.
+    pub fn as_sent(&self) -> Option<&MessageSent> {
+        if self.is_message_sent() {
+            Some(self)
+        } else {
+            None
+        }
+    }
+
+    /// Returns `Some(self)` viewed as a [`MessageNotSent`] when no notification
+    /// was created, otherwise `None`.
+    pub fn as_not_sent(&self) -> Option<&MessageNotSent> {
+        if self.is_message_not_sent() {
+            Some(self)
+        } else {
+            None
+        }
+    }
+}
+
 fn header_value(resp: &reqwest::Response, name: &str) -> Option<String> {
     resp.headers()
         .get(name)

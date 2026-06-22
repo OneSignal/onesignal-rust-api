@@ -1360,7 +1360,7 @@ pub async fn get_notification_history(configuration: &configuration::Configurati
 }
 
 /// View the details of multiple notifications
-pub async fn get_notifications(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>, kind: Option<i32>) -> Result<crate::models::NotificationSlice, Error<GetNotificationsError>> {
+pub async fn get_notifications(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>, kind: Option<i32>, time_offset: Option<&str>) -> Result<crate::models::NotificationSlice, Error<GetNotificationsError>> {
     let configuration = configuration;
 
     let client = &configuration.client;
@@ -1377,6 +1377,9 @@ pub async fn get_notifications(configuration: &configuration::Configuration, app
     }
     if let Some(ref str) = kind {
         req_builder = req_builder.query(&[("kind", &str.to_string())]);
+    }
+    if let Some(ref str) = time_offset {
+        req_builder = req_builder.query(&[("time_offset", &str.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
