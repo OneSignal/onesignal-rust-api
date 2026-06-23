@@ -19,6 +19,12 @@ pub struct NotificationSlice {
     pub offset: Option<i32>,
     #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
     pub limit: Option<i32>,
+    /// The time_offset cursor specified in the request, if any.
+    #[serde(rename = "time_offset", skip_serializing_if = "Option::is_none")]
+    pub time_offset: Option<String>,
+    /// An opaque Base64 cursor token representing the next page of messages to fetch.  Present when time_offset was provided in the request.  Pass this value as time_offset on the next request to continue paginating.
+    #[serde(rename = "next_time_offset", skip_serializing_if = "Option::is_none")]
+    pub next_time_offset: Option<String>,
     #[serde(rename = "notifications", skip_serializing_if = "Option::is_none")]
     pub notifications: Option<Vec<crate::models::NotificationWithMeta>>,
 }
@@ -29,6 +35,8 @@ impl NotificationSlice {
             total_count: None,
             offset: None,
             limit: None,
+            time_offset: None,
+            next_time_offset: None,
             notifications: None,
         }
     }

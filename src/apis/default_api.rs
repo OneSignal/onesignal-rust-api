@@ -22,6 +22,7 @@ pub enum CancelNotificationError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -30,6 +31,7 @@ pub enum CancelNotificationError {
 #[serde(untagged)]
 pub enum CopyTemplateToAppError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -41,6 +43,7 @@ pub enum CreateAliasError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -52,6 +55,7 @@ pub enum CreateAliasBySubscriptionError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -60,6 +64,7 @@ pub enum CreateAliasBySubscriptionError {
 #[serde(untagged)]
 pub enum CreateApiKeyError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -69,6 +74,7 @@ pub enum CreateApiKeyError {
 pub enum CreateAppError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -79,6 +85,7 @@ pub enum CreateCustomEventsError {
     Status400(crate::models::GenericError),
     Status401(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -88,6 +95,7 @@ pub enum CreateCustomEventsError {
 pub enum CreateNotificationError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -98,6 +106,7 @@ pub enum CreateSegmentError {
     Status400(crate::models::GenericError),
     Status409(crate::models::CreateSegmentConflictResponse),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -109,6 +118,7 @@ pub enum CreateSubscriptionError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -118,6 +128,7 @@ pub enum CreateSubscriptionError {
 pub enum CreateTemplateError {
     Status400(crate::models::GenericError),
     Status422(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -128,6 +139,7 @@ pub enum CreateUserError {
     Status400(crate::models::GenericError),
     Status409(crate::models::CreateUserConflictResponse),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -139,6 +151,7 @@ pub enum DeleteAliasError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -147,6 +160,7 @@ pub enum DeleteAliasError {
 #[serde(untagged)]
 pub enum DeleteApiKeyError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -157,6 +171,7 @@ pub enum DeleteSegmentError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericSuccessBoolResponse),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -168,6 +183,7 @@ pub enum DeleteSubscriptionError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -177,6 +193,7 @@ pub enum DeleteSubscriptionError {
 pub enum DeleteTemplateError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -187,6 +204,7 @@ pub enum DeleteUserError {
     Status400(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -197,6 +215,7 @@ pub enum ExportEventsError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -206,6 +225,7 @@ pub enum ExportEventsError {
 pub enum ExportSubscriptionsError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -216,6 +236,7 @@ pub enum GetAliasesError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -225,6 +246,7 @@ pub enum GetAliasesError {
 pub enum GetAliasesBySubscriptionError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -234,6 +256,7 @@ pub enum GetAliasesBySubscriptionError {
 pub enum GetAppError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -243,6 +266,7 @@ pub enum GetAppError {
 pub enum GetAppsError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -253,6 +277,7 @@ pub enum GetNotificationError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -263,6 +288,7 @@ pub enum GetNotificationHistoryError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -272,6 +298,7 @@ pub enum GetNotificationHistoryError {
 pub enum GetNotificationsError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -281,6 +308,7 @@ pub enum GetNotificationsError {
 pub enum GetOutcomesError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -290,6 +318,7 @@ pub enum GetOutcomesError {
 pub enum GetSegmentsError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -300,6 +329,7 @@ pub enum GetUserError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -308,6 +338,7 @@ pub enum GetUserError {
 #[serde(untagged)]
 pub enum RotateApiKeyError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -317,6 +348,7 @@ pub enum RotateApiKeyError {
 pub enum StartLiveActivityError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -328,6 +360,7 @@ pub enum TransferSubscriptionError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -337,6 +370,7 @@ pub enum TransferSubscriptionError {
 pub enum UnsubscribeEmailWithTokenError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -345,6 +379,7 @@ pub enum UnsubscribeEmailWithTokenError {
 #[serde(untagged)]
 pub enum UpdateApiKeyError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -354,6 +389,7 @@ pub enum UpdateApiKeyError {
 pub enum UpdateAppError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -363,6 +399,7 @@ pub enum UpdateAppError {
 pub enum UpdateLiveActivityError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -374,6 +411,7 @@ pub enum UpdateSubscriptionError {
     Status404(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -383,6 +421,7 @@ pub enum UpdateSubscriptionError {
 pub enum UpdateSubscriptionByTokenError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -391,6 +430,7 @@ pub enum UpdateSubscriptionByTokenError {
 #[serde(untagged)]
 pub enum UpdateTemplateError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -401,6 +441,7 @@ pub enum UpdateUserError {
     Status400(crate::models::GenericError),
     Status409(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -409,6 +450,7 @@ pub enum UpdateUserError {
 #[serde(untagged)]
 pub enum ViewApiKeysError {
     Status400(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -418,6 +460,7 @@ pub enum ViewApiKeysError {
 pub enum ViewTemplateError {
     Status400(crate::models::GenericError),
     Status404(crate::models::GenericError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -427,6 +470,7 @@ pub enum ViewTemplateError {
 pub enum ViewTemplatesError {
     Status400(crate::models::GenericError),
     Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
     UnknownValue(serde_json::Value),
 }
 
@@ -1360,7 +1404,7 @@ pub async fn get_notification_history(configuration: &configuration::Configurati
 }
 
 /// View the details of multiple notifications
-pub async fn get_notifications(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>, kind: Option<i32>) -> Result<crate::models::NotificationSlice, Error<GetNotificationsError>> {
+pub async fn get_notifications(configuration: &configuration::Configuration, app_id: &str, limit: Option<i32>, offset: Option<i32>, kind: Option<i32>, time_offset: Option<&str>) -> Result<crate::models::NotificationSlice, Error<GetNotificationsError>> {
     let configuration = configuration;
 
     let client = &configuration.client;
@@ -1377,6 +1421,9 @@ pub async fn get_notifications(configuration: &configuration::Configuration, app
     }
     if let Some(ref str) = kind {
         req_builder = req_builder.query(&[("kind", &str.to_string())]);
+    }
+    if let Some(ref str) = time_offset {
+        req_builder = req_builder.query(&[("time_offset", &str.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
