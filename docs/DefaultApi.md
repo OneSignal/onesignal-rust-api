@@ -1768,7 +1768,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_notifications
 
-> crate::models::NotificationSlice get_notifications(app_id, limit, offset, kind)
+> crate::models::NotificationSlice get_notifications(app_id, limit, offset, kind, time_offset)
 View notifications
 
 View the details of multiple notifications
@@ -1791,8 +1791,9 @@ async fn main() {
     let limit: Option<i32> = None;
     let offset: Option<i32> = None;
     let kind: Option<i32> = None;
+    let time_offset: Option<&str> = None;
 
-    match default_api::get_notifications(&configuration, app_id, limit, offset, kind).await {
+    match default_api::get_notifications(&configuration, app_id, limit, offset, kind, time_offset).await {
         Ok(resp) => println!("{:?}", resp),
         Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
             // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
@@ -1813,6 +1814,7 @@ Name | Type | Description  | Required | Notes
 **limit** | Option<**i32**> | How many notifications to return.  Max is 50.  Default is 50. |  |
 **offset** | Option<**i32**> | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. |  |
 **kind** | Option<**i32**> | Kind of notifications returned:   * unset - All notification types (default)   * `0` - Dashboard only   * `1` - API only   * `3` - Automated only  |  |
+**time_offset** | Option<**String**> | Time-offset pagination cursor for sequential pulls of all messages.  Accepts either an ISO 8601 formatted timestamp (e.g. `2025-01-01T00:00:00.000Z`) or the opaque Base64 cursor token returned as `next_time_offset` in a prior response.  When set, results are sorted ascending by send_after and the standard `offset` parameter cannot be used.  Repeat the request with each `next_time_offset` until an empty notifications array is returned. |  |
 
 ### Return type
 
