@@ -107,7 +107,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
 
     match default_api::cancel_notification(&configuration, app_id, notification_id).await {
@@ -170,7 +170,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let copy_template_request: models::CopyTemplateRequest = todo!();
 
     match default_api::copy_template_to_app(&configuration, template_id, app_id, copy_template_request).await {
@@ -233,7 +233,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
     let user_identity_body: models::UserIdentityBody = todo!();
@@ -299,7 +299,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
     let user_identity_body: models::UserIdentityBody = todo!();
 
@@ -363,7 +363,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let create_api_key_request: models::CreateApiKeyRequest = todo!();
 
     match default_api::create_api_key(&configuration, app_id, create_api_key_request).await {
@@ -485,7 +485,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let custom_events_request: models::CustomEventsRequest = todo!();
 
     match default_api::create_custom_events(&configuration, app_id, custom_events_request).await {
@@ -550,6 +550,10 @@ async fn main() {
         en: Some("Hello from OneSignal!".to_string()),
         ..Default::default()
     }));
+    notification.headings = Some(Box::new(LanguageStringMap {
+        en: Some("Push Notification".to_string()),
+        ..Default::default()
+    }));
     let mut aliases = std::collections::HashMap::new();
     aliases.insert(
         "external_id".to_string(),
@@ -609,6 +613,10 @@ async fn main() {
     let mut notification = Notification::new("YOUR_APP_ID".to_string());
     notification.contents = Some(Box::new(LanguageStringMap {
         en: Some("Hello from OneSignal!".to_string()),
+        ..Default::default()
+    }));
+    notification.headings = Some(Box::new(LanguageStringMap {
+        en: Some("Push Notification".to_string()),
         ..Default::default()
     }));
     let mut aliases = std::collections::HashMap::new();
@@ -681,7 +689,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let segment: Option<models::Segment> = None;
 
     match default_api::create_segment(&configuration, app_id, segment).await {
@@ -743,7 +751,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
     let subscription_body: models::SubscriptionBody = todo!();
@@ -869,7 +877,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let user: models::User = todo!();
 
     match default_api::create_user(&configuration, app_id, user).await {
@@ -945,7 +953,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
     let alias_label_to_delete: &str = "external_id";
@@ -1009,7 +1017,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
 
     match default_api::delete_api_key(&configuration, app_id, token_id).await {
@@ -1069,7 +1077,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let segment_id: &str = "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e";
 
     match default_api::delete_segment(&configuration, app_id, segment_id).await {
@@ -1129,7 +1137,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
 
     match default_api::delete_subscription(&configuration, app_id, subscription_id).await {
@@ -1190,7 +1198,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
 
     match default_api::delete_template(&configuration, template_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
@@ -1249,7 +1257,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
 
@@ -1312,7 +1320,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
 
     match default_api::export_events(&configuration, notification_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
@@ -1373,7 +1381,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let export_subscriptions_request_body: Option<models::ExportSubscriptionsRequestBody> = None;
 
     match default_api::export_subscriptions(&configuration, app_id, export_subscriptions_request_body).await {
@@ -1433,7 +1441,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
 
@@ -1495,7 +1503,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
 
     match default_api::get_aliases_by_subscription(&configuration, app_id, subscription_id).await {
@@ -1555,7 +1563,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
 
     match default_api::get_app(&configuration, app_id).await {
         Ok(resp) => println!("{:?}", resp),
@@ -1665,7 +1673,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
 
     match default_api::get_notification(&configuration, app_id, notification_id).await {
@@ -1787,7 +1795,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let limit: Option<i32> = None;
     let offset: Option<i32> = None;
     let kind: Option<i32> = None;
@@ -1853,7 +1861,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let outcome_names: &str = "os__session_duration.count,os__click.count";
     let outcome_names2: Option<&str> = None;
     let outcome_time_range: Option<&str> = None;
@@ -1921,7 +1929,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let offset: Option<i32> = None;
     let limit: Option<i32> = None;
 
@@ -1983,7 +1991,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
 
@@ -2045,7 +2053,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
 
     match default_api::rotate_api_key(&configuration, app_id, token_id).await {
@@ -2107,7 +2115,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let activity_type: &str = "order_status";
     let start_live_activity_request: models::StartLiveActivityRequest = todo!();
 
@@ -2171,7 +2179,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
     let transfer_subscription_request_body: models::TransferSubscriptionRequestBody = todo!();
 
@@ -2233,7 +2241,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
     let token: &str = "YOUR_TOKEN_ID";
 
@@ -2297,7 +2305,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
     let update_api_key_request: models::UpdateApiKeyRequest = todo!();
 
@@ -2361,7 +2369,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let app: models::App = todo!();
 
     match default_api::update_app(&configuration, app_id, app).await {
@@ -2423,7 +2431,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let activity_id: &str = "12345";
     let update_live_activity_request: models::UpdateLiveActivityRequest = todo!();
 
@@ -2487,7 +2495,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
     let subscription_body: models::SubscriptionBody = todo!();
 
@@ -2551,7 +2559,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let token_type: &str = "Email";
     let token: &str = "user@example.com";
     let subscription_body: models::SubscriptionBody = todo!();
@@ -2618,7 +2626,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let update_template_request: models::UpdateTemplateRequest = todo!();
 
     match default_api::update_template(&configuration, template_id, app_id, update_template_request).await {
@@ -2681,7 +2689,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
     let update_user_request: models::UpdateUserRequest = todo!();
@@ -2745,7 +2753,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
 
     match default_api::view_api_keys(&configuration, app_id).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2804,7 +2812,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
 
     match default_api::view_template(&configuration, template_id, app_id).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2863,7 +2871,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app_id: &str = "00000000-0000-0000-0000-000000000000";
+    let app_id: &str = "YOUR_APP_ID";
     let limit: Option<i32> = None;
     let offset: Option<i32> = None;
     let channel: Option<&str> = None;
