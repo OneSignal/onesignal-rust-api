@@ -6,15 +6,15 @@ A powerful way to send personalized messages at scale and build effective custom
 
 For more information, please visit [https://onesignal.com](https://onesignal.com)
 
-- API version: 5.8.0
-- Package version: 5.8.0
+- API version: 5.9.0
+- Package version: 5.9.0
 
 ## Installation
 
 Add to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-onesignal-rust-api = "5.8.0"
+onesignal-rust-api = "5.9.0"
 ```
 
 ## Configuration
@@ -27,7 +27,7 @@ Every SDK requires authentication via API keys. Two key types are available:
 > **Warning:** Store your API keys in environment variables or a secrets manager. Never commit them to source control.
 
 ```rust
-use onesignal::apis::configuration::Configuration;
+use onesignal_rust_api::apis::configuration::Configuration;
 
 fn create_configuration() -> Configuration {
     let mut config = Configuration::new();
@@ -40,13 +40,14 @@ fn create_configuration() -> Configuration {
 ## Send a push notification
 
 ```rust
-use onesignal::apis::default_api;
-use onesignal::models::{Notification, StringMap};
+use onesignal_rust_api::apis::default_api;
+use onesignal_rust_api::models::{Notification, LanguageStringMap};
+use onesignal_rust_api::models::notification::TargetChannelType;
 
-let mut contents = StringMap::new();
+let mut contents = LanguageStringMap::new();
 contents.en = Some("Hello from OneSignal!".to_string());
 
-let mut headings = StringMap::new();
+let mut headings = LanguageStringMap::new();
 headings.en = Some("Push Notification".to_string());
 
 let mut notification = Notification::new("YOUR_APP_ID".to_string());
@@ -65,7 +66,7 @@ let mut notification = Notification::new("YOUR_APP_ID".to_string());
 notification.email_subject = Some("Important Update".to_string());
 notification.email_body = Some("<h1>Hello!</h1><p>This is an HTML email.</p>".to_string());
 notification.included_segments = Some(vec!["Subscribed Users".to_string()]);
-notification.channel_for_external_user_ids = Some("email".to_string());
+notification.target_channel = Some(TargetChannelType::Email);
 
 let response = default_api::create_notification(&config, notification).await;
 ```
@@ -73,13 +74,13 @@ let response = default_api::create_notification(&config, notification).await;
 ## Send an SMS
 
 ```rust
-let mut contents = StringMap::new();
+let mut contents = LanguageStringMap::new();
 contents.en = Some("Your SMS message content here".to_string());
 
 let mut notification = Notification::new("YOUR_APP_ID".to_string());
 notification.contents = Some(Box::new(contents));
 notification.included_segments = Some(vec!["Subscribed Users".to_string()]);
-notification.channel_for_external_user_ids = Some("sms".to_string());
+notification.target_channel = Some(TargetChannelType::Sms);
 notification.sms_from = Some("+15551234567".to_string());
 
 let response = default_api::create_notification(&config, notification).await;
