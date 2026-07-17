@@ -19,7 +19,7 @@ pub struct Filter {
     /// If `field` is `tag`, this field is *required* to specify `key` inside the tags.
     #[serde(rename = "key", skip_serializing_if = "Option::is_none")]
     pub key: Option<String>,
-    /// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator.
+    /// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator. For `in_array` and `not_in_array` relations, provide a comma-separated list of up to 20 values.
     #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
     pub value: Option<String>,
     /// If `field` is session-related, this is *required* to specify the number of hours before or after the user's session.
@@ -73,6 +73,10 @@ pub enum RelationType {
     TimeElapsedGt,
     #[serde(rename = "time_elapsed_lt")]
     TimeElapsedLt,
+    #[serde(rename = "in_array")]
+    InArray,
+    #[serde(rename = "not_in_array")]
+    NotInArray,
 }
 
 impl Default for RelationType {
