@@ -6,15 +6,15 @@ A powerful way to send personalized messages at scale and build effective custom
 
 For more information, please visit [https://onesignal.com](https://onesignal.com)
 
-- API version: 5.9.0
-- Package version: 5.9.0
+- API version: 5.10.0
+- Package version: 5.10.0
 
 ## Installation
 
 Add to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-onesignal-rust-api = "5.9.0"
+onesignal-rust-api = "5.10.0"
 ```
 
 ## Configuration
