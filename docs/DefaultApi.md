@@ -32,6 +32,7 @@ Method | HTTP request | Description
 [**get_notification_history**](DefaultApi.md#get_notification_history) | **POST** /notifications/{notification_id}/history | Notification History
 [**get_notifications**](DefaultApi.md#get_notifications) | **GET** /notifications | View notifications
 [**get_outcomes**](DefaultApi.md#get_outcomes) | **GET** /apps/{app_id}/outcomes | View Outcomes
+[**get_segment**](DefaultApi.md#get_segment) | **GET** /apps/{app_id}/segments/{segment_id} | View Segment
 [**get_segments**](DefaultApi.md#get_segments) | **GET** /apps/{app_id}/segments | Get Segments
 [**get_user**](DefaultApi.md#get_user) | **GET** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**rotate_api_key**](DefaultApi.md#rotate_api_key) | **POST** /apps/{app_id}/auth/tokens/{token_id}/rotate | Rotate API key
@@ -1895,6 +1896,68 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::OutcomesData**](OutcomesData.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## get_segment
+
+> crate::models::GetSegmentSuccessResponse get_segment(app_id, segment_id, include_segment_detail)
+View Segment
+
+Retrieve details for a single segment by its ID, including subscriber count and optionally segment metadata and filters.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let segment_id: &str = "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e";
+    let include_segment_detail: Option<bool> = None;
+
+    match default_api::get_segment(&configuration, app_id, segment_id, include_segment_detail).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_segment failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("get_segment failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**segment_id** | **String** | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | [required] |
+**include_segment_detail** | Option<**bool**> | Set to true to include segment metadata and filters in the response. |  |
+
+### Return type
+
+[**crate::models::GetSegmentSuccessResponse**](GetSegmentSuccessResponse.md)
 
 ### Authorization
 

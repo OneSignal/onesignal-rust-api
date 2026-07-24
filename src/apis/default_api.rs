@@ -312,6 +312,17 @@ pub enum GetOutcomesError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSegmentError {
+    Status400(crate::models::GenericError),
+    Status404(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_segments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1494,6 +1505,44 @@ pub async fn get_outcomes(configuration: &configuration::Configuration, app_id: 
         serde_json::from_str(&content).map_err(Error::from)
     } else {
         let entity: Option<GetOutcomesError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
+/// Retrieve details for a single segment by its ID, including subscriber count and optionally segment metadata and filters.
+pub async fn get_segment(configuration: &configuration::Configuration, app_id: &str, segment_id: &str, include_segment_detail: Option<bool>) -> Result<crate::models::GetSegmentSuccessResponse, Error<GetSegmentError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/apps/{app_id}/segments/{segment_id}", configuration.base_path, app_id=crate::apis::urlencode(app_id), segment_id=crate::apis::urlencode(segment_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
+
+    if let Some(ref str) = include_segment_detail {
+        req_builder = req_builder.query(&[("include-segment-detail", &str.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.10.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<GetSegmentError> = serde_json::from_str(&content).ok();
         let error = ResponseContent { status: status, content: content, entity: entity };
         Err(Error::ResponseError(error))
     }
