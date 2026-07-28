@@ -32,8 +32,10 @@ Method | HTTP request | Description
 [**get_notification_history**](DefaultApi.md#get_notification_history) | **POST** /notifications/{notification_id}/history | Notification History
 [**get_notifications**](DefaultApi.md#get_notifications) | **GET** /notifications | View notifications
 [**get_outcomes**](DefaultApi.md#get_outcomes) | **GET** /apps/{app_id}/outcomes | View Outcomes
+[**get_segment**](DefaultApi.md#get_segment) | **GET** /apps/{app_id}/segments/{segment_id} | View Segment
 [**get_segments**](DefaultApi.md#get_segments) | **GET** /apps/{app_id}/segments | Get Segments
 [**get_user**](DefaultApi.md#get_user) | **GET** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**list_audit_logs**](DefaultApi.md#list_audit_logs) | **GET** /organizations/{organization_id}/audit_logs | List audit logs
 [**rotate_api_key**](DefaultApi.md#rotate_api_key) | **POST** /apps/{app_id}/auth/tokens/{token_id}/rotate | Rotate API key
 [**start_live_activity**](DefaultApi.md#start_live_activity) | **POST** /apps/{app_id}/activities/activity/{activity_type} | Start Live Activity
 [**transfer_subscription**](DefaultApi.md#transfer_subscription) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id}/owner | 
@@ -41,6 +43,7 @@ Method | HTTP request | Description
 [**update_api_key**](DefaultApi.md#update_api_key) | **PATCH** /apps/{app_id}/auth/tokens/{token_id} | Update API key
 [**update_app**](DefaultApi.md#update_app) | **PUT** /apps/{app_id} | Update an app
 [**update_live_activity**](DefaultApi.md#update_live_activity) | **POST** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
+[**update_segment**](DefaultApi.md#update_segment) | **PATCH** /apps/{app_id}/segments/{segment_id} | Update Segment
 [**update_subscription**](DefaultApi.md#update_subscription) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**update_subscription_by_token**](DefaultApi.md#update_subscription_by_token) | **PATCH** /apps/{app_id}/subscriptions_by_token/{token_type}/{token} | Update subscription by token
 [**update_template**](DefaultApi.md#update_template) | **PATCH** /templates/{template_id} | Update template
@@ -1908,6 +1911,68 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
+## get_segment
+
+> crate::models::GetSegmentSuccessResponse get_segment(app_id, segment_id, include_segment_detail)
+View Segment
+
+Retrieve details for a single segment by its ID, including subscriber count and optionally segment metadata and filters.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let segment_id: &str = "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e";
+    let include_segment_detail: Option<bool> = None;
+
+    match default_api::get_segment(&configuration, app_id, segment_id, include_segment_detail).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_segment failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("get_segment failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**segment_id** | **String** | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | [required] |
+**include_segment_detail** | Option<**bool**> | Set to true to include segment metadata and filters in the response. |  |
+
+### Return type
+
+[**crate::models::GetSegmentSuccessResponse**](GetSegmentSuccessResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
 ## get_segments
 
 > crate::models::GetSegmentsSuccessResponse get_segments(app_id, offset, limit)
@@ -2023,6 +2088,86 @@ Name | Type | Description  | Required | Notes
 ### Authorization
 
 [rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## list_audit_logs
+
+> crate::models::ListAuditLogsSuccessResponse list_audit_logs(organization_id, start_time, end_time, cursor, limit, app_ids, actions, actor_ids, actor_emails, target_types, target_ids, ip_addresses)
+List audit logs
+
+Retrieve a paginated, time-scoped list of audit log events for an organization. Requires an Enterprise plan with the audit logs entitlement enabled.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.organization_api_key_token = Some("YOUR_ORGANIZATION_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let organization_id: &str = "YOUR_ORG_ID";
+    let start_time: Option<&str> = None;
+    let end_time: Option<&str> = None;
+    let cursor: Option<&str> = None;
+    let limit: Option<i32> = None;
+    let app_ids: Option<Vec<String>> = None;
+    let actions: Option<Vec<String>> = None;
+    let actor_ids: Option<Vec<String>> = None;
+    let actor_emails: Option<Vec<String>> = None;
+    let target_types: Option<Vec<String>> = None;
+    let target_ids: Option<Vec<String>> = None;
+    let ip_addresses: Option<Vec<String>> = None;
+
+    match default_api::list_audit_logs(&configuration, organization_id, start_time, end_time, cursor, limit, app_ids, actions, actor_ids, actor_emails, target_types, target_ids, ip_addresses).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("list_audit_logs failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("list_audit_logs failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**organization_id** | **String** | The UUID of the organization to retrieve audit logs for. Must match the authenticated Organization API Key. | [required] |
+**start_time** | Option<**String**> | Start of the time range in ISO 8601 format (e.g. 2026-02-01T00:00:00Z). Required unless cursor is provided. Must be within the last 90 days. |  |
+**end_time** | Option<**String**> | End of the time range in ISO 8601 format. Defaults to the current time. Must be after start_time. |  |
+**cursor** | Option<**String**> | Pagination cursor returned in a previous response as next_cursor. When provided, start_time and end_time are ignored. |  |
+**limit** | Option<**i32**> | Maximum number of events to return per page. Minimum 1, maximum 100. Values outside this range are clamped automatically by the server. |  |
+**app_ids** | Option<[**Vec<String>**](String.md)> | Filter events by app UUID. Accepts up to 10 values. Org-level events are always included. |  |
+**actions** | Option<[**Vec<String>**](String.md)> | Filter by action type (e.g. notification.sent, segment.created). Accepts up to 20 values. |  |
+**actor_ids** | Option<[**Vec<String>**](String.md)> | Filter by actor UUID (the user or service that performed the action). Accepts up to 10 values. |  |
+**actor_emails** | Option<[**Vec<String>**](String.md)> | Filter by actor email address. Accepts up to 10 values. |  |
+**target_types** | Option<[**Vec<String>**](String.md)> | Filter by the type of resource the action was performed on (e.g. notification, segment, journey). Accepts up to 10 values. |  |
+**target_ids** | Option<[**Vec<String>**](String.md)> | Filter by the UUID of the resource the action was performed on. Accepts up to 10 values. |  |
+**ip_addresses** | Option<[**Vec<String>**](String.md)> | Filter by the IP address the action originated from. Accepts up to 10 values. |  |
+
+### Return type
+
+[**crate::models::ListAuditLogsSuccessResponse**](ListAuditLogsSuccessResponse.md)
+
+### Authorization
+
+[organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
@@ -2459,6 +2604,70 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::UpdateLiveActivitySuccessResponse**](UpdateLiveActivitySuccessResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## update_segment
+
+> crate::models::UpdateSegmentSuccessResponse update_segment(app_id, segment_id, update_segment_request)
+Update Segment
+
+Update an existing segment's name and/or filters. The name parameter is always required. When filters are provided, all existing filters are replaced with the new ones.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let segment_id: &str = "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e";
+    let update_segment_request: Option<models::UpdateSegmentRequest> = None;
+
+    match default_api::update_segment(&configuration, app_id, segment_id, update_segment_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_segment failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("update_segment failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
+**segment_id** | **String** | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | [required] |
+**update_segment_request** | Option<[**UpdateSegmentRequest**](UpdateSegmentRequest.md)> |  |  |
+
+### Return type
+
+[**crate::models::UpdateSegmentSuccessResponse**](UpdateSegmentSuccessResponse.md)
 
 ### Authorization
 
