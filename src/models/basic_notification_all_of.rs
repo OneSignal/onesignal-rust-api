@@ -100,6 +100,9 @@ pub struct BasicNotificationAllOf {
     /// Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL. 
     #[serde(rename = "big_picture", skip_serializing_if = "Option::is_none")]
     pub big_picture: Option<String>,
+    /// Channel: Push Notifications Platform: All Picture to display on all platforms that support it. Must be a URL to an image file. Platform-specific picture fields (big_picture, huawei_big_picture, adm_big_picture, chrome_web_image, ios_attachments, firefox_icon) take precedence over this value when set. 
+    #[serde(rename = "global_image", skip_serializing_if = "Option::is_none")]
+    pub global_image: Option<String>,
     /// Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL. 
     #[serde(rename = "huawei_big_picture", skip_serializing_if = "Option::is_none")]
     pub huawei_big_picture: Option<String>,
@@ -350,6 +353,7 @@ impl BasicNotificationAllOf {
             mutable_content: None,
             target_content_identifier: None,
             big_picture: None,
+            global_image: None,
             huawei_big_picture: None,
             adm_big_picture: None,
             chrome_big_picture: None,

@@ -1160,7 +1160,7 @@ pub async fn export_events(configuration: &configuration::Configuration, notific
 
     let client = &configuration.client;
 
-    let uri_str = format!("{}/notifications/{notification_id}/export_events?app_id={app_id}", configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
+    let uri_str = format!("{}/notifications/{notification_id}/export_events", configuration.base_path, notification_id=crate::apis::urlencode(notification_id));
     let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
 
     req_builder = req_builder.query(&[("app_id", &app_id.to_string())]);
