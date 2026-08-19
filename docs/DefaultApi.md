@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**create_api_key**](DefaultApi.md#create_api_key) | **POST** /apps/{app_id}/auth/tokens | Create API key
 [**create_app**](DefaultApi.md#create_app) | **POST** /apps | Create an app
 [**create_custom_events**](DefaultApi.md#create_custom_events) | **POST** /apps/{app_id}/custom_events | Create custom events
+[**create_journey**](DefaultApi.md#create_journey) | **POST** /apps/{app_id}/journeys | Create journey
 [**create_notification**](DefaultApi.md#create_notification) | **POST** /notifications | Create notification
 [**create_segment**](DefaultApi.md#create_segment) | **POST** /apps/{app_id}/segments | Create Segment
 [**create_subscription**](DefaultApi.md#create_subscription) | **POST** /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions | 
@@ -18,6 +19,7 @@ Method | HTTP request | Description
 [**create_user**](DefaultApi.md#create_user) | **POST** /apps/{app_id}/users | 
 [**delete_alias**](DefaultApi.md#delete_alias) | **DELETE** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete} | 
 [**delete_api_key**](DefaultApi.md#delete_api_key) | **DELETE** /apps/{app_id}/auth/tokens/{token_id} | Delete API key
+[**delete_journey**](DefaultApi.md#delete_journey) | **DELETE** /apps/{app_id}/journeys/{journey_id} | Delete journey
 [**delete_segment**](DefaultApi.md#delete_segment) | **DELETE** /apps/{app_id}/segments/{segment_id} | Delete Segment
 [**delete_subscription**](DefaultApi.md#delete_subscription) | **DELETE** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**delete_template**](DefaultApi.md#delete_template) | **DELETE** /templates/{template_id} | Delete template
@@ -42,6 +44,8 @@ Method | HTTP request | Description
 [**unsubscribe_email_with_token**](DefaultApi.md#unsubscribe_email_with_token) | **POST** /apps/{app_id}/notifications/{notification_id}/unsubscribe | Unsubscribe with token
 [**update_api_key**](DefaultApi.md#update_api_key) | **PATCH** /apps/{app_id}/auth/tokens/{token_id} | Update API key
 [**update_app**](DefaultApi.md#update_app) | **PUT** /apps/{app_id} | Update an app
+[**update_journey**](DefaultApi.md#update_journey) | **PATCH** /apps/{app_id}/journeys/{journey_id} | Update journey
+[**update_journey_node**](DefaultApi.md#update_journey_node) | **PATCH** /apps/{app_id}/journeys/{journey_id}/nodes/{node_id} | Update journey node
 [**update_live_activity**](DefaultApi.md#update_live_activity) | **POST** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**update_segment**](DefaultApi.md#update_segment) | **PATCH** /apps/{app_id}/segments/{segment_id} | Update Segment
 [**update_subscription**](DefaultApi.md#update_subscription) | **PATCH** /apps/{app_id}/subscriptions/{subscription_id} | 
@@ -49,6 +53,9 @@ Method | HTTP request | Description
 [**update_template**](DefaultApi.md#update_template) | **PATCH** /templates/{template_id} | Update template
 [**update_user**](DefaultApi.md#update_user) | **PATCH** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**view_api_keys**](DefaultApi.md#view_api_keys) | **GET** /apps/{app_id}/auth/tokens | View API keys
+[**view_journey**](DefaultApi.md#view_journey) | **GET** /apps/{app_id}/journeys/{journey_id} | View journey
+[**view_journey_stats**](DefaultApi.md#view_journey_stats) | **GET** /apps/{app_id}/journeys/{journey_id}/stats | View journey stats
+[**view_journeys**](DefaultApi.md#view_journeys) | **GET** /apps/{app_id}/journeys | View journeys
 [**view_template**](DefaultApi.md#view_template) | **GET** /templates/{template_id} | View template
 [**view_templates**](DefaultApi.md#view_templates) | **GET** /templates | View templates
 
@@ -514,6 +521,68 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**serde_json::Value**](serde_json::Value.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## create_journey
+
+> crate::models::Journey create_journey(app_id, create_journey_request)
+Create journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Create a new journey with an audience and a node graph. Journeys are always created in the draft state. The authenticated App API key must have permission to create journeys.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let create_journey_request: models::CreateJourneyRequest = todo!();
+
+    match default_api::create_journey(&configuration, app_id, create_journey_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("create_journey failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("create_journey failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**create_journey_request** | [**CreateJourneyRequest**](CreateJourneyRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::Journey**](Journey.md)
 
 ### Authorization
 
@@ -1050,6 +1119,66 @@ Name | Type | Description  | Required | Notes
 ### Authorization
 
 [organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## delete_journey
+
+> crate::models::GenericSuccessBoolResponse delete_journey(app_id, journey_id)
+Delete journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Permanently delete a journey by its UUID. Returns { \"success\": true } on success. The authenticated App API key must have permission to delete journeys. Deleting a journey stops any in-flight users and cannot be undone. Archive a running journey instead if you need to keep its data.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+
+    match default_api::delete_journey(&configuration, app_id, journey_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("delete_journey failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("delete_journey failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey to delete. | [required] |
+
+### Return type
+
+[**crate::models::GenericSuccessBoolResponse**](GenericSuccessBoolResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
@@ -2553,6 +2682,136 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
+## update_journey
+
+> crate::models::Journey update_journey(app_id, journey_id, update_journey_request)
+Update journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Apply a partial update to a journey using JSON Merge Patch (RFC 7396). Send only the fields you want to change; omitted fields are left unchanged. A null value clears a nullable field, and arrays such as nodes are replaced wholesale. Set state to active to activate a draft journey.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+    let update_journey_request: models::UpdateJourneyRequest = todo!();
+
+    match default_api::update_journey(&configuration, app_id, journey_id, update_journey_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_journey failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("update_journey failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey to update. | [required] |
+**update_journey_request** | [**UpdateJourneyRequest**](UpdateJourneyRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::Journey**](Journey.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## update_journey_node
+
+> crate::models::Journey update_journey_node(app_id, journey_id, node_id, update_journey_node_request)
+Update journey node
+
+The Journeys API is in beta. Endpoints and response fields can still change. Apply a partial update to a single node, located by its server-assigned id, using JSON Merge Patch (RFC 7396). Send only the node fields you want to change; the rest of the node and the rest of the journey graph are left untouched. Returns the full updated journey.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+    let node_id: &str = "YOUR_NODE_ID";
+    let update_journey_node_request: models::UpdateJourneyNodeRequest = todo!();
+
+    match default_api::update_journey_node(&configuration, app_id, journey_id, node_id, update_journey_node_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("update_journey_node failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("update_journey_node failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey that owns the node. | [required] |
+**node_id** | **String** | Server-assigned UUID of the node to update, from a prior View journey fetch. | [required] |
+**update_journey_node_request** | [**UpdateJourneyNodeRequest**](UpdateJourneyNodeRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::Journey**](Journey.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
 ## update_live_activity
 
 > crate::models::UpdateLiveActivitySuccessResponse update_live_activity(app_id, activity_id, update_live_activity_request)
@@ -2990,6 +3249,188 @@ Name | Type | Description  | Required | Notes
 ### Authorization
 
 [organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## view_journey
+
+> crate::models::Journey view_journey(app_id, journey_id)
+View journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Retrieve the full configuration of a single journey by its UUID, including its audience and node graph.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+
+    match default_api::view_journey(&configuration, app_id, journey_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_journey failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("view_journey failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey to retrieve. | [required] |
+
+### Return type
+
+[**crate::models::Journey**](Journey.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## view_journey_stats
+
+> crate::models::JourneyStats view_journey_stats(app_id, journey_id)
+View journey stats
+
+The Journeys API is in beta. Endpoints and response fields can still change. Retrieve performance stats for a single journey: journey-level entry and exit counts, per-node counts keyed by node id, per-branch counts keyed by branch id, and channel delivery stats for message-sending nodes. The response carries no definition detail, so join it by id against the journey from View journey.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+
+    match default_api::view_journey_stats(&configuration, app_id, journey_id).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_journey_stats failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("view_journey_stats failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey to retrieve stats for. | [required] |
+
+### Return type
+
+[**crate::models::JourneyStats**](JourneyStats.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## view_journeys
+
+> crate::models::JourneyListResponse view_journeys(app_id, cursor, limit)
+View journeys
+
+The Journeys API is in beta. Endpoints and response fields can still change. Retrieve a paginated list of journeys for an app. Returns a summary representation of each journey; use View journey for the full configuration. Uses forward-only cursor-based pagination.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let cursor: Option<&str> = None;
+    let limit: Option<i32> = None;
+
+    match default_api::view_journeys(&configuration, app_id, cursor, limit).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("view_journeys failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("view_journeys failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**cursor** | Option<**String**> | Opaque pagination token from a previous response's next_cursor. Omit for the first page. |  |
+**limit** | Option<**i32**> | Maximum journeys to return per page. Minimum 1, maximum 50. |  |[default to 50]
+
+### Return type
+
+[**crate::models::JourneyListResponse**](JourneyListResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
