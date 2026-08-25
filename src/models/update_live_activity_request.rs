@@ -24,18 +24,24 @@ pub struct UpdateLiveActivityRequest {
     pub contents: Option<Box<crate::models::LanguageStringMap>>,
     #[serde(rename = "headings", skip_serializing_if = "Option::is_none")]
     pub headings: Option<Box<crate::models::LanguageStringMap>>,
-    /// Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification.
+    /// Deprecated. The API ignores this field. Use `ios_sound`.
     #[serde(rename = "sound", skip_serializing_if = "Option::is_none")]
     pub sound: Option<String>,
+    /// Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification. Requires `headings` on the same request: ActivityKit ignores an update whose alert has no title, which silently drops the sound. Supersedes the deprecated `sound` field. 
+    #[serde(rename = "ios_sound", skip_serializing_if = "Option::is_none")]
+    pub ios_sound: Option<String>,
     /// Accepts Unix timestamp in seconds. When time reaches the configured stale date, the system considers the Live Activity out of date, and the ActivityState of the Live Activity changes to ActivityState.stale.
     #[serde(rename = "stale_date", skip_serializing_if = "Option::is_none")]
     pub stale_date: Option<i32>,
     /// Accepts Unix timestamp in seconds; only allowed if event is \"end\"
     #[serde(rename = "dismissal_date", skip_serializing_if = "Option::is_none")]
     pub dismissal_date: Option<i32>,
-    /// Delivery priority through the the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery.
+    /// Delivery priority through the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery.
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
     pub priority: Option<i32>,
+    /// A value between 0 and 1. When more than one Live Activity is active for your app, the one with the highest relevance score shows in the Dynamic Island. If the scores are equal, the system shows the Live Activity that started first. The score also sets the order of Live Activities on the Lock Screen. Only available on iOS 16.2 and later.
+    #[serde(rename = "ios_relevance_score", skip_serializing_if = "Option::is_none")]
+    pub ios_relevance_score: Option<f32>,
 }
 
 impl UpdateLiveActivityRequest {
@@ -47,9 +53,11 @@ impl UpdateLiveActivityRequest {
             contents: None,
             headings: None,
             sound: None,
+            ios_sound: None,
             stale_date: None,
             dismissal_date: None,
             priority: None,
+            ios_relevance_score: None,
         }
     }
 }
