@@ -260,7 +260,7 @@ pub struct BasicNotificationAllOf {
     /// Channel: Push Notifications Platform: iOS 15+ Focus Modes and Interruption Levels indicate the priority and delivery timing of a notification, to \"interrupt\" the user. Can choose from options: ['active', 'passive', 'time_sensitive', 'critical']. Default is active. 
     #[serde(rename = "ios_interruption_level", skip_serializing_if = "Option::is_none")]
     pub ios_interruption_level: Option<String>,
-    /// Channel: Email Required.  The subject of the email. 
+    /// Channel: Email Required. The subject of the email. 
     #[serde(rename = "email_subject", skip_serializing_if = "Option::is_none")]
     pub email_subject: Option<String>,
     /// Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an <a> tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid. 
@@ -290,6 +290,11 @@ pub struct BasicNotificationAllOf {
     /// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
     #[serde(rename = "email_sender_domain", skip_serializing_if = "Option::is_none")]
     pub email_sender_domain: Option<String>,
+    /// Channel: Email Set to \"warmup\" to send this as an Auto Warm Up campaign: a single campaign delivered gradually to your audience over several days, so you don't have to pace sends manually. OneSignal generates a sending schedule based on your past delivery volumes, scheduled Auto Warm Up emails, and the size of your current audience. When set, `email_warm_up` is required and describes the campaign's stages and (optionally) its scheduling strategy. `send_after` cannot be combined with `kind: \"warmup\"`. The campaign will be scheduled to begin at its first stage's `start` time. Only supported for Email notifications. 
+    #[serde(rename = "kind", skip_serializing_if = "Option::is_none")]
+    pub kind: Option<KindType>,
+    #[serde(rename = "email_warm_up", skip_serializing_if = "Option::is_none")]
+    pub email_warm_up: Option<Box<crate::models::EmailWarmUpRequest>>,
     /// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
     #[serde(rename = "sms_from", skip_serializing_if = "Option::is_none")]
     pub sms_from: Option<String>,
@@ -416,6 +421,8 @@ impl BasicNotificationAllOf {
             include_unsubscribed: None,
             email_bcc: None,
             email_sender_domain: None,
+            kind: None,
+            email_warm_up: None,
             sms_from: None,
             sms_media_urls: None,
             filters: None,
@@ -441,6 +448,18 @@ pub enum AggregationType {
 impl Default for AggregationType {
     fn default() -> AggregationType {
         Self::Sum
+    }
+}
+/// Channel: Email Set to \"warmup\" to send this as an Auto Warm Up campaign: a single campaign delivered gradually to your audience over several days, so you don't have to pace sends manually. OneSignal generates a sending schedule based on your past delivery volumes, scheduled Auto Warm Up emails, and the size of your current audience. When set, `email_warm_up` is required and describes the campaign's stages and (optionally) its scheduling strategy. `send_after` cannot be combined with `kind: \"warmup\"`. The campaign will be scheduled to begin at its first stage's `start` time. Only supported for Email notifications. 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum KindType {
+    #[serde(rename = "warmup")]
+    Warmup,
+}
+
+impl Default for KindType {
+    fn default() -> KindType {
+        Self::Warmup
     }
 }
 /// Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification.
