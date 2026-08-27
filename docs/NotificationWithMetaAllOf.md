@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **canceled** | Option<**bool**> | Indicates whether the notification was canceled before it could be sent. | [optional]
 **email_bcc** | Option<**Vec<String>**> | BCC recipients that were set on this email notification. | [optional]
 **bcc_sent** | Option<**i32**> | Number of BCC copies successfully sent for this notification. | [optional]
+**email_warm_up** | Option<[**crate::models::EmailWarmUp**](EmailWarmUp.md)> |  | [optional]
 
 [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 

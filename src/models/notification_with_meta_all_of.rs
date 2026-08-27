@@ -53,6 +53,8 @@ pub struct NotificationWithMetaAllOf {
     /// Number of BCC copies successfully sent for this notification.
     #[serde(rename = "bcc_sent", skip_serializing_if = "Option::is_none")]
     pub bcc_sent: Option<i32>,
+    #[serde(rename = "email_warm_up", skip_serializing_if = "Option::is_none")]
+    pub email_warm_up: Option<Box<crate::models::EmailWarmUp>>,
 }
 
 impl NotificationWithMetaAllOf {
@@ -72,6 +74,7 @@ impl NotificationWithMetaAllOf {
             canceled: None,
             email_bcc: None,
             bcc_sent: None,
+            email_warm_up: None,
         }
     }
 }
