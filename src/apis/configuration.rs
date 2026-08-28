@@ -44,7 +44,7 @@ impl Default for Configuration {
     fn default() -> Self {
         Configuration {
             base_path: "https://api.onesignal.com".to_owned(),
-            user_agent: Some("OpenAPI-Generator/5.13.0/rust".to_owned()),
+            user_agent: Some("OpenAPI-Generator/5.14.0/rust".to_owned()),
             client: reqwest::Client::new(),
             basic_auth: None,
             oauth_access_token: None,
