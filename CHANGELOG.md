@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.14.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.13.0...v5.14.0) (2026-08-28)
+
+### Features
+
+* add v5.14.0 package updates ([39e64e0](https://github.com/OneSignal/onesignal-rust-api/commit/39e64e0d24c02637aa13de741a13a6df2efb6015))
+* add v5.14.0 package updates ([#91](https://github.com/OneSignal/onesignal-rust-api/issues/91)) ([a86e664](https://github.com/OneSignal/onesignal-rust-api/commit/a86e6645a7d55683ff204d74d7c5ea9735e9ac15)), closes [OneSignal/api-client-libraries#452](https://github.com/OneSignal/api-client-libraries/issues/452)
+
 ## [5.13.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.12.0...v5.13.0) (2026-08-25)
 
 ### Features
