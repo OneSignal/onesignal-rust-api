@@ -229,6 +229,16 @@ pub enum DeleteUserError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`estimate_notification_recipients`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EstimateNotificationRecipientsError {
+    Status400(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`export_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1300,6 +1310,42 @@ pub async fn delete_user(configuration: &configuration::Configuration, app_id: &
         Ok(())
     } else {
         let entity: Option<DeleteUserError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
+/// Returns the estimated number of recipients for a notification's targeting, without creating or sending anything. The returned `count` reflects the same audience-size estimate you would see under \"Choose your target audience\" when composing a message. It is based on the user targeting method you've set and the specific platforms the message is targeted to send to. This endpoint only supports a subset of targeting parameters: `included_segments` is required (its `\"All\"` shorthand targets every subscriber), and `excluded_segments`, `filters`, `include_aliases`, and `target_channel` narrow that audience further. Use `target_channel` to select platforms. `include_subscription_ids` and the other raw subscription id/token fields, and the individual `isIos` / `isAndroid` / etc. platform flags, are not supported. All other notification fields (content, delivery options, and so on) are accepted, but ignored. 
+pub async fn estimate_notification_recipients(configuration: &configuration::Configuration, estimate_notification_recipients_request: crate::models::EstimateNotificationRecipientsRequest) -> Result<crate::models::EstimateNotificationRecipientsSuccessResponse, Error<EstimateNotificationRecipientsError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/notifications/count-unsaved", configuration.base_path);
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.14.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+    req_builder = req_builder.json(&estimate_notification_recipients_request);
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<EstimateNotificationRecipientsError> = serde_json::from_str(&content).ok();
         let error = ResponseContent { status: status, content: content, entity: entity };
         Err(Error::ResponseError(error))
     }
