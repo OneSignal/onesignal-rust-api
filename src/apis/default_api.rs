@@ -301,6 +301,17 @@ pub enum GetAppsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_email_reputation`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEmailReputationError {
+    Status400(crate::models::GenericError),
+    Status404(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_notification`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1558,6 +1569,41 @@ pub async fn get_apps(configuration: &configuration::Configuration, ) -> Result<
         serde_json::from_str(&content).map_err(Error::from)
     } else {
         let entity: Option<GetAppsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
+/// The email bounce and spam complaint rates received for the app over the last 24 hours, 7 days, and 30 days. Rates are expressed as fractions of successfully delivered emails (for example, `0.02` means 2%). A window reports `0` for both rates when the app has not successfully delivered any email in that period. 
+pub async fn get_email_reputation(configuration: &configuration::Configuration, app_id: &str) -> Result<crate::models::EmailReputationResponse, Error<GetEmailReputationError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/apps/{app_id}/email_analytics/delivery_metrics", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.15.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<GetEmailReputationError> = serde_json::from_str(&content).ok();
         let error = ResponseContent { status: status, content: content, entity: entity };
         Err(Error::ResponseError(error))
     }
