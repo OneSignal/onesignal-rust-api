@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**delete_subscription**](DefaultApi.md#delete_subscription) | **DELETE** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**delete_template**](DefaultApi.md#delete_template) | **DELETE** /templates/{template_id} | Delete template
 [**delete_user**](DefaultApi.md#delete_user) | **DELETE** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**duplicate_journey**](DefaultApi.md#duplicate_journey) | **POST** /apps/{app_id}/journeys/{journey_id}/duplicate | Duplicate journey
 [**estimate_notification_recipients**](DefaultApi.md#estimate_notification_recipients) | **POST** /notifications/count-unsaved | Estimate notification recipients
 [**export_events**](DefaultApi.md#export_events) | **POST** /notifications/{notification_id}/export_events | Export CSV of Events
 [**export_subscriptions**](DefaultApi.md#export_subscriptions) | **POST** /players/csv_export?app_id={app_id} | Export CSV of Subscriptions
@@ -1232,7 +1233,7 @@ async fn main() {
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
-**segment_id** | **String** | The segment_id can be found in the URL of the segment when viewing it in the dashboard. | [required] |
+**segment_id** | **String** | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard. | [required] |
 
 ### Return type
 
@@ -1427,6 +1428,70 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## duplicate_journey
+
+> crate::models::Journey duplicate_journey(app_id, journey_id, duplicate_journey_request)
+Duplicate journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Copy an existing journey into a new draft. The source does not change. The copy is always a draft, and started_at and archived_at are null. If you omit the body, or omit overrides, the copy keeps the source description, audience, nodes, early_exit, and reentry_rules. The copy takes the source name plus \" (Copy)\". The copy does not keep schedule. Send schedule under overrides to set it. Server-controlled fields are rejected with 400. The authenticated App API key must have permission to create journeys.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+use onesignal_rust_api::models;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let journey_id: &str = "YOUR_JOURNEY_ID";
+    let duplicate_journey_request: Option<models::DuplicateJourneyRequest> = None;
+
+    match default_api::duplicate_journey(&configuration, app_id, journey_id, duplicate_journey_request).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("duplicate_journey failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("duplicate_journey failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**journey_id** | **String** | UUID of the journey to copy. | [required] |
+**duplicate_journey_request** | Option<[**DuplicateJourneyRequest**](DuplicateJourneyRequest.md)> |  |  |
+
+### Return type
+
+[**crate::models::Journey**](Journey.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
@@ -2203,7 +2268,7 @@ async fn main() {
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
-**segment_id** | **String** | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | [required] |
+**segment_id** | **String** | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard. | [required] |
 **include_segment_detail** | Option<**bool**> | Set to true to include segment metadata and filters in the response. |  |
 
 ### Return type
@@ -3041,7 +3106,7 @@ async fn main() {
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **app_id** | **String** | The OneSignal App ID for your app.  Available in Keys & IDs. | [required] |
-**segment_id** | **String** | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | [required] |
+**segment_id** | **String** | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard. | [required] |
 **update_segment_request** | Option<[**UpdateSegmentRequest**](UpdateSegmentRequest.md)> |  |  |
 
 ### Return type
