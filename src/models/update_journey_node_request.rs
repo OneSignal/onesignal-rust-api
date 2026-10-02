@@ -16,7 +16,7 @@ pub struct UpdateJourneyNodeRequest {
     /// Optional client-assigned identifier, unique within the journey. Use it to reference this node from elsewhere in the same request. Persisted and returned on reads.
     #[serde(rename = "client_node_id", skip_serializing_if = "Option::is_none")]
     pub client_node_id: Option<String>,
-    /// Optional free-text label, up to 255 characters. Stored and returned as-is with no effect on journey behavior.
+    /// Optional free-text label, up to 1024 characters. Stored and returned as-is with no effect on journey behavior.
     #[serde(rename = "annotation", skip_serializing_if = "Option::is_none")]
     pub annotation: Option<String>,
     /// wait nodes: seconds to hold the user. Minimum 60, maximum 31556952 (1 year).
@@ -52,7 +52,7 @@ pub struct UpdateJourneyNodeRequest {
     /// split_range nodes: when true, assigns each user to a branch at random on entry. Defaults to false.
     #[serde(rename = "randomize_on_entry", skip_serializing_if = "Option::is_none")]
     pub randomize_on_entry: Option<bool>,
-    /// Branching nodes: nested branches. split_range requires 2-20 weighted branches that sum to 100. yes_no requires exactly 2 branches. wait_until requires 1-10 condition branches.
+    /// Branching nodes: nested branches. split_range requires 2-25 weighted branches that sum to 100. yes_no requires exactly 2 branches. wait_until requires 1-25 condition branches.
     #[serde(rename = "branches", skip_serializing_if = "Option::is_none")]
     pub branches: Option<Vec<crate::models::JourneyBranch>>,
     #[serde(rename = "expiration", skip_serializing_if = "Option::is_none")]
