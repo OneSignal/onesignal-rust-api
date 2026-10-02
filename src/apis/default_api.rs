@@ -229,6 +229,18 @@ pub enum DeleteUserError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`duplicate_journey`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DuplicateJourneyError {
+    Status400(crate::models::GenericError),
+    Status403(crate::models::GenericError),
+    Status404(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`estimate_notification_recipients`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -626,7 +638,7 @@ pub async fn cancel_notification(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -662,7 +674,7 @@ pub async fn copy_template_to_app(configuration: &configuration::Configuration, 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -698,7 +710,7 @@ pub async fn create_alias(configuration: &configuration::Configuration, app_id: 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -734,7 +746,7 @@ pub async fn create_alias_by_subscription(configuration: &configuration::Configu
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -770,7 +782,7 @@ pub async fn create_api_key(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -806,7 +818,7 @@ pub async fn create_app(configuration: &configuration::Configuration, app: crate
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -842,7 +854,7 @@ pub async fn create_custom_events(configuration: &configuration::Configuration, 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -878,7 +890,7 @@ pub async fn create_journey(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -914,7 +926,7 @@ pub async fn create_notification(configuration: &configuration::Configuration, n
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -950,12 +962,14 @@ pub async fn create_segment(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
     }
-    req_builder = req_builder.json(&segment);
+    if let Some(ref local_var_body) = segment {
+        req_builder = req_builder.json(local_var_body);
+    }
 
     let req = req_builder.build()?;
     let resp = client.execute(req).await?;
@@ -986,7 +1000,7 @@ pub async fn create_subscription(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1022,7 +1036,7 @@ pub async fn create_template(configuration: &configuration::Configuration, creat
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1058,7 +1072,7 @@ pub async fn create_user(configuration: &configuration::Configuration, app_id: &
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1094,7 +1108,7 @@ pub async fn delete_alias(configuration: &configuration::Configuration, app_id: 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1129,7 +1143,7 @@ pub async fn delete_api_key(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1164,7 +1178,7 @@ pub async fn delete_journey(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1199,7 +1213,7 @@ pub async fn delete_segment(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1234,7 +1248,7 @@ pub async fn delete_subscription(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1270,7 +1284,7 @@ pub async fn delete_template(configuration: &configuration::Configuration, templ
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1305,7 +1319,7 @@ pub async fn delete_user(configuration: &configuration::Configuration, app_id: &
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1326,6 +1340,44 @@ pub async fn delete_user(configuration: &configuration::Configuration, app_id: &
     }
 }
 
+/// The Journeys API is in beta. Endpoints and response fields can still change. Copy an existing journey into a new draft. The source does not change. The copy is always a draft, and started_at and archived_at are null. If you omit the body, or omit overrides, the copy keeps the source description, audience, nodes, early_exit, and reentry_rules. The copy takes the source name plus \" (Copy)\". The copy does not keep schedule. Send schedule under overrides to set it. Server-controlled fields are rejected with 400. The authenticated App API key must have permission to create journeys.
+pub async fn duplicate_journey(configuration: &configuration::Configuration, app_id: &str, journey_id: &str, duplicate_journey_request: Option<crate::models::DuplicateJourneyRequest>) -> Result<crate::models::Journey, Error<DuplicateJourneyError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/apps/{app_id}/journeys/{journey_id}/duplicate", configuration.base_path, app_id=crate::apis::urlencode(app_id), journey_id=crate::apis::urlencode(journey_id));
+    let mut req_builder = client.request(reqwest::Method::POST, uri_str.as_str());
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+    if let Some(ref local_var_body) = duplicate_journey_request {
+        req_builder = req_builder.json(local_var_body);
+    }
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<DuplicateJourneyError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
 /// Returns the estimated number of recipients for a notification's targeting, without creating or sending anything. The returned `count` reflects the same audience-size estimate you would see under \"Choose your target audience\" when composing a message. It is based on the user targeting method you've set and the specific platforms the message is targeted to send to. This endpoint only supports a subset of targeting parameters: `included_segments` is required (its `\"All\"` shorthand targets every subscriber), and `excluded_segments`, `filters`, `include_aliases`, and `target_channel` narrow that audience further. Use `target_channel` to select platforms. `include_subscription_ids` and the other raw subscription id/token fields, and the individual `isIos` / `isAndroid` / etc. platform flags, are not supported. All other notification fields (content, delivery options, and so on) are accepted, but ignored. 
 pub async fn estimate_notification_recipients(configuration: &configuration::Configuration, estimate_notification_recipients_request: crate::models::EstimateNotificationRecipientsRequest) -> Result<crate::models::EstimateNotificationRecipientsSuccessResponse, Error<EstimateNotificationRecipientsError>> {
     let configuration = configuration;
@@ -1340,7 +1392,7 @@ pub async fn estimate_notification_recipients(configuration: &configuration::Con
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1377,7 +1429,7 @@ pub async fn export_events(configuration: &configuration::Configuration, notific
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1412,12 +1464,14 @@ pub async fn export_subscriptions(configuration: &configuration::Configuration, 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
     }
-    req_builder = req_builder.json(&export_subscriptions_request_body);
+    if let Some(ref local_var_body) = export_subscriptions_request_body {
+        req_builder = req_builder.json(local_var_body);
+    }
 
     let req = req_builder.build()?;
     let resp = client.execute(req).await?;
@@ -1448,7 +1502,7 @@ pub async fn get_aliases(configuration: &configuration::Configuration, app_id: &
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1483,7 +1537,7 @@ pub async fn get_aliases_by_subscription(configuration: &configuration::Configur
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1518,7 +1572,7 @@ pub async fn get_app(configuration: &configuration::Configuration, app_id: &str)
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1553,7 +1607,7 @@ pub async fn get_apps(configuration: &configuration::Configuration, ) -> Result<
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1588,7 +1642,7 @@ pub async fn get_email_reputation(configuration: &configuration::Configuration, 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1624,7 +1678,7 @@ pub async fn get_notification(configuration: &configuration::Configuration, app_
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1659,7 +1713,7 @@ pub async fn get_notification_history(configuration: &configuration::Configurati
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1708,7 +1762,7 @@ pub async fn get_notifications(configuration: &configuration::Configuration, app
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1756,7 +1810,7 @@ pub async fn get_outcomes(configuration: &configuration::Configuration, app_id: 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1794,7 +1848,7 @@ pub async fn get_segment(configuration: &configuration::Configuration, app_id: &
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1835,7 +1889,7 @@ pub async fn get_segments(configuration: &configuration::Configuration, app_id: 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1870,7 +1924,7 @@ pub async fn get_user(configuration: &configuration::Configuration, app_id: &str
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1959,7 +2013,7 @@ pub async fn list_audit_logs(configuration: &configuration::Configuration, organ
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -1994,7 +2048,7 @@ pub async fn rotate_api_key(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2029,7 +2083,7 @@ pub async fn start_live_activity(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2065,7 +2119,7 @@ pub async fn transfer_subscription(configuration: &configuration::Configuration,
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2102,7 +2156,7 @@ pub async fn unsubscribe_email_with_token(configuration: &configuration::Configu
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2137,7 +2191,7 @@ pub async fn update_api_key(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2173,7 +2227,7 @@ pub async fn update_app(configuration: &configuration::Configuration, app_id: &s
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2209,7 +2263,7 @@ pub async fn update_journey(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2245,7 +2299,7 @@ pub async fn update_journey_node(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2281,7 +2335,7 @@ pub async fn update_live_activity(configuration: &configuration::Configuration, 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2317,12 +2371,14 @@ pub async fn update_segment(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
     }
-    req_builder = req_builder.json(&update_segment_request);
+    if let Some(ref local_var_body) = update_segment_request {
+        req_builder = req_builder.json(local_var_body);
+    }
 
     let req = req_builder.build()?;
     let resp = client.execute(req).await?;
@@ -2353,7 +2409,7 @@ pub async fn update_subscription(configuration: &configuration::Configuration, a
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2389,7 +2445,7 @@ pub async fn update_subscription_by_token(configuration: &configuration::Configu
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2426,7 +2482,7 @@ pub async fn update_template(configuration: &configuration::Configuration, templ
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2462,7 +2518,7 @@ pub async fn update_user(configuration: &configuration::Configuration, app_id: &
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2498,7 +2554,7 @@ pub async fn view_api_keys(configuration: &configuration::Configuration, app_id:
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.organization_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2533,7 +2589,7 @@ pub async fn view_journey(configuration: &configuration::Configuration, app_id: 
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2568,7 +2624,7 @@ pub async fn view_journey_stats(configuration: &configuration::Configuration, ap
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2609,7 +2665,7 @@ pub async fn view_journeys(configuration: &configuration::Configuration, app_id:
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2645,7 +2701,7 @@ pub async fn view_template(configuration: &configuration::Configuration, templat
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
@@ -2690,7 +2746,7 @@ pub async fn view_templates(configuration: &configuration::Configuration, app_id
     }
 
     // Adds a telemetry header
-    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.16.0");
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
 
     if let Some(ref token) = configuration.rest_api_key_token {
         req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
