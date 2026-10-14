@@ -184,7 +184,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
     let app_id: &str = "YOUR_APP_ID";
-    let copy_template_request: models::CopyTemplateRequest = todo!();
+    let copy_template_request: models::CopyTemplateRequest = models::CopyTemplateRequest::new("YOUR_TARGET_APP_ID".to_string());
 
     match default_api::copy_template_to_app(&configuration, template_id, app_id, copy_template_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -249,7 +249,7 @@ async fn main() {
     let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
-    let user_identity_body: models::UserIdentityBody = todo!();
+    let user_identity_body: models::UserIdentityBody = models::UserIdentityBody::new();
 
     match default_api::create_alias(&configuration, app_id, alias_label, alias_id, user_identity_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -314,7 +314,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
-    let user_identity_body: models::UserIdentityBody = todo!();
+    let user_identity_body: models::UserIdentityBody = models::UserIdentityBody::new();
 
     match default_api::create_alias_by_subscription(&configuration, app_id, subscription_id, user_identity_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -377,7 +377,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
-    let create_api_key_request: models::CreateApiKeyRequest = todo!();
+    let create_api_key_request: models::CreateApiKeyRequest = models::CreateApiKeyRequest::new();
 
     match default_api::create_api_key(&configuration, app_id, create_api_key_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -438,7 +438,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let app: models::App = todo!();
+    let app: models::App = models::App::new();
 
     match default_api::create_app(&configuration, app).await {
         Ok(resp) => println!("{:?}", resp),
@@ -499,7 +499,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
-    let custom_events_request: models::CustomEventsRequest = todo!();
+    let custom_events_request: models::CustomEventsRequest = models::CustomEventsRequest::new(vec![models::CustomEvent::new("YOUR_NAME".to_string())]);
 
     match default_api::create_custom_events(&configuration, app_id, custom_events_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -561,7 +561,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
-    let create_journey_request: models::CreateJourneyRequest = todo!();
+    let create_journey_request: models::CreateJourneyRequest = models::CreateJourneyRequest::new("YOUR_NAME".to_string());
 
     match default_api::create_journey(&configuration, app_id, create_journey_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -829,7 +829,7 @@ async fn main() {
     let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
-    let subscription_body: models::SubscriptionBody = todo!();
+    let subscription_body: models::SubscriptionBody = models::SubscriptionBody::new();
 
     match default_api::create_subscription(&configuration, app_id, alias_label, alias_id, subscription_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -892,7 +892,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let create_template_request: models::CreateTemplateRequest = todo!();
+    let create_template_request: models::CreateTemplateRequest = models::CreateTemplateRequest::new("YOUR_APP_ID".to_string(), "YOUR_NAME".to_string(), models::LanguageStringMap::new());
 
     match default_api::create_template(&configuration, create_template_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -953,7 +953,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
-    let user: models::User = todo!();
+    let user: models::User = models::User::new();
 
     match default_api::create_user(&configuration, app_id, user).await {
         Ok(resp) => println!("{:?}", resp),
@@ -1520,7 +1520,7 @@ async fn main() {
 
 
     // Realistic values are pulled from the spec's `example:` fields where present.
-    let estimate_notification_recipients_request: models::EstimateNotificationRecipientsRequest = todo!();
+    let estimate_notification_recipients_request: models::EstimateNotificationRecipientsRequest = models::EstimateNotificationRecipientsRequest::new("YOUR_APP_ID".to_string());
 
     match default_api::estimate_notification_recipients(&configuration, estimate_notification_recipients_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2053,7 +2053,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let notification_id: &str = "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88";
-    let get_notification_history_request_body: models::GetNotificationHistoryRequestBody = todo!();
+    let get_notification_history_request_body: models::GetNotificationHistoryRequestBody = models::GetNotificationHistoryRequestBody::new();
 
     match default_api::get_notification_history(&configuration, notification_id, get_notification_history_request_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2576,7 +2576,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let activity_type: &str = "order_status";
-    let start_live_activity_request: models::StartLiveActivityRequest = todo!();
+    let start_live_activity_request: models::StartLiveActivityRequest = models::StartLiveActivityRequest::new("YOUR_NAME".to_string(), models::start_live_activity_request::EventType::Start, "YOUR_ACTIVITY_ID".to_string(), serde_json::json!({}), serde_json::json!({}), models::LanguageStringMap::new(), models::LanguageStringMap::new());
 
     match default_api::start_live_activity(&configuration, app_id, activity_type, start_live_activity_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2640,7 +2640,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
-    let transfer_subscription_request_body: models::TransferSubscriptionRequestBody = todo!();
+    let transfer_subscription_request_body: models::TransferSubscriptionRequestBody = models::TransferSubscriptionRequestBody::new();
 
     match default_api::transfer_subscription(&configuration, app_id, subscription_id, transfer_subscription_request_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2766,7 +2766,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let token_id: &str = "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff";
-    let update_api_key_request: models::UpdateApiKeyRequest = todo!();
+    let update_api_key_request: models::UpdateApiKeyRequest = models::UpdateApiKeyRequest::new();
 
     match default_api::update_api_key(&configuration, app_id, token_id, update_api_key_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2829,7 +2829,7 @@ async fn main() {
 
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
-    let app: models::App = todo!();
+    let app: models::App = models::App::new();
 
     match default_api::update_app(&configuration, app_id, app).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2892,7 +2892,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let journey_id: &str = "YOUR_JOURNEY_ID";
-    let update_journey_request: models::UpdateJourneyRequest = todo!();
+    let update_journey_request: models::UpdateJourneyRequest = models::UpdateJourneyRequest::new();
 
     match default_api::update_journey(&configuration, app_id, journey_id, update_journey_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -2957,7 +2957,7 @@ async fn main() {
     let app_id: &str = "YOUR_APP_ID";
     let journey_id: &str = "YOUR_JOURNEY_ID";
     let node_id: &str = "YOUR_NODE_ID";
-    let update_journey_node_request: models::UpdateJourneyNodeRequest = todo!();
+    let update_journey_node_request: models::UpdateJourneyNodeRequest = models::UpdateJourneyNodeRequest::new();
 
     match default_api::update_journey_node(&configuration, app_id, journey_id, node_id, update_journey_node_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -3022,7 +3022,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let activity_id: &str = "12345";
-    let update_live_activity_request: models::UpdateLiveActivityRequest = todo!();
+    let update_live_activity_request: models::UpdateLiveActivityRequest = models::UpdateLiveActivityRequest::new("YOUR_NAME".to_string(), models::update_live_activity_request::EventType::Update, serde_json::json!({}));
 
     match default_api::update_live_activity(&configuration, app_id, activity_id, update_live_activity_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -3150,7 +3150,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let app_id: &str = "YOUR_APP_ID";
     let subscription_id: &str = "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51";
-    let subscription_body: models::SubscriptionBody = todo!();
+    let subscription_body: models::SubscriptionBody = models::SubscriptionBody::new();
 
     match default_api::update_subscription(&configuration, app_id, subscription_id, subscription_body).await {
         Ok(_) => println!("update_subscription succeeded"),
@@ -3215,7 +3215,7 @@ async fn main() {
     let app_id: &str = "YOUR_APP_ID";
     let token_type: &str = "Email";
     let token: &str = "user@example.com";
-    let subscription_body: models::SubscriptionBody = todo!();
+    let subscription_body: models::SubscriptionBody = models::SubscriptionBody::new();
 
     match default_api::update_subscription_by_token(&configuration, app_id, token_type, token, subscription_body).await {
         Ok(resp) => println!("{:?}", resp),
@@ -3280,7 +3280,7 @@ async fn main() {
     // Realistic values are pulled from the spec's `example:` fields where present.
     let template_id: &str = "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c";
     let app_id: &str = "YOUR_APP_ID";
-    let update_template_request: models::UpdateTemplateRequest = todo!();
+    let update_template_request: models::UpdateTemplateRequest = models::UpdateTemplateRequest::new();
 
     match default_api::update_template(&configuration, template_id, app_id, update_template_request).await {
         Ok(resp) => println!("{:?}", resp),
@@ -3345,7 +3345,7 @@ async fn main() {
     let app_id: &str = "YOUR_APP_ID";
     let alias_label: &str = "external_id";
     let alias_id: &str = "YOUR_USER_EXTERNAL_ID";
-    let update_user_request: models::UpdateUserRequest = todo!();
+    let update_user_request: models::UpdateUserRequest = models::UpdateUserRequest::new();
 
     match default_api::update_user(&configuration, app_id, alias_label, alias_id, update_user_request).await {
         Ok(resp) => println!("{:?}", resp),
