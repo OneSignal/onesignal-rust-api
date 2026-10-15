@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.18.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.17.0...v5.18.0) (2026-10-15)
+
+### Features
+
+* add v5.18.0 package updates ([893da0e](https://github.com/OneSignal/onesignal-rust-api/commit/893da0e2a28cfd6b86608213efbfcc6403533166))
+* add v5.18.0 package updates ([#106](https://github.com/OneSignal/onesignal-rust-api/issues/106)) ([8f443e8](https://github.com/OneSignal/onesignal-rust-api/commit/8f443e869ef6d157ad6964076fb68c596a95b035)), closes [OneSignal/api-client-libraries#476](https://github.com/OneSignal/api-client-libraries/issues/476)
+
 ## [5.17.0](https://github.com/OneSignal/onesignal-rust-api/compare/v5.16.0...v5.17.0) (2026-10-02)
 
 ### Features
