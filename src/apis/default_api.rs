@@ -313,6 +313,28 @@ pub enum GetAppsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_email_provider_metrics`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEmailProviderMetricsError {
+    Status400(crate::models::GenericError),
+    Status404(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`get_email_provider_metrics_timeseries`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEmailProviderMetricsTimeseriesError {
+    Status400(crate::models::GenericError),
+    Status404(crate::models::GenericError),
+    Status429(crate::models::RateLimitError),
+    DefaultResponse(crate::models::GenericError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_email_reputation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1623,6 +1645,89 @@ pub async fn get_apps(configuration: &configuration::Configuration, ) -> Result<
         serde_json::from_str(&content).map_err(Error::from)
     } else {
         let entity: Option<GetAppsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
+/// Email delivery, opens, clicks, bounces, failures, and spam complaints broken down by inbox provider (Gmail, Outlook, Yahoo, Apple, and more) to pinpoint where deliverability problems are coming from. Metrics are reported for a single sending domain over the requested time range. `start` must be before `end` and no more than 365 days ago. `providers` is empty when the domain is not found for the app or is not currently active for sending. 
+pub async fn get_email_provider_metrics(configuration: &configuration::Configuration, app_id: &str, domain: &str, start: String, end: String) -> Result<crate::models::EmailProviderMetricsResponse, Error<GetEmailProviderMetricsError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/apps/{app_id}/email_analytics/provider_metrics", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
+
+    req_builder = req_builder.query(&[("domain", &domain.to_string())]);
+    req_builder = req_builder.query(&[("start", &start.to_string())]);
+    req_builder = req_builder.query(&[("end", &end.to_string())]);
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<GetEmailProviderMetricsError> = serde_json::from_str(&content).ok();
+        let error = ResponseContent { status: status, content: content, entity: entity };
+        Err(Error::ResponseError(error))
+    }
+}
+
+/// Email delivery, opens, clicks, bounces, failures, and spam complaints for a sending domain over time, bucketed by hour, day, or month. Use `providers[]` to narrow the totals to specific inbox providers (Gmail, Outlook, Yahoo, Apple, and more) and track how deliverability to them changes. Each event's metrics are totaled across the requested providers, or across all providers when none are given. `start` must be before `end` and no more than 365 days ago, or 60 days ago for `hourly` granularity. `events` is empty when the domain is not found for the app or is not currently active for sending. 
+pub async fn get_email_provider_metrics_timeseries(configuration: &configuration::Configuration, app_id: &str, domain: &str, start: String, end: String, granularity: &str, providers: Option<Vec<String>>) -> Result<crate::models::EmailProviderMetricsTimeseriesResponse, Error<GetEmailProviderMetricsTimeseriesError>> {
+    let configuration = configuration;
+
+    let client = &configuration.client;
+
+    let uri_str = format!("{}/apps/{app_id}/email_analytics/provider_metrics_timeseries", configuration.base_path, app_id=crate::apis::urlencode(app_id));
+    let mut req_builder = client.request(reqwest::Method::GET, uri_str.as_str());
+
+    req_builder = req_builder.query(&[("domain", &domain.to_string())]);
+    req_builder = req_builder.query(&[("start", &start.to_string())]);
+    req_builder = req_builder.query(&[("end", &end.to_string())]);
+    req_builder = req_builder.query(&[("granularity", &granularity.to_string())]);
+    if let Some(ref str) = providers {
+        req_builder = match "multi" {
+            "multi" => req_builder.query(&str.into_iter().map(|p| ("providers[]".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("providers[]", &str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    // Adds a telemetry header
+    req_builder = req_builder.header("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-rust, version=5.17.0");
+
+    if let Some(ref token) = configuration.rest_api_key_token {
+        req_builder = req_builder.header("Authorization", format!("Key {}", token.to_owned()));
+    }
+
+    let req = req_builder.build()?;
+    let resp = client.execute(req).await?;
+
+    let status = resp.status();
+    let content = resp.text().await?;
+
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity: Option<GetEmailProviderMetricsTimeseriesError> = serde_json::from_str(&content).ok();
         let error = ResponseContent { status: status, content: content, entity: entity };
         Err(Error::ResponseError(error))
     }
