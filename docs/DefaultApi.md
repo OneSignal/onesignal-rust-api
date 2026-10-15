@@ -32,6 +32,8 @@ Method | HTTP request | Description
 [**get_aliases_by_subscription**](DefaultApi.md#get_aliases_by_subscription) | **GET** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
 [**get_app**](DefaultApi.md#get_app) | **GET** /apps/{app_id} | View an app
 [**get_apps**](DefaultApi.md#get_apps) | **GET** /apps | View apps
+[**get_email_provider_metrics**](DefaultApi.md#get_email_provider_metrics) | **GET** /apps/{app_id}/email_analytics/provider_metrics | Get email inbox provider metrics
+[**get_email_provider_metrics_timeseries**](DefaultApi.md#get_email_provider_metrics_timeseries) | **GET** /apps/{app_id}/email_analytics/provider_metrics_timeseries | Get email inbox provider metrics over time
 [**get_email_reputation**](DefaultApi.md#get_email_reputation) | **GET** /apps/{app_id}/email_analytics/delivery_metrics | Get email reputation statistics
 [**get_notification**](DefaultApi.md#get_notification) | **GET** /notifications/{notification_id} | View notification
 [**get_notification_history**](DefaultApi.md#get_notification_history) | **POST** /notifications/{notification_id}/history | Notification History
@@ -1902,6 +1904,138 @@ This endpoint does not need any parameter.
 ### Authorization
 
 [organization_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## get_email_provider_metrics
+
+> crate::models::EmailProviderMetricsResponse get_email_provider_metrics(app_id, domain, start, end)
+Get email inbox provider metrics
+
+Email delivery, opens, clicks, bounces, failures, and spam complaints broken down by inbox provider (Gmail, Outlook, Yahoo, Apple, and more) to pinpoint where deliverability problems are coming from. Metrics are reported for a single sending domain over the requested time range. `start` must be before `end` and no more than 365 days ago. `providers` is empty when the domain is not found for the app or is not currently active for sending. 
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let domain: &str = "mail.example.com";
+    let start: String = 2026-08-01T00:00Z;
+    let end: String = 2026-08-08T00:00Z;
+
+    match default_api::get_email_provider_metrics(&configuration, app_id, domain, start, end).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_email_provider_metrics failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("get_email_provider_metrics failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**domain** | **String** | The sending domain to report on. Must be an email domain configured for this app. | [required] |
+**start** | **String** | Start of the reporting window, as an ISO 8601 timestamp (for example, `2026-08-01T00:00:00Z`). | [required] |
+**end** | **String** | End of the reporting window, as an ISO 8601 timestamp (for example, `2026-08-08T00:00:00Z`). | [required] |
+
+### Return type
+
+[**crate::models::EmailProviderMetricsResponse**](EmailProviderMetricsResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
+## get_email_provider_metrics_timeseries
+
+> crate::models::EmailProviderMetricsTimeseriesResponse get_email_provider_metrics_timeseries(app_id, domain, start, end, granularity, providers)
+Get email inbox provider metrics over time
+
+Email delivery, opens, clicks, bounces, failures, and spam complaints for a sending domain over time, bucketed by hour, day, or month. Use `providers[]` to narrow the totals to specific inbox providers (Gmail, Outlook, Yahoo, Apple, and more) and track how deliverability to them changes. Each event's metrics are totaled across the requested providers, or across all providers when none are given. `start` must be before `end` and no more than 365 days ago, or 60 days ago for `hourly` granularity. `events` is empty when the domain is not found for the app or is not currently active for sending. 
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+    configuration.rest_api_key_token = Some("YOUR_REST_API_KEY".to_string());
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let app_id: &str = "YOUR_APP_ID";
+    let domain: &str = "mail.example.com";
+    let start: String = 2026-08-01T00:00Z;
+    let end: String = 2026-08-08T00:00Z;
+    let granularity: &str = "daily";
+    let providers: Option<Vec<String>> = None;
+
+    match default_api::get_email_provider_metrics_timeseries(&configuration, app_id, domain, start, end, granularity, providers).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_email_provider_metrics_timeseries failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("get_email_provider_metrics_timeseries failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**app_id** | **String** | Your OneSignal App ID in UUID v4 format. | [required] |
+**domain** | **String** | The sending domain to report on. Must be an email domain configured for this app. | [required] |
+**start** | **String** | Start of the reporting window, as an ISO 8601 timestamp (for example, `2026-08-01T00:00:00Z`). | [required] |
+**end** | **String** | End of the reporting window, as an ISO 8601 timestamp (for example, `2026-08-08T00:00:00Z`). | [required] |
+**granularity** | **String** | The size of each time bucket. Hourly data is only available for the last 60 days. | [required] |
+**providers** | Option<[**Vec<String>**](String.md)> | Inbox providers to include in the totals. Omit to include all providers. Accepted values: `apple`, `att`, `canadian`, `chinese`, `comcast`, `free_fr`, `french`, `german`, `gmail`, `google_workspace`, `googlers`, `inbox_lv`, `italian`, `japanese`, `outlook_365`, `outlook_eu`, `outlook_us`, `proton`, `rackspace`, `russian`, `uk`, `united_online`, `yahoo_eu`, `yahoo_us`, `other_eu`, `other_us`, and `other`. Example: providers[]=gmail&providers[]=yahoo_us  |  |
+
+### Return type
+
+[**crate::models::EmailProviderMetricsTimeseriesResponse**](EmailProviderMetricsTimeseriesResponse.md)
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-rust-api#configuration)
 
 ### HTTP request headers
 
