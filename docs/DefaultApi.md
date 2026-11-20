@@ -35,6 +35,7 @@ Method | HTTP request | Description
 [**get_email_provider_metrics**](DefaultApi.md#get_email_provider_metrics) | **GET** /apps/{app_id}/email_analytics/provider_metrics | Get email inbox provider metrics
 [**get_email_provider_metrics_timeseries**](DefaultApi.md#get_email_provider_metrics_timeseries) | **GET** /apps/{app_id}/email_analytics/provider_metrics_timeseries | Get email inbox provider metrics over time
 [**get_email_reputation**](DefaultApi.md#get_email_reputation) | **GET** /apps/{app_id}/email_analytics/delivery_metrics | Get email reputation statistics
+[**get_journey_schema**](DefaultApi.md#get_journey_schema) | **GET** /journeys/schema | Get Journey schema
 [**get_notification**](DefaultApi.md#get_notification) | **GET** /notifications/{notification_id} | View notification
 [**get_notification_history**](DefaultApi.md#get_notification_history) | **POST** /notifications/{notification_id}/history | Notification History
 [**get_notifications**](DefaultApi.md#get_notifications) | **GET** /notifications | View notifications
@@ -2103,6 +2104,63 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
 
 
+## get_journey_schema
+
+> crate::models::JourneySchemaResponse get_journey_schema(operation)
+Get Journey schema
+
+Retrieve the JSON Schema for a Journey authoring operation without authentication or app context. The response identifies the document to validate. Schema retrieval does not validate permissions or business rules for a later write.
+
+### Example
+
+```rust
+use onesignal_rust_api::apis::configuration::Configuration;
+use onesignal_rust_api::apis::default_api;
+
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = Configuration::new();
+
+
+    // Realistic values are pulled from the spec's `example:` fields where present.
+    let operation: &str = "create";
+
+    match default_api::get_journey_schema(&configuration, operation).await {
+        Ok(resp) => println!("{:?}", resp),
+        Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
+            // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
+            // the raw response remains on the ResponseError variant.
+            eprintln!("get_journey_schema failed: {:?}", e.error_messages());
+        }
+        Err(e) => eprintln!("get_journey_schema failed: {:?}", e),
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**operation** | **String** | The authoring operation whose schema you need. | [required] |
+
+### Return type
+
+[**crate::models::JourneySchemaResponse**](JourneySchemaResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-rust-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-rust-api)
+
+
 ## get_notification
 
 > crate::models::NotificationWithMeta get_notification(app_id, notification_id)
@@ -3821,7 +3879,7 @@ Name | Type | Description  | Required | Notes
 
 ## view_templates
 
-> crate::models::TemplatesListResponse view_templates(app_id, limit, offset, channel)
+> crate::models::TemplatesListResponse view_templates(app_id, limit, offset, channel, name)
 View templates
 
 List templates for an app.
@@ -3844,8 +3902,9 @@ async fn main() {
     let limit: Option<i32> = None;
     let offset: Option<i32> = None;
     let channel: Option<&str> = None;
+    let name: Option<&str> = None;
 
-    match default_api::view_templates(&configuration, app_id, limit, offset, channel).await {
+    match default_api::view_templates(&configuration, app_id, limit, offset, channel, name).await {
         Ok(resp) => println!("{:?}", resp),
         Err(e @ onesignal_rust_api::apis::Error::ResponseError(_)) => {
             // `e.error_messages()` flattens any error-envelope shape to a Vec<String>;
@@ -3866,6 +3925,7 @@ Name | Type | Description  | Required | Notes
 **limit** | Option<**i32**> | Maximum number of templates. Default and max is 50. |  |[default to 50]
 **offset** | Option<**i32**> | Pagination offset. |  |[default to 0]
 **channel** | Option<**String**> | Filter by delivery channel. |  |
+**name** | Option<**String**> | Return only templates whose name contains this text, ignoring case. |  |
 
 ### Return type
 
